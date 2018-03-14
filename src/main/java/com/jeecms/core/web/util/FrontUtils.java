@@ -197,6 +197,7 @@ public class FrontUtils {
 	 * @return
 	 */
 	public static String getTplPath(String solution, String dir, String name) {
+		System.out.println("页面模板路径: =====>" + (solution + "/" + dir + "/" + name + TPL_SUFFIX));
 		return solution + "/" + dir + "/" + name + TPL_SUFFIX;
 	}
 
