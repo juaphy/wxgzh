@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>部门列表</title>
+    <link rel="stylesheet" type="text/css" href="${resSys}/www/default/css/searchclient/xjfwpd.css" />
+    <script src="${resSys}/www/default/js/searchclient/jquery.min.js" type="text/javascript"></script>
+    <style>
+        .deptinfo {
+            font-size: 25px;
+		    float: left;
+		    width: 20%;
+		    color: #13a9d6;
+		    margin: 19px;
+		    cursor: pointer;
+        }
+        .examples_body {
+            background: white;
+            width: 87%;
+            height: 600px;
+            text-align: center;
+            box-shadow: 18px 18px 30px 3px #d6d5d5;
+        }
+    </style>
+    <script>
+        $(function() {
+        	
+	        $(".deptinfo").click(function() {
+	        	var _url = $(this).attr("to");
+	        	if (_url == null || "" == _url) {
+	        		return false;
+	        	}
+	            window.location.href = encodeURI(_url + "&deptName=" + $(this).attr("deptName"));
+	            /* $.post(_url, {
+	            	"deptName": encodeURIComponent($(this).attr("deptName"),"UTF-8")
+	            }) */
+	        });
+        });
+    </script>
+</head>
+<body style="background: #eaf7ff;">
+    <div class="tit">贵阳市白云区人民政府政务服务中心部门列表</div>
+    <div class="examples_body" style="background: white;">
+         [#if deptList??]
+         [#list deptList as c]
+             <div class="deptinfo" deptName="${c.shortName!''}" to="/cxzdj/bsznsxlb.jspx?deptId=${c.deptId!''}">${c.shortName!''}</div>
+         [/#list]
+         [/#if]
+    </div>
+</body>
+</html>

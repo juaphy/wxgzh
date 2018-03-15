@@ -68,7 +68,4 @@
 	<bean id="contentOrderApiAct" class="com.jeecms.cms.api.front.ContentOrderApiAct"/>
 	<bean id="smsApiAct" class="com.jeecms.cms.api.front.CmsSmsApiAct"/>
 
-    <!-- 自定义 -->
-    <!-- 查询机 -->
-    <bean id="cxjAct" class="com.jeecms.cms.action.front.CxjAct"/>
 </beans>

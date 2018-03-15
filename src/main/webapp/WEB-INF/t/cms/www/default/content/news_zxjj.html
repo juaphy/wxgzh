@@ -14,68 +14,36 @@
 <script src="/${res}/js/html5shiv.min.js"></script>
 <script src="/${res}/js/respond.min.js"></script>
 <![endif]-->
-
-<script type="text/javascript">
-$(function() {;
-Cms.checkPerm("${base}","${content.id}");
-Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
-Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach");
-Cms.viewCount("${base}","${content.id}");
-Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
-});
-</script>
-
-<script type="text/javascript"> 
-jQuery(document).ready(function($){ 
-$('.content-comment').click(function(){
-	$('html,body').animate({scrollTop:$('#comments-text').offset().top}, 1000)
-	$('#comments-text').focus();
-	});  
-});
-
-$(function(){
-	//设置一个定时器，为BUTTON点击事件用
-	var timer=null;
-	var number1=0;
-
-	//文本输入时改变
-	$('#comments-text').keyup(function(){
-		if(!$(this).val()==''){
-			$('.submit-on').attr("class", "submit-out");
-		}else{
-			$(".submit-out").attr("class", "submit-on");
-		}
-	});
-	
-	//处理输入的内容是文字还是字母的函数
-	function getLength(str){
-		return String(str).replace(/[^\x00-\xff]/g,'aa').length;
-	};
-	
-});
 </script>
 
 <head>
 <body>
-[#include "../include/header.html"/]
+<!-- [#include "../include/header.html"/] -->
 <div class="main container clearfix">
   <section class="content_w850">
-    <h1>${content.title}<a class="position">${channel.name}</a></h1>
-    </div>
+    <!-- <h1>${content.title}</h1> -->
     <div class="content-txt">
       ${txt!}
     </div>
-    </section>
-    <script>
+    <!-- <script>
       $(document).ready(function(){
-		  $(".comments-hf").click(function(){
-		    $(this).toggleClass("reply-on");
-		    $(this).parent().siblings(".reply").animate({height:'toggle'},300)
-			  })
-		  })
-    </script>
+          $(".comments-hf").click(function(){
+            $(this).toggleClass("reply-on");
+            $(this).parent().siblings(".reply").animate({height:'toggle'},300)
+              })
+          })
+    </script> -->
   </section>
 </div>
-[#include "../include/footer.html"/]
+<!-- [#include "../include/footer.html"/] -->
+<style>
+    .main {
+        border-bottom: 0px;
+    }
+    .content_w850 {
+        width: 100%;
+        float: left;
+    }
+</style>
 </body>
 </html>

@@ -9,6 +9,7 @@
 			/WEB-INF/config/captcha-context.xml
 			/WEB-INF/config/jeecms/jeecore-context.xml
 			/WEB-INF/config/jeecms/jeecms-context.xml
+			/WEB-INF/config/searchclient/cxj-context.xml
 			/WEB-INF/config/shiro-context.xml
 			/WEB-INF/config/plug/**/*-context.xml
 			/WEB-INF/config/quartz-task.xml
@@ -158,6 +159,7 @@
       <param-name>contextConfigLocation</param-name>
       <param-value>
 				/WEB-INF/config/jeecms-servlet-front.xml
+				/WEB-INF/config/searchclient/cxj-action.xml
 				/WEB-INF/config/plug/**/*-servlet-front-action.xml
 			</param-value>
     </init-param>

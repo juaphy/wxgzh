@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+    default-lazy-init="true">
+
+    <!-- Mng -->
+    <bean id="cxjMng" class="com.jeecms.cms.manager.main.impl.CxjMngImpl"/>
+    <bean id="callRestMng" class="com.jeecms.cms.rest2.impl.CallRestMngImpl"/>
+
+    <!--DAO-->
+    <bean id="cxjDao" class="com.jeecms.cms.dao.main.impl.CxjDaoImpl"/>
+
+</beans>

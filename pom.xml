@@ -781,6 +781,17 @@
 	    <artifactId>httpasyncclient</artifactId>
 	    <version>4.0.2</version>
 	</dependency>
+
+	<!-- <dependency>
+        <groupId>soap</groupId>
+        <artifactId>soap</artifactId>
+        <version>2.3</version>
+    </dependency> -->
+    <!-- <dependency>
+        <groupId>org.knopflerfish.bundle.ksoap-osgi</groupId>
+        <artifactId>ksoap</artifactId>
+        <version>1.0.0</version>
+    </dependency> -->
   </dependencies>
   
   <build>

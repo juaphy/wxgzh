@@ -1,0 +1,35 @@
+
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: #F3F7FE;
+	font-size: 12px;
+	color: #fff;
+	overflow: hidden;
+	font-family:"微软雅黑";
+}
+
+
+
+/* examples_body */
+.examples_body {
+	width: 1780px;
+	margin: 60px auto;
+	clear: both;
+	position: relative;
+}
+.bx_wrap {
+	margin-left: 35px;
+}
+.tit { width:1800px; height:100px; background:url(../../images/searchclient/xjfwpd_icon.png) left no-repeat; font-size:30px; color:#13A9D6 ; font-family:"微软雅黑"; text-indent:100px; line-height:100px;}
+.bx_container ul li { width:300px; height:540px;}
+.photo_box { width:300px; height:540px; background:#FFF; padding-top:1px; }
+.photo_box .photo { width:280px; height:360px; margin:10px;}
+.photo_box .photo img { width:280px; height:360px;}
+.photo_box .ryname { width:280px; height:50px; line-height:50px; font-size:24px; font-family:"微软雅黑"; margin:auto; color:#333; font-weight:bold;text-align:center; border-bottom:0px dotted #EEE;}
+.photo_box .dept { width:280px; height:100px; margin:10px; line-height:50px; color:#069; font-size:24px; font-family:"微软雅黑"; font-weight:bold; text-align:center; }
+
+.photo_box .star { width:280px; height:34px; text-align:center; border-bottom:0px dotted #EEE;margin: 0px auto;}
+.photo_box .star img{width:40px; }
