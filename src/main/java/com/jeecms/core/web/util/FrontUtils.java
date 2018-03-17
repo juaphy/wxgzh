@@ -158,8 +158,9 @@ public class FrontUtils {
 		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
 			solution=site.getMobileSolutionPath();
 		}
-		return solution + "/" + dir + "/"
-				+ MessageResolver.getMessage(request, name) + TPL_SUFFIX;
+		String pagePath = solution + "/" + dir + "/" + MessageResolver.getMessage(request, name) + TPL_SUFFIX;
+		System.out.println("页面模板路径: =====>" + pagePath);
+		return pagePath;
 	}
 
 	/**

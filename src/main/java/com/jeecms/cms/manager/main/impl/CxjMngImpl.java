@@ -15,6 +15,8 @@ import com.jeecms.cms.CTools;
 import com.jeecms.cms.ListUtils;
 import com.jeecms.cms.dao.main.CxjDao;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
+import com.jeecms.cms.entity.main.cxj.TCxjMenu;
+import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.manager.main.CxjMng;
 import com.jeecms.cms.rest2.CallRestMng;
 import com.jeecms.cms.rest2.entity.DeptInfo;
@@ -27,8 +29,7 @@ public class CxjMngImpl implements CxjMng {
 
 	private CxjDao dao;
 	@Autowired
-	public void setDao(CxjDao dao) {
-		this.dao = dao;
+	public void setDao(CxjDao dao) {		this.dao = dao;
 	}
     
     @Autowired
@@ -189,6 +190,21 @@ public class CxjMngImpl implements CxjMng {
             e.printStackTrace();
         }
         return sxInfos;
+    }
+
+    @Override
+    public List<TCxjMenu> findCxjMenu(String areaId) {
+        return dao.findCxjMenu(areaId);
+    }
+
+    @Override
+    public TCxjZwzxconfig findZwzxconfig() {
+        return dao.findZwzxconfig();
+    }
+
+    @Override
+    public TCxjZwzxconfig findZwzxconfig(String areaId) {
+        return dao.findZwzxconfig(areaId);
     }
 
 }

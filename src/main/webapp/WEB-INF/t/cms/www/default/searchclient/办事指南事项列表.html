@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/bin/js/index.js"></script>
+<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="an_container w_content">
+		<input type="hidden" id="deptid" value="${deptid}"/>
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle" >
+					<img src="/${res}/images3/main_title.png" alt="" />办事指南事项列表
+				</div>
+				<div class="main_con sxlb">
+					<div class="sjbm_content animation" id="xxlbid">
+								<!-- <a class="sjbm_list"  href="/gabmshowsxnr.jspx">
+									<div>对生产、销售国家明令禁止淘汰的产品、使用国家命令淘汰的技术、工艺、材料、用能设备行为的处罚${deptid}</div> 
+								</a> -->
+							<!-- <a class="sjbm_list " href="/gabmshowsxnr.jspx">
+							<div>对生产、销售国家明令禁止淘汰的产品、使用国家命令淘汰的技术、工艺、材料、用能设备行为的处罚</div> 
+							</a><a class="sjbm_list " href="/gabmshowsxnr.jspx">
+							<div>对生产、销售国家明令禁止淘汰的产品、使用国家命令淘汰的技术、工艺、材料、用能设备行为的处罚</div> 
+							</a><a class="sjbm_list " href="/gabmshowsxnr.jspx">
+							<div>对生产、销售国家明令禁止淘汰的产品、使用国家命令淘汰的技术、工艺、材料、用能设备行为的处罚</div> 
+							</a> -->
+					</div>
+					<!-- <div class="fanye">
+						<p>
+							共3页 <a href="#" class="fycurrent">1</a><a href="#">2</a><a
+								href="#">3</a> 共15条
+						</p>
+					</div> -->
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">
+			 	[#include "/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]
+		</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+</body>
+</html>
+<script language="javascript" type="text/javascript" >
+	$(function(){
+		var deptid=$("#deptid").val();
+		var url="/getData/sxlb.jspx";
+		var str="";
+		$.ajax({
+			url:url,
+			type:'get',
+			data:{deptid:deptid},
+			dataType:'json',
+			success:function(data){
+				if(data.length==0){
+					 str="<a class='sjbm_list'>"+
+						"<div class='p_list'>该部门没有对应的事项</div>"+ 
+						"</a>";
+					$("#xxlbid").append(str);
+					return;
+				}
+				$(data).each(function(){
+				 var id=this.id;
+				 var sxzxname=this.sxzxname;
+				 var sxnam=this.sxname;
+			   //  str="<a class='sjbm_list' style='text-align: center;'  href='/gabmshowsxnr.jspx?perid="+id+"'>"+
+			     str="<a class='sjbm_list' style='text-align: center;'  href='/lawguide/"+id+".jspx'>"+
+						"<div  class='p_list'>"+sxnam+"("+sxzxname+")"+"</div>"+ 
+						"</a>";
+				$("#xxlbid").append(str);
+			}); 
+			},
+			error:function(){
+				alert("系统错误！");
+			}
+		});
+	
+			
+	});
+	
+</script>
+
+

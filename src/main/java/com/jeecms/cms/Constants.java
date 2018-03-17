@@ -171,4 +171,10 @@ public class Constants {
 	 * 模板路径
 	 */
 	public static final String TPL_BACK_BASE = "/WEB-INF/jeecms_sys";
+
+	/**
+	 * 查询机系统页面模板路径（目录）
+	 */
+	public static final String TPLDIR_CXJINDEX = "searchclient";
+
 }

@@ -1,0 +1,330 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript"
+	src="/bin/js/index.js"></script>
+<script type="text/javascript" language="javascript">   
+function  printPage(){   
+  var newWin=window.open('about:blank', '', '');   
+  var titleHTML=document.getElementById("doctitle").innerHTML;   
+  newWin.document.write(titleHTML);   
+  newWin.document.location.reload();   
+  newWin.print();   
+}  
+</script> 
+</head>
+<body>
+	<div class="an_container w_content">
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle rel">
+					<img src="/${res}/images3/main_title.png" alt="" />办事指南办理事项内容
+					<p class="blsxnr_title abs">${permissionitem.sxzxname!}-办事指南</p>
+				</div>
+				<div class="main_con blsxnr">
+					<div class="common_tab rel">
+						<ul class="tab_ul6 abs">
+							<li class="selectTag"><a onclick="selectTag('0',this)">基本信息</a>
+							</li>
+							<li><a onclick="selectTag('1',this)">设定依据</a>
+							</li>
+							<li><a onclick="selectTag('2',this)">申请材料</a>
+							</li>
+							<li><a onclick="selectTag('3',this)">特殊环节</a>
+							</li>
+							<li><a onclick="selectTag('4',this)">办理流程</a>
+							</li>
+						</ul>
+					</div>
+					<div class="bl_common_content zong_tagContent">
+						<div class="tagContent selectTag">
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								
+								<tr>
+									<td class=" common_label_title_r td_width">事项名称</td>
+									<td colspan="3">${permissionitem.sxzxname!}</td>
+								</tr>
+								
+								<tr>
+									<td class="common_label_title_r">权力来源</td>
+									<td>${permissionitem.qlly!}</td>
+									<td class="common_label_title_r">事项类型</td>
+									<td id="xzxk">[@cms_codemap type='XZXK'
+									code='${permissionitem.xzxk!}'] [#if tag_bean??] ${tag_bean.value!}
+									[#else]未知 [/#if] [/@cms_codemap]</td>
+								</tr>
+								<tr>
+									<td class="common_label_title_r">权力部门</td>
+									<td>${permissionitem.spsljgmc!}</td>
+									<td class="common_label_title_r">办理对象</td>
+									<td>${permissionitem.bsdx!'个人和企业'}</td>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">法定时限</td>
+									<td>[#if (permissionitem.fdsxflag!'')
+								='0']${permissionitem.limittimesexplain!'无相关规定'}[#else]${permissionitem.limittime!permissionitem.limitdays!}
+								[#if (permissionitem.fdsxdw!)=="G"]个工作日[#else]个自然日[/#if] [/#if]</td>
+									<td class="common_label_title_r td_width">承诺时限</td>
+									<td>[#if permissionitem.limitdays??][#if (permissionitem.limitdays!)
+								=999]该事项没有承诺时限[#else]${permissionitem.limitdays!} [#if
+								(permissionitem.limitunit!)=="G"]个工作日[#else]个自然日[/#if] [/#if][/#if]</td>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">办理窗口</td>
+									<td colspan="3">${permissionitem.windowsval!}</td>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">办理时间</td>
+									<td colspan="3">${permissionitem.blsjdetails!'无'}</td>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">网上办理</td>
+									 [#if (permissionitem.sfwssb!'')='1']
+									<td colspan="3">
+										${permissionitem.wssbaddress!'申请人可通过贵州省网上办事大厅在线申请(地址：http://www.gzegn.gov.cn）'}
+									</td>
+									[#else]
+									<td colspan="3">
+										${permissionitem.wssbaddress!'申请人可通过贵州省网上办事大厅在线申请(地址：http://www.gzegn.gov.cn）'}
+									</td>
+									 [/#if]
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">网上查询</td>
+									<td colspan="3">${permissionitem.blcx!'申请人可通过电话、贵州省网上办事大厅、贵州省网上办事大厅手机APP客户端、政务服务大厅窗口等方式查询行政许可事项的办理进程'}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="tagContent" id="twotagContent">
+						[#if laws?size gt 0]
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								 [#list laws as law] 
+								<tr>
+									<td class=" common_label_title_r td_width">依据名称</td>
+									<td colspan="3">${law.lawname!}</td>
+								</tr>
+								
+								<tr>
+									<td class=" common_label_title_r td_width">依据说明</td>
+									<td colspan="3">${law.lawdeclar!}</td>
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">依据类型</td>
+									[#if (law.type!"")=="1"]
+										<td colspan="3" id="lptype">
+											法律依据
+										</td>
+									[#else]
+										<td colspan="3" id="lptype">
+											法律法规
+										</td>
+									[/#if]	
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">依据文件名称</td>
+									<td colspan="3">${law.lawfilename!'无'}</td>
+								</tr>
+							 [/#list]
+							</table>
+							
+							[#else]
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								<tr>
+									<td colspan="5">无所对应的依据</td>
+								</tr>
+								</table>
+							[/#if]
+						</div>
+						<div class="tagContent" >
+								<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								[#if sxcls?size gt 0] [#list sxcls as sxcl]
+								<tr >
+									<th align="center" class="common_label_title_r" style="height:70px;"  >
+										${sxcl_index+1}--材料列表
+									</th>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">材料名称</td>
+									<td colspan="3">${sxcl.clmc!}</td>
+								</tr>
+								
+								<tr>
+									<td class=" common_label_title_r td_width">材料要求</td>
+									<td colspan="3">${sxcl.detailrequer!}</td>
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">材料来源</td>
+									<td colspan="3" id="lptype">${sxcl.clly!'无'}</td>
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">法定依据描述</td>
+									<td colspan="3">${sxcl.bz!'无'}</td>
+								</tr>
+								[/#list] [#else]
+								<tr>
+									<td colspan="3">无</td>
+								</tr>
+								[/#if]
+							</table>
+							
+						</div>
+						<div class="tagContent">
+						
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+									[#if (permissionitem.speprmflag!"")=="1"]
+								<tr>
+									<td class=" common_label_title_r td_width">特殊环节名称</td>
+									<td colspan="3">${permissionitem.speprmname!"无"}</td>
+								</tr>
+								
+								<tr>
+									<td class=" common_label_title_r td_width">是否收费</td>
+									<td colspan="3">[#if (permissionitem.speprmflagsfsf!"")=="1"]收费[#else]不收费[/#if]</td>
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">完成时限</td>
+									<td colspan="3" > ${permissionitem.finishtime!''} [#if (permissionitem.finishlimit!)=="G"]个工作日[#else]个自然日[/#if]</td>
+								</tr>
+									
+								<tr>
+									<td class=" common_label_title_r td_width">法律依据描述</td>
+									<td colspan="3">${permissionitem.tshjyj!"无"}</td>
+								</tr>
+									<tr>
+									<td class=" common_label_title_r td_width">收费依据描述</td>
+									<td colspan="3">[#if
+								(permissionitem.speprmflagsfsf!"")=="1"]${permissionitem.byzda!}[#else]不涉及收费[/#if]</td>
+								</tr>
+								[#else]
+								<tr>
+									<td colspan="6">该事项无特殊环节</td>
+								</tr>
+								<!-- <tr>
+									<td class="common_label_title_r td_width">是否收费</td>
+									<td colspan="3">不收费</td>
+								</tr>
+								<tr>
+									<td class="common_label_title_r td_width">完成时限</td>
+									<td colspan="3">无</td>
+								</tr>
+								<tr>
+									<td class="common_label_title_r td_width">法律依据及描述</td>
+									<td colspan="3">无</td>
+								</tr>
+								<tr>
+									<td class="common_label_title_r td_width">收费依据及描述</td>
+									<td colspan="3">不涉及收费</td>
+								</tr> -->
+								[/#if]
+							</table>
+						
+						</div>
+						<div class="tagContent">
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								[#if perNodes?size>0 ] [#list perNodes as node]
+									<tr style="height: 50px;border: 1px;">
+										<th class="common_label_title_r">步骤</th>
+										<th class="common_label_title_r">受理人</th>
+										<th class="common_label_title_r">办理时限</th>
+										<th class="common_label_title_r">审查标准</th>
+										<th class="common_label_title_r">审查结果</th>
+									</tr>
+									<tr>
+										<td >${node.nodename!"接件"}</td>
+										<td >${node.appname!'无'}</td>
+										<td >${node.blqx!'无'}</td>
+										<td >${node.spbz!'无'}</td>
+										<td >${node.spresult!'无'}</td>
+									</tr>
+									 [/#list]
+									 [#else]
+									 	<tr>
+										<td colspan="6">无</td>
+										</tr>
+									 [/#if]
+								</table>
+						</div>
+					</div>
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">
+			[#include "/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]
+		</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+	
+	<!----print--
+	<div id="doctitle"> 111111111111111111111111111111111</div><a href= "javascript:;" onclick= "printPage()">打印办事指南 </a>
+	---print end----->
+</body>
+</html>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		
+	});
+</script>
+

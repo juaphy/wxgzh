@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.cxj">
+    <class name="TCxjMenu" table="t_cxj_menu">
+        <meta attribute="sync-DAO">false</meta>
+        <cache usage="read-write"/>
+        <id name="id" type="java.lang.String" column="id"></id>
+        <property name="areaid" column="areaid" type="string" />
+        <property name="name" column="name" type="string" />
+        <property name="tag" column="tag" type="string" />
+        <property name="url" column="url" type="string" />
+        <property name="icon" column="icon" type="string" />
+        <property name="classname" column="classname" type="string" />
+        <property name="ordernum" column="ordernum" type="java.lang.Integer" />
+        <property name="status" column="status" type="string" />
+        <property name="imgsrc" column="imgsrc" type="string" />
+        <property name="homeUrl" column="home_url" type="string" />
+        <property name="remark" column="remark" type="string" />
+        <property name="createtime" column="createtime" type="timestamp" />
+        <property name="createUsername" column="create_username" type="string" />
+        <property name="createUserid" column="create_userid" type="string" />
+        <property name="updatetime" column="updatetime" type="timestamp" />
+        <property name="updateUsername" column="update_username" type="string" />
+        <property name="updateUserid" column="update_userid" type="string" />
+    </class>
+</hibernate-mapping>

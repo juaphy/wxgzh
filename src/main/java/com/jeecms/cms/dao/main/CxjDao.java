@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
+import com.jeecms.cms.entity.main.cxj.TCxjMenu;
+import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.common.hibernate4.Updater;
 
 /**
@@ -28,5 +30,26 @@ public interface CxjDao {
     public TCxjXjfwpd updateTCxjXjfwpd(Updater<TCxjXjfwpd> updater);
 
     public TCxjXjfwpd deleteTCxjXjfwpdById(String id);
+
+    /**
+     * 获取查询机配置信息
+     * @param areaId
+     * @return 只取最新添加的查询机配置信息
+     */
+    public TCxjZwzxconfig findZwzxconfig();
+
+    /**
+     * 根据区划id获取查询机配置信息
+     * @param areaId
+     * @return
+     */
+    public TCxjZwzxconfig findZwzxconfig(String areaId);
+
+    /**
+     * 根据区划id获取该区划的菜单
+     * @param areaId
+     * @return
+     */
+    public List<TCxjMenu> findCxjMenu(String areaId);
 
 }

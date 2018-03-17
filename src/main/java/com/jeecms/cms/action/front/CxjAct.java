@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.JsonParser;
+import com.jeecms.cms.CTools;
+import com.jeecms.cms.Constants;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
+import com.jeecms.cms.entity.main.cxj.TCxjMenu;
+import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.manager.assist.CmsKeywordMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.CxjMng;
@@ -50,6 +54,31 @@ public class CxjAct {
 
     @Autowired
     private CxjMng cxjMng;
+
+    @RequestMapping(value="/cxj/index.jspx", method = RequestMethod.GET)
+    public String cxjHome(HttpServletRequest request, HttpServletResponse response,
+            ModelMap model) throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+
+        /*// 获取菜单
+        String areaId = request.getParameter("areaId");
+        if (CTools.isEmpty(areaId)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig(areaId);
+        if (zwzxConfig == null) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+
+        List<TCxjMenu> menus = cxjMng.findCxjMenu(areaId);
+        if (menus == null || menus.size() <= 0) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        model.put("menus", menus);
+        model.put("zwzxConfig", zwzxConfig);*/
+        FrontUtils.frontData(request, model, site);
+        return FrontUtils.getTplPath(site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "home/index");
+    }
 
     /**
      * 中心简介/窗口布局/服务评价
@@ -139,4 +168,30 @@ public class CxjAct {
         return FrontUtils.getTplPath(site.getSolutionPath(), INDEXPAGE, "sxlist");
     }
 
+    /**
+     * 查询机内容页-iframe页面
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws JSONException
+     */
+    @RequestMapping(value="/cxj/contentIframe.jspx", method = RequestMethod.GET)
+    public String cxjContent(HttpServletRequest request,HttpServletResponse response, ModelMap model) 
+            throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+        String areaId = request.getParameter("areaId");
+        if (CTools.isEmpty(areaId)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+
+        TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig(areaId);
+        if (zwzxConfig == null) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        FrontUtils.frontData(request, model, site);
+        model.put("zwzxConfig", zwzxConfig);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjy");
+
+    }
 }

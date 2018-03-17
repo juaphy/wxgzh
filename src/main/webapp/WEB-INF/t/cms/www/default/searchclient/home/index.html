@@ -7,6 +7,7 @@
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
+<script type="text/javascript" src="/${res}/js/layer-v3.1.1/layer/layer.js"></script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/home.css" />
 </script>
 <style>
@@ -49,61 +50,79 @@
 </style>
 <script>
     $(function() {
-    	$(".icon_main").hover(function() {
-    		var _path = $(this).find("img").attr("_path");
-    		var _hover = $(this).find("img").attr("_hover");
-    		if (_path == null || "" == _path || _hover == null || "" == _hover) {
-    			return false;
-    		}
-    		$(this).find("img").attr("src", _path + _hover);
-    	}, function() {
-    		var _path = $(this).find("img").attr("_path");
-    		var _src = $(this).find("img").attr("_src");
-    		if (_path == null || "" == _path || _src == null || "" == _src) {
-    			return false;
-    		}
-    		$(this).find("img").attr("src", _path + _src);
-    	});
+        $(".icon_main").hover(function() {
+            var _path = $(this).find("img").attr("_path");
+            var _hover = $(this).find("img").attr("_hover");
+            if (_path == null || "" == _path || _hover == null || "" == _hover) {
+                return false;
+            }
+            $(this).find("img").attr("src", _path + _hover);
+        }, function() {
+            var _path = $(this).find("img").attr("_path");
+            var _src = $(this).find("img").attr("_src");
+            if (_path == null || "" == _path || _src == null || "" == _src) {
+                return false;
+            }
+            $(this).find("img").attr("src", _path + _src);
+        });
+        $(".icon_main").click(function() {
+            // window.location.href=$(this).attr("to");
+            var _url = $(this).attr("to");
+            if (_url == null || "" == _url) {
+                return false;
+            }
+            var istitle = $(this).attr("istitle");
+            var title = false;
+            if (istitle != null && istitle != "") {
+                title = "<div style='text-align: center;font-size: 25px;font-size: 30px;color: #13A9D6;'>贵阳市白云区人民政府政务服务中心</div>";
+            }
+            layer.open({
+                area:["98%", "98%"],
+                type:2,
+                title: title,
+                content: _url
+            });
+        });
     });
 </script>
 <head>
 <body>
     <div id="_main">
-        <div class="icon_main">
+        <div class="icon_main" to="/cxzdj/zxjj.jspx?id=148">
             <img src="/${res}/images/searchclient/index_icon1.png" _path="/${res}/images/searchclient/"
                 _src="index_icon1.png" _hover="index_icon1_hover.png" />
             <div class="icon_title">中心简介</div>
         </div>
-        <div class="icon_main">
+        <div class="icon_main" to="/cxzdj/zxjj.jspx?id=150">
             <img src="/${res}/images/searchclient/index_icon2.png" _path="/${res}/images/searchclient/"
                 _src="index_icon2.png" _hover="index_icon2_hover.png" />
             <div class="icon_title">窗口布局</div>
         </div>
-        <div class="icon_main">
+        <div class="icon_main" to="/cxzdj/bszn.jspx?areaId=520113">
             <img src="/${res}/images/searchclient/index_icon3.png" _path="/${res}/images/searchclient/"
                 _src="index_icon3.png" _hover="index_icon3_hover.png" />
             <div class="icon_title">办事指南</div>
         </div>
-        <div class="icon_main">
+        <div class="icon_main" istitle="true" to="http://www.gzegn.gov.cn/businessinfolist.jspx?isCxj=true&areaId=520113">
             <img src="/${res}/images/searchclient/index_icon4.png" _path="/${res}/images/searchclient/"
                 _src="index_icon4.png" _hover="index_icon4_hover.png" />
             <div class="icon_title">进度查询</div>
         </div>
-        <div class="icon_main">
+        <div class="icon_main" to="http://www.gzegn.gov.cn/cxj_fwpj.jspx">
             <img src="/${res}/images/searchclient/index_icon5.png" _path="/${res}/images/searchclient/"
                 _src="index_icon5.png" _hover="index_icon5_hover.png" />
             <div class="icon_title">服务评价</div>
         </div>
-        <div class="icon_main">
+        <div class="icon_main" to="/cxzdj/xjfwpd.jspx">
             <img src="/${res}/images/searchclient/index_icon6.png" _path="/${res}/images/searchclient/"
                 _src="index_icon6.png" _hover="index_icon6_hover.png" />
-            <div class="icon_title">月度服务之星</div>
+            <div class="icon_title">星级服务评定</div>
         </div>
-        <div class="icon_main">
+        <!-- <div class="icon_main">
            <img src="/${res}/images/searchclient/index_icon7.png" _path="/${res}/images/searchclient/"
                 _src="index_icon7.png" _hover="index_icon7_hover.png" />
             <div class="icon_title">月度红旗窗口</div>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>

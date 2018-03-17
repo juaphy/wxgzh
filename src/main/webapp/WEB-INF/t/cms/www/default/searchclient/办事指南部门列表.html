@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript"
+	src="/bin/js/index.js"></script>
+</head>
+<body>
+	<div class="an_container w_content">
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle">
+					<img src="/${res}/images3/main_title.png" alt="" />办事指南部门列表
+				</div>
+				<div class="main_con bmlb2">
+					
+					<div class="bmbtn2">
+					[@cms_sysdept_list count='200' areaId='522722' status='1']
+							[#list tag_list as a]
+							<a href="/gabmshowsx.jspx?deptid=${a.deptId!}" class="">[@text_cut s=a.name len=110 append='...'/]</a> 
+<!-- 								<a href="/permissionitem/${a.deptId!}.jspx" class="">[@text_cut s=a.name len=110 append='...'/]</a> -->
+							[/#list] [/@cms_sysdept_list]
+					</div>
+					
+					<!-- <div class="fanye fanye2">
+						<p>
+							共3页 <a href="#" class="fycurrent">1</a><a href="#">2</a><a
+								href="#">3</a> 共15条
+						</p>
+					</div> -->
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">
+				[#include "/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]
+		</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+</body>
+</html>

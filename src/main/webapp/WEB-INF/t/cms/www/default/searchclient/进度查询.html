@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript"
+	src="/bin/js/index.js"></script>
+<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="an_container w_content">
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle">
+					<img src="/${res}/images3/main_title.png" alt="" />进度查询
+				</div>
+				<div class="main_con jdcx">
+					<div class="jdcx_left f_l">
+						<div class="login">
+							<table class="table_fix" width="100%">
+								<tr>
+									<td class="width_l">受理编号：</td>
+									<td class="width_r"><input class="login_input_style" id="bsnum"
+										type="text" value="请输入受理编号" onfocus="this.value=''" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="height:32px;font-size:0px;"></td>
+								</tr>
+								<!-- <tr>
+									<td class="width_l">查询密码：</td>
+									<td><input class="login_input_style" type="password" id="password"
+										value="" onfocus="this.value=''" />
+									</td>
+								</tr> -->
+								<tr>
+									<td  class="width_ll"  id="tisi"><td>
+								</tr>
+								
+								<tr>
+									<td colspan="2" style="height:60px;font-size:0px;"></td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td><a 
+										class="common_btn common_btn1 inline_block" onclick="dosubmit();">确认</a><a 
+										class="common_btn common_btn2 inline_block" onclick="clearfun();">重置</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="jdcx_right f_r">
+					<div class="jianpan rel" id="anjan_number" style="cursor: pointer;">
+							<!--  <div class="bscx_sj abs">&nbsp;</div>
+							<a >0</a><a >1</a><a >2</a><a >3</a><a
+								>4</a><a >5</a><a >6</a><a >7</a><a
+								>8</a><a >9</a><a  class="word_x">x</a><a
+								>→</a>
+							</div> -->
+						<div class="bscx_sj abs">&nbsp;</div>
+							<button >0</button><button>1</button><button>2</button><button >3</button><button
+								>4</button><button>5</button><button>6</button><button>7</button><button
+								>8</button><button >9</button><button  class="word_x">x</button><button
+								>→</button>
+						</div>
+					</div>
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">[#include
+			"/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+</body>
+</html>
+<script language="javascript" type="text/javascript" >
+	var bsnum="";
+	$(function(){
+		
+		var str=$("#bsnum").val();
+		$("#anjan_number button").click(function(){
+			if(str=="请输入受理编号"){
+				$("#bsnum").val("");
+			}
+			var num=$(this).text();
+			if(num=="x"){
+				 bsnum=bsnum.substring(0,(bsnum.length-1)); 
+				 num="";
+			}
+			if(num=="→"){
+				num="";
+				$("#tisi").text("");
+				if(bsnum==null||bsnum==""){
+					$("#tisi").text("请输入编号！");
+					return;
+				}
+				window.location.href="/doSearch.jspx?bid="+bsnum;
+			}
+			bsnum+=num;
+			$("#bsnum").val(bsnum);
+		});
+	
+	});
+function clearfun(){
+	$("#bsnum").val("");
+	bsnum="";
+	$("#tisi").text("");
+}
+
+function dosubmit(){
+$("#tisi").text("");
+	var bsnum=$("#bsnum").val();
+// 	var password=$("#password").val();
+	if(bsnum==null||bsnum==""){
+		$("#tisi").text("请输入编号！");
+		return;
+	}
+	window.location.href="/doSearch.jspx?bid="+bsnum;
+	//$.post("/doSearch.jspx",{bid:bsnum},function(data){},"text");
+	
+}
+</script>

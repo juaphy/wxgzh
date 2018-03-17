@@ -7,6 +7,7 @@ import static  com.jeecms.cms.Constants.TPLDIR_INDEX;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +22,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jeecms.cms.Constants;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentCheck;
+import com.jeecms.cms.entity.main.cxj.TCxjMenu;
+import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.manager.assist.CmsKeywordMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentBuyMng;
 import com.jeecms.cms.manager.main.ContentMng;
+import com.jeecms.cms.manager.main.CxjMng;
 import com.jeecms.cms.web.Token;
 import com.jeecms.common.page.Paginable;
 import com.jeecms.common.page.SimplePage;
@@ -63,6 +68,7 @@ public class DynamicPageAct {
 	 * @param model
 	 * @return
 	 */
+	/*
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@Token(save=true)
 	public String index(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
@@ -88,7 +94,53 @@ public class DynamicPageAct {
 			}
 		}
 	}
-	
+	*/
+
+	/**
+	 * TOMCAT的默认路径
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@Token(save=true)
+	public String index(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+	    CmsSite site = CmsUtils.getSite(request);
+	    FrontUtils.frontData(request, model, site);
+	    //	return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_INDEX, TPL_INDEX);
+	    //带有其他路径则是非法请求(非内网)
+	    String uri=URLHelper.getURI(request);
+	    if(StringUtils.isNotBlank(uri)&&(!(uri.equals("/")||uri.equals("/index.jhtml")))){
+	        return FrontUtils.pageNotFound(request, response, model);
+	    }
+
+	    TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig();
+        if (zwzxConfig == null) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        List<TCxjMenu> menus = cxjMng.findCxjMenu(zwzxConfig.getAreaid());
+        if (menus == null || menus.size() <= 0) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        model.put("menus", menus);
+        model.put("zwzxConfig", zwzxConfig);
+
+	    //使用静态首页而且静态首页存在
+	    /*if(existIndexPage(site)){
+	        return goToIndexPage(request, response, site);
+	    }else{
+	        String tpl = site.getTplIndex();
+	        String equipment=(String) request.getAttribute("ua");
+	        if (StringUtils.isNotBlank(equipment)&&!equipment.equals("mobile")
+	                &&!StringUtils.isBlank(tpl)) {
+	            return tpl;
+	        } else {
+	            return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_INDEX, TPL_INDEX);
+	        }
+	    }*/
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjindex");
+	}
 
 	/**
 	 * WEBLOGIC的默认路径
@@ -323,4 +375,8 @@ public class DynamicPageAct {
 	private SessionProvider session;
 	@Autowired
 	private CmsSiteMng siteMng;
+
+    @Autowired
+    private CxjMng cxjMng;
+
 }

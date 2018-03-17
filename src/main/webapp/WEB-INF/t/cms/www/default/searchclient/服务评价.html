@@ -1,0 +1,153 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript"
+	src="/bin/js/index.js"></script>
+<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="an_container w_content">
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle">
+					<img src="/${res}/images3/main_title.png" alt="" />服务评价
+				</div>
+				<div class="main_con jdcx">
+					<div class="jdcx_left f_l">
+						<div class="login">
+							<table class="table_fix" width="100%">
+								<tr>
+									<td class="width_l">业务编号：</td>
+									<td class="width_r"><input class="login_input_style" id="bodyid"
+										type="text" value="请输入业务编号" onfocus="this.value=''" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="height:32px;font-size:0px;"></td>
+								</tr>
+								<tr>
+									<td class="width_l">手机号码：</td>
+									<td><input class="login_input_style" type=text id="phonenum"
+										value="请输入手机号码" onfocus="this.value=''" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="height:60px;font-size:0px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="tisi" style="height:60px;font-size:27px;color: #fff;"></td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td style="cursor: pointer;"><a 
+										class="common_btn common_btn1 inline_block" onclick="dosubmit();">确认</a><a 
+										class="common_btn common_btn2 inline_block" onclick="clearBtn();">重置</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="jdcx_right f_r" id="anjan_number">
+						<div class="jianpan rel">
+							<!-- <div class="bscx_sj abs">&nbsp;</div>
+							<a href="#">0</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a
+								href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a
+								href="#">8</a><a href="#">9</a><a href="#" class="word_x">x</a><a
+								href="#">→</a>
+						</div> -->
+							<div class="bscx_sj abs">&nbsp;</div>
+								<button >0</button><button>1</button><button>2</button><button >3</button><button
+								>4</button><button>5</button><button>6</button><button>7</button><button
+								>8</button><button >9</button><button  class="word_x">x</button><button
+								>→</button>
+						</div>
+					</div>
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">
+			 	[#include "/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]
+		</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+</body>
+</html>
+<script language="javascript" type="text/javascript">
+	var bodyid="";
+	$(function(){
+	var flag="";
+	$("#bodyid").focus(function(){
+		flag="1";
+		bodyid="";
+	});
+	$("#phonenum").focus(function(){
+		flag="2";
+		bodyid="";
+	});
+	var str=$("#bodyid").val();
+		$("#anjan_number button").click(function(){
+			/* if(str=="请输入业务编号"){
+			} */
+			var num=$(this).text();
+			if(num=="x"){
+				 bodyid=bodyid.substring(0,(bodyid.length-1)); 
+				 num="";
+			}
+			if(num=="→"){
+				num="";
+				$("#tisi").text("");
+				if(bodyid==null||bodyid==""){
+					$("#tisi").text("请输入编号！");
+					return;
+				}
+				window.location.href="/queryfuwupingja.jspx?bid="+bodyid+"&phone="+phonenum;
+			}
+			bodyid+=num;
+		
+				if(flag=="1"){
+					$("#bodyid").val(bodyid);
+				}
+				if(flag=="2"){
+					$("#phonenum").val(bodyid);
+				}
+				
+			
+		});
+	});
+	
+	function clearBtn(){
+		$("#bodyid").val("");
+		$("#phonenum").val("");
+		bodyid="";
+	}
+	
+	function dosubmit(){
+	$("#tisi").text("");
+	$("#tisi").text("");
+		var bodyid=$("#bodyid").val();
+		var phonenum=$("#phonenum").val();
+		if(bodyid==""){
+			$("#tisi").text("请输入业务编号！");
+			return;
+		}
+		if(phonenum==""){
+			$("#tisi").text("请输入手机号!");
+			return;
+		}
+		window.location.href="/queryfuwupingja.jspx?bid="+bodyid+"&phone="+phonenum;
+	}
+</script>
