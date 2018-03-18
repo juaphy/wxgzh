@@ -3,23 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <title>${zwzxname!''}</title>
+    <title>${zwzxConfig.zwzxshortname!''} 查询系统</title>
     <link href="/${res}/css/searchclient/index2.css" rel="stylesheet" type="text/css" />
     <script language="javascript" type="text/javascript" src="/${res}/js/searchclient/index.js"></script>
-    <style>
-        .an_header2 { height: 120px; padding: 52px 47px 0px; background: url(/${res}/images/searchclient/head2_bj.png) center bottom no-repeat; }
-        .an_footer2 .block_icon a {
-            background: url(/${res}/images/searchclient/foot_line.png) right center no-repeat;
-        }
-        .an_header2 .head_icon2 { background: url(/${res}/images/searchclient/head_icon2.png) left 0px no-repeat; }
-        .an_header2 .head_icon2:hover { background: url(/${res}/images/searchclient/head_icon2.png) left -52px no-repeat; }
-        .an_header2 .head_icon1 { background: url(/${res}/images/searchclient/head_icon1.png) left 0px no-repeat; }
-        .an_header2 .head_icon1:hover { background: url(/${res}/images/searchclient/head_icon1.png) left -52px no-repeat; }
-        .an_footer2 .block_icon a:hover, .an_footer2 .block_icon a.current { background: url(/${res}/images/searchclient/footicon_hover.png) repeat }
-    </style>
+    [#include "/r/cms/www/default/css/searchclient/include_cxy_css.html" /]
 </head>
 <body>
-	<div class="an_container w_content" style="background:${zwzxConfig.backgroundImg!'#0c5ba5'}">
+	<div class="an_container w_content" style="background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg})[#else]#0c5ba5[/#if]">
 		<div class="an_header2">
 			[#if zwzxConfig.homelogo??]
             <img src="${zwzxConfig.minlogo}" alt="" />

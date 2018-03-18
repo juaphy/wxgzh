@@ -177,4 +177,9 @@ public class Constants {
 	 */
 	public static final String TPLDIR_CXJINDEX = "searchclient";
 
+	/**
+	 * 查询机系统-后台模块页面模板路径（目录）
+	 */
+	public static final String TPLDIR_MNG_CXJINDEX = "searchclient/manage";
+
 }

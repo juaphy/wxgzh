@@ -20,5 +20,6 @@
         <property name="updatetime" column="updatetime" type="timestamp" />
         <property name="updateUsername" column="update_username" type="string" />
         <property name="updateUserid" column="update_userid" type="string" />
+        <property name="loginBjImg" column="login_bj_img" type="string" />
     </class>
 </hibernate-mapping>

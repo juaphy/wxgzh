@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>实体大厅管理系统</title> 
+        <link href="${resSys}/www/default/css/searchclient/manage/index.css" rel="stylesheet" type="text/css" />
+        <script src="${resSys}/www/default/js/searchclient/manage/jquery.js" type="text/javascript"></script>
+        <script src="${resSys}/www/default/js/searchclient/manage/captcha.js" type="text/javascript"></script>
+        <style>
+body{font-family:'宋体',Arial, "Times New Roman", Times, serif;font-size:14px;line-height:25px;background:url(${resSys}/www/default/css/searchclient/manage/mid-bg.jpg) no-repeat center top;}
+ 
+.submit{
+    background:url(${resSys}/www/default/css/searchclient/manage/loginBtn.png) no-repeat;border:none;width:202px;height:51px;cursor:pointer;
+}
+.user_ipt{
+    padding-left:30px;
+    background:url(/images/login/user-1.png) no-repeat;
+    background-position: 2px 2px;
+}
+.sel .user_ipt{
+    color: #09f;
+    padding-left:30px;
+    background:url(/r/cms/www/default/images/searchclient/manage/user-2.png) no-repeat;
+    background-position: 2px 2px;
+    background-color: #ffffcc;
+}
+.pwd_ipt{
+    padding-left:30px;
+    background:url(/r/cms/www/default/images/searchclient/manage/login/pwd-1.png) no-repeat;
+    background-position: 2px 2px;
+}
+.sel .pwd_ipt{
+    color: #09f;
+    padding-left:30px;
+    background:url(/r/cms/www/default/images/searchclient/manage/login/pwd-2.png) no-repeat;
+    background-position: 2px 2px;
+    background-color: #ffffcc;
+}
+.ipt{ 
+    font-size:16px;font-weight:bolder; border: 1px solid #AAAAAA; background-color: white; height: 30px; line-height: 27px;
+}
+/* input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: rgb(0, 0, 0);
+    background-image: none;
+    color: rgb(0, 0, 0);
+} */
+.login_bj {
+    background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg}) no-repeat center center;[#else]#0c5ba5[/#if]
+}
+.login_pic {
+    z-index:-1;
+    width:487px;
+    height:268px;
+    position:absolute;
+    left:50%;
+    margin-left:-324px;
+    top:50%;
+    margin-top:-221px;
+    padding:174px 0px 0px 160px;
+    background:url(${zwzxConfig.loginBjImg!''});
+    _background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${zwzxConfig.loginBjImg!''}");
+}
+</style>
+    </head>
+    <body class="login_bj">
+        
+        <div class="login_pic"></div>
+            <div class="login">
+            <form method="post" action="/login/doLogin.do" name="loginForm"
+                id="loginForm">
+                <input type="hidden" name="login" value="1">
+                
+                  <p><input class="text" type="text" id="username" name="username" /></p>
+                  <p style="height:14px; font-size:0px;"></p>
+                  <p> <input class="text" type="password" id="password" name="password" style="margin-top: 1px;" /></p>
+                  <p style="height:10px;font-size:0px;"></p>
+                  <p class="checkbox">
+                  <input class="checkbox" id="chkRememberPwd" type="checkbox" />记住用户名或密码
+                 </p>
+                    [#if login??]
+                        <tr >
+                            <td >
+                            <p style="margin-left:60px;">
+                                <font size="3" color="red"> 用户名或密码不正确！
+                            </font>
+                            </p>
+                            
+                            </td>
+                        </tr>
+                    [/#if]
+                    <p style="height:28px;font-size:0px;"></p>
+                
+                   <p><a href="javascript:doSubmit();" id="submit"></a></p>
+                    
+            </form>
+            </div>
+        
+        
+        
+    
+    </body>
+</html>
+<script type="text/javascript"> 
+if(window.opener){
+    window.close(); // 只保留一个，不重刷opener 防止第三方链接到我们的登录会重复刷登录页面的问题。
+}
+
+$(document).ready(function(){
+    captchaInit();
+    $("#loginForm").submit(function(){
+        doSubmit();
+        return false;
+    })
+    $("#loginForm :input").focus(function(){ 
+        $(this).parent().addClass("sel");
+    })
+    $("#loginForm :input").blur(function(){
+        if($(this).val()==""){
+            $(this).parent().removeClass("sel");
+        }
+    })
+    $("#username").focus();
+    $("html").die().live("keydown",function(event){       
+             if(event.keyCode==13){      
+                 //调用登陆方法;  
+              doSubmit();
+               }       
+       });
+       GetLastUser();
+})
+
+function doSubmit(){
+    var username = $("#username").val();
+    var password = $("#password").val();
+    var isname = true;
+    var ispassword = true;
+    if(username==""){
+        isname = false;
+        alert("请输入用户名！")
+        $("#username").focus();
+    
+    }
+    if(password==""){
+        ispassword = false;
+        alert("请输入密码！")
+        $("#password").focus(); 
+    }
+    SetPwdAndChk();
+    if(isname&&ispassword){
+    document.forms["loginForm"].submit();
+    }
+}
+
+function submitFunc(captcha){
+    document.forms["loginForm"].submit();
+}
+
+function GetLastUser() {
+    var id = "TAIJI005-7D5B-4231-8CDT-16939BEACD67";
+    var usr = GetCookie(id);
+    if (usr != null) {
+        document.getElementById('username').value = usr;
+    }
+    GetPwdAndChk();
+}
+//点击登录时触发客户端事件
+    
+function SetPwdAndChk() {
+    //取用户名
+    var usr = $("#username").val();
+    //将最后一个用户信息写入到Cookie
+    SetLastUser(usr);
+    //如果记住密码选项被选中
+    if (document.getElementById('chkRememberPwd').checked == true) {
+        //取密码值
+        var pwd = $("#password").val();
+        var expdate = new Date();
+        expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000));
+        //将用户名和密码写入到Cookie
+        SetCookie(usr, pwd, expdate);
+    } else {
+        //如果没有选中记住密码,则立即过期
+        ResetCookie();
+    }
+}
+
+function SetLastUser(usr) {
+    var id = "TAIJI005-7D5B-4231-8CDT-16939BEACD67";
+    var expdate = new Date();
+    //当前时间加上两周的时间
+    expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000));
+    SetCookie(id, usr, expdate);
+}
+//用户名失去焦点时调用该方法
+
+function GetPwdAndChk() {
+    var usr = $("#username").val();
+    var pwd = GetCookie(usr);
+    if (pwd != null) {
+        document.getElementById('chkRememberPwd').checked = true;
+        document.getElementById('password').value = pwd;
+    } else {
+        document.getElementById('chkRememberPwd').checked = false;
+        document.getElementById('password').value = "";
+    }
+}
+//取Cookie的值
+
+function GetCookie(name) {
+    var arg = name + "=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+        var j = i + alen;
+        //alert(j);
+        if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+        i = document.cookie.indexOf(" ", i) + 1;
+        if (i == 0) break;
+    }
+    return null;
+}
+
+function getCookieVal(offset) {
+    var endstr = document.cookie.indexOf(";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+}
+//写入到Cookie
+
+function SetCookie(name, value, expires) {
+    var argv = SetCookie.arguments;
+    //本例中length = 3
+    var argc = SetCookie.arguments.length;
+    var expires = (argc > 2) ? argv[2] : null;
+    var path = (argc > 3) ? argv[3] : null;
+    var domain = (argc > 4) ? argv[4] : null;
+    var secure = (argc > 5) ? argv[5] : false;
+    document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + ((path == null) ? "" : ("; path=" + path)) + ((domain == null) ? "" : ("; domain=" + domain)) + ((secure == true) ? "; secure" : "");
+}
+
+function ResetCookie() {
+    var usr = $("#username").val();
+    var expdate = new Date();
+    SetCookie(usr, null, expdate);
+}
+</script>

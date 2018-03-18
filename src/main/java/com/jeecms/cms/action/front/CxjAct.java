@@ -189,6 +189,12 @@ public class CxjAct {
         if (zwzxConfig == null) {
             return FrontUtils.pageNotFound(request, response, model);
         }
+        List<TCxjMenu> menus = cxjMng.findCxjMenu(areaId);
+        if (menus == null || menus.size() <= 0) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        model.put("menus", menus);
+
         FrontUtils.frontData(request, model, site);
         model.put("zwzxConfig", zwzxConfig);
         return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjy");

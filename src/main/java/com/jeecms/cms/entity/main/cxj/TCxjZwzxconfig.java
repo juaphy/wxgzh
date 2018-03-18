@@ -26,6 +26,8 @@ public class TCxjZwzxconfig implements Serializable {
     private String updateUserid; // 更新人id
     private String updateUsername; // 更新人名称
     private String backgroundImg; // 背景图路径
+    private String loginBjImg; // 管理平台登录页面背景图路径
+
     public String getId() {
         return id;
     }
@@ -121,6 +123,12 @@ public class TCxjZwzxconfig implements Serializable {
     }
     public void setBackgroundImg(String backgroundImg) {
         this.backgroundImg = backgroundImg;
+    }
+    public String getLoginBjImg() {
+        return loginBjImg;
+    }
+    public void setLoginBjImg(String loginBjImg) {
+        this.loginBjImg = loginBjImg;
     }
 
 }

@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+* {
+	margin:0px;
+	padding:0px;
+}
+html, body {
+	height:100%;
+}
+/* .login_bj {
+	background:url(/r/cms/www/default/images/searchclient/manage/bj.jpg) no-repeat center center;
+} */
+/* .login_pic {
+	z-index:-1;
+	width:487px;
+	height:268px;
+	position:absolute;
+	left:50%;
+	margin-left:-324px;
+	top:50%;
+	margin-top:-221px;
+	padding:174px 0px 0px 160px;
+	background:url(/r/cms/www/default/images/searchclient/manage/login_bj.png);
+	_background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/r/cms/www/default/images/searchclient/manage/login_bj.png");
+} */
+.login {
+	z-index:1;
+	width:487px;
+	height:268px;
+	position:absolute;
+	left:50%;
+	margin-left:-324px;
+	top:50%;
+	margin-top:-221px;
+	padding:174px 0px 0px 160px;
+}
+.login input.text {
+	width:226px;
+	height:29px;
+	line-height:29px;
+	background:none;
+	border:none;
+	font-size:14px;
+	color:#666;
+	margin-left:98px;
+
+	outline: none;
+}
+ input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f7f8f8 inset;
+}
+.login .checkbox input {
+	margin-left:63px;
+	vertical-align:middle;
+}
+.login .checkbox {
+	line-height:23px;
+	color:#8e8e8e;
+	font-size:12px;
+}
+.login a {
+	margin-left:63px;
+	text-decoration:none;
+	display:inline-block;
+	/* width:61px; */
+	height: 51px;
+    width: 155px;
+	padding-left:50px;
+	line-height:38px;
+	font-size:18px;
+	color:#FFF;
+	font-family:微软雅黑;
+	font-weight:bold;
+	background:url(/r/cms/www/default/images/searchclient/manage/loginBtn.png) no-repeat;
+}
+/* .login a:hover {
+	background:url(/r/cms/www/default/images/searchclient/manage/login_btn_hover.jpg) no-repeat;
+	color:#fff;
+} */

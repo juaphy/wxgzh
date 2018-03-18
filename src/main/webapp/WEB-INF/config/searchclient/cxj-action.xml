@@ -8,5 +8,6 @@
 
     <!-- 查询机 -->
     <bean id="cxjAct" class="com.jeecms.cms.action.front.CxjAct"/>
+    <bean id="cxjManageAct" class="com.jeecms.cms.action.front.CxjManageAct"/>
 
 </beans>
