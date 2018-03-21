@@ -40,11 +40,24 @@ public interface CxjDao {
     public TCxjZwzxconfig findZwzxconfig();
 
     /**
+     * 更新查询机背景图路径
+     * @param info
+     */
+    public void updateBackgroundImg(TCxjZwzxconfig info);
+
+    /**
      * 根据区划id获取查询机配置信息
      * @param areaId
      * @return
      */
     public TCxjZwzxconfig findZwzxconfig(String areaId);
+
+    /**
+     * 根据id获取查询机配置信息
+     * @param areaId
+     * @return
+     */
+    public TCxjZwzxconfig findZwzxconfigById(String id);
 
     /**
      * 根据区划id获取该区划的菜单

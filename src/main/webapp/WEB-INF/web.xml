@@ -128,10 +128,10 @@
     <filter-name>osivFilter</filter-name>
     <url-pattern>/</url-pattern>
   </filter-mapping>
-  <filter-mapping>
+  <!-- <filter-mapping>
     <filter-name>XssFilter</filter-name>
     <url-pattern>*.jspx</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   <filter-mapping>
     <filter-name>XssFilter</filter-name>
     <url-pattern>*.jhtml</url-pattern>

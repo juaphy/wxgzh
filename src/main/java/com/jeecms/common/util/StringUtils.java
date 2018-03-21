@@ -16,4 +16,16 @@ public class StringUtils {
 		return str == null || "".equals(str);
 	}
 
+	/**
+	 * 字符串转为Integer型
+	 * @param str
+	 * @return
+	 */
+	public static Integer strToInteger(String str) {
+	    if (isEmpty(str)) {
+	        return null;
+	    }
+	    return Integer.valueOf(str);
+	}
+
 }

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${site.name!}--${pagetitle!}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="This is page-header (.page-header &gt; h1)" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/bootstrap.min.css" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/font-awesome.min.css" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/ace.min.css" id="main-ace-style" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/index2.css" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/common_style.css" />
+    <link rel="stylesheet" href="/${res}/css/searchclient/manage/new_home_css.css" />
+    <script src="/${res}/js/jquery-1.11.3.js"></script>
+    <script src="/${res}/js/bootstrap.min.js"></script>
+    <script src="/${res}/js/searchclient/manage/jzbminfo.js"></script>
+    <script src="/${res}/js/searchclient/manage/newhome.js"></script>
+    <script src='/${res}/js/jquery.nicescroll.min.js'></script>
+    <script src="/${res}/js/layer-v3.1.1/layer/layer.js" type="text/javascript"></script>
+    <script>
+    </script>
+    <style>
+        #dateinfo {
+            float: right;
+            top: 0px;
+            right: 0px;
+            width: 136px;
+        }
+        #news_html {display: none;}
+        .show {
+            display:none;
+        }
+        .fa-angle-down2:before {
+            content: "\f106";
+        }
+        .page-content {
+            min-height: 800px;
+        }
+        body {overflow: hidden;}
+        #center_right_iframe {
+            border: 0px;
+            width: 100%;
+            height: 800px;
+        }
+        .no-skin .nav-list>li .submenu>li>a {cursor: pointer;}
+        .navbar {
+            background: -webkit-linear-gradient(#4fa6d8, #2f7096);
+        }
+        .title_font {
+            margin-left: -17px;font-family: '幼圆'; text-shadow:1.55px 1.51px 6.21px #404040;font-size:24px;font-weight: bold;
+        }
+        .qlqd_table_style td.q_title{text-align: center;}
+		.qlqd_table_style td{ text-align:left;}
+		.qlqd_table_style td {
+		    border-right: 1px solid #3dc0ff;
+		    border-bottom: 1px solid #3dc0ff;
+		}
+		.qlqd_table_style {
+		    border-left: 1px solid #3dc0ff;
+		}
+		.qlqd_table_style th {
+		    border-right: 1px solid #3dc0ff;
+		    border-bottom: 1px solid #3dc0ff;
+		}
+		.merge_qd {
+		    background: #caedff;
+		    padding: 10px 10px 13px 8px;
+		    margin-left: -6px;
+		    border-right: 3px solid #e3e6e8;
+		    /* border-radius: 17px; */
+		    color: #0081cf;
+		}
+		.merge_qd2 {
+		    border-radius: 6px;
+		    margin-right: 8px;
+		    border: 0px;
+		    font-weight: normal;
+		    padding: 8px;
+		    line-height: 58px;
+		    height: 58px;
+		}
+		.merge_qd a {color: #0081cf;}
+		.merge_qd:hover {background:#afe1fb;}
+		.merge_qd_active {background: #0081cf;color: white;}
+		.merge_qd_active:hover {background: #0081cf;}
+		.merge_qd_active a {color:white;}
+		.common_title8 {padding-left: 6px;}
+		.table_fix {
+		    border-collapse: inherit;
+		}
+		body {
+		    /* background: url(/r/cms/www/blue_webhall/images/bg.jpg) repeat-x top -145px left #eaf7ff; */
+		    background: none;
+		    overflow: hidden;
+		}
+		.table_fix {
+		    margin: 0 auto;
+		}
+		.other_input {
+		    border: 0;
+		    width: 100%;
+		    height: 25px;
+		    line-height: 25px;
+		    border-radius: 5px;
+		}
+		.an_content {padding: 0px;}
+		.w_content {width: 100%;}
+		.q_title {
+		    text-align: center;
+		}
+		.viewcontent {
+		    cursor: pointer;
+	        background: #0081cf;
+		    cursor: pointer;
+		    color: white;
+		    padding: 5px;
+		    border-radius: 5px;
+		    font-weight: normal;
+		    font-size: 14px;
+		}
+		.viewcontent:hover {
+		    text-decoration: none;
+		    background: #0696ec;
+            font-weight: normal;
+		}
+		.mytitle {
+		    margin-bottom: 0px;
+		    background: #489bcb;
+		    color: white;
+		    margin: 0px;
+		    margin-top: -8px;
+		    font-weight: normal;
+		    font-size: 16px;
+		    height: 43px;
+		    line-height: 40px;
+		}
+    </style>
+</head>
+<body class="no-skin">
+    <div class="an_container">
+        <!-- <div class="an_header"> -->
+        <div class="an_content w_content">
+            <div class="an_main w_content">
+                <div class="qlqd_con w_content">
+
+                    <div class="clear" style="height:0px;"></div>
+                    <div class="common_title8" style="margin-bottom: 0px;">
+                        <img src="/${res}/images/searchclient/manage/common_title8_img2.jpg"/>
+                        <font class="merge_qd1">星级服务评定列表</font>
+                        <a class="viewcontent" onclick="addInfo()"><i class="fa fa-plus" aria-hidden="true"></i> 新增</a>
+                    </div>
+                    <!-- 列表START -->
+                    <div class="qlqd_info div_v1" style="padding-bottom: 0px;">
+                        <table cellpadding="0" cellspacing="0" border="0" id="spdata"
+                            class="table_fix qlqd_table_style table_v1">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="q_title" width="4%">序号</th>
+                                    <th rowspan="2"  class="q_title" width="12%">部门名称</th>
+                                    <th colspan="2" class="q_title" width="5%">评定年份</th>
+                                    <th rowspan="2"  class="q_title" width="5%">评定月份</th>
+                                    <th rowspan="2"  class="q_title" width="5%">星级数</th>
+                                    <th rowspan="2"  class="q_title" width="10%">发布时间</th>
+                                    <th rowspan="2"  class="q_title" width="8%">发布人名称</th>
+                                    <th rowspan="2"  class="q_title" width="8%">状态</th>
+                                    <th rowspan="2"  class="q_title" width="10%">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="qlqd_info div_v2" style="padding-top: 0px;height: 500px;">
+                        [#if pagination??]
+                        <form id="tableForm" name="tableForm" action="" method="post">
+                        <table cellpadding="0" cellspacing="0" border="0" id="spdata"
+                            class="table_fix qlqd_table_style table_v2"
+                            style="margin-top: 0px; border-top: 0px;">
+                            <tbody>
+                            [#if pagination.list?? && pagination.list?size>0]
+                            [#list pagination.list as a]
+                                <tr>
+                                    <td title="" width="4%" style="text-align: center;">${pagination.pageSize*(pagination.pageNo-1)+a_index+1}</td>
+                                    <td title="" width="12%">${a.deptname!}</td>
+                                    <td title="" width="5%">${a.year!}</td>
+                                    <td title="" width="5%">${a.month!}</td>
+                                    <td title="" width="5%">${a.starnum!}</td>
+                                    <td title="" width="10%">[#if a.createtime??]${a.createtime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</td>
+                                    <td title="" width="8%">${a.sendname!}</td>
+                                    <td title="" width="8%">[#if (a.status!'') == '1']有效[#else]无效[/#if]</td>
+                                    <td title="" width="10%">
+                                        <a class="viewcontent" onclick="viewInfo('${a.id!}')">查看</a>
+                                        <a class="viewcontent" onclick="editInfo('${a.id!}')">修改</a>
+                                    </td>
+                                </tr>
+                            [/#list]
+                            [#else]
+                            <tr style="margin-top: 10px;"><td colspan="7">暂无数据</td></tr>
+                            [/#if]
+                            </tbody>
+                        </table>
+                        [#if pagination.list?? && pagination.list?size>0]
+                        <div style="margin-top: -10px;">
+                            <p class="flip l_h28 align_c f_all">
+                            <input type="hidden" name="pageNo" />
+                            <input type="hidden" name="areaId" value="${areaId!}"/>
+                            <input type="hidden" name="deptId" value="${deptId!}"/>
+                                &nbsp;共 ${pagination.totalCount}条记录 ${pagination.pageNo}/${pagination.totalPage}页
+                            <a href="javascript:_gotoPage('1')" class="page_btn_goto">首页</a>
+                            <a href="javascript:_gotoPage('${pagination.prePage}');" class="page_btn_goto">上一页</a>
+                            <a href="javascript:_gotoPage('${pagination.nextPage}')" class="page_btn_goto">下一页</a>
+                            <a href="javascript:_gotoPage('${pagination.totalPage}');" class="page_btn_goto">尾页</a>
+                            &nbsp;共 ${pagination.totalPage} 页&nbsp;转到第 
+                            <input type="text" id="_goPs" style="width: 50px" onfocus="this.select();"
+                                onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" />&nbsp;页 
+                            <input id="_goPage" type="button" class="page_btn_goto" value="转" onclick="_gotoPage($('#_goPs').val());"
+                                [#if pagination.totalPage==1] disabled="disabled" style="cursor: default;" [/#if] />
+                            </p>
+                        </div>
+                        [/#if]
+                    </form>
+                    [/#if]
+                    </div>
+                    <!-- 列表END -->
+                </div>
+            </div>
+            <!-- an_footer end -->
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function() {
+    	$(".viewcontent_view").click(function() {
+    		var _content = $(this).attr("content");
+    		layer.open({
+    			title:false,
+    			type:1,
+    			area:['90%','90%'],
+    			content:_content
+    		});
+    	});
+    });
+	function _gotoPage(pageNo) {
+	    newhome._gotoPage(pageNo, "${search_url!}");
+	}
+
+	// 查看详情
+	function viewInfo(id) {
+		layer.open({
+            title:false,
+            type:2,
+            maxmin:true,
+            area:['98%','95%'],
+            content:'/cxj/manage/showXjfwpdInfo.jspx?id=' + id
+        });
+	}
+
+	// 编辑
+	function editInfo(id) {
+		layer.open({
+            title:false,
+            type:2,
+            maxmin:true,
+            area:['98%','95%'],
+            content:'/cxj/manage/showXjfwpdInfo.jspx?procType=update&id=' + id
+        });
+	}
+
+	// 编辑
+	function addInfo() {
+		layer.open({
+            title:false,
+            type:2,
+            maxmin:true,
+            area:['98%','95%'],
+            content:'/cxj/manage/showXjfwpdInfo.jspx?procType=add&'
+        });
+	}
+
+	// 删除
+	function deleteInfo(id) {
+		layer.open({
+            title:false,
+            type:2,
+            maxmin:true,
+            area:['98%','95%'],
+            content:'/cxj/manage/showZxjjCkbjInfo.jspx?procType=update&id=' + id
+        });
+	}
+</script>

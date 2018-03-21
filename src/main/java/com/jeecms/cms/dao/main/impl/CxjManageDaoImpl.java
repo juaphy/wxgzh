@@ -13,8 +13,10 @@ import com.jeecms.cms.entity.main.cxj.TCxjMenu;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.cms.entity.main.cxj.TSysMenu;
+import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.hibernate4.Updater;
+import com.jeecms.common.page.Pagination;
 
 @SuppressWarnings("rawtypes")
 @Repository
@@ -52,17 +54,96 @@ public class CxjManageDaoImpl extends HibernateBaseDao implements CxjManageDao {
 
     @Override
     public TCxjZxjjckbj findTCxjZxjjckbjByType(String areaId, String type) {
-        if (isEmpty(areaId) || isEmpty(type)) {
-            return null;
-        }
-        String sql = "from TCxjZxjjckbj where status='1' and areaid='" + areaId + "' and type='" + type + "'";
-        sql += "order by orderid, createTime desc";
-        Query query = getSession().createQuery(sql);
-        List<TCxjZxjjckbj> list = query.list();
+        List<TCxjZxjjckbj> list = findZxjjCkbjList(areaId, type, "1");
         if (list != null && list.size() > 0) {
             return list.get(0);
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TCxjZxjjckbj> findZxjjCkbjList(String areaId, String type, String status) {
+        if (isEmpty(areaId) || isEmpty(type)) {
+            return null;
+        }
+        String sql = "from TCxjZxjjckbj where areaid='" + areaId + "' and type='" + type + "'";
+        if (!isEmpty(status)) {
+            sql += " and status ='" + status + "'";
+        }
+        sql += "order by orderid, createTime desc";
+        Query query = getSession().createQuery(sql);
+        List<TCxjZxjjckbj> list = query.list();
+        return list;
+    }
+
+    @Override
+    public Pagination findZxjjckbjListForPage(String areaId, String type, String status, int pageNo, int pageSize) {
+        StringBuffer hql = new StringBuffer();
+
+        hql.append("from TCxjZxjjckbj bean where bean.areaid = '");
+        hql.append(areaId);
+        hql.append("'");
+        hql.append(" and type = '");
+        hql.append(type);
+        hql.append("'");
+        if (!isEmpty(status)) {
+            hql.append(" and status = '");
+            hql.append(status);
+            hql.append("'");
+        }
+        hql.append(" order by orderid, createTime desc");
+
+        Finder f = Finder.create(hql.toString());
+        f.setCacheable(false);
+        return find(f, pageNo, pageSize);
+    }
+
+    @Override
+    public TCxjZxjjckbj findTCxjZxjjckbjInfo(String id) {
+        return (TCxjZxjjckbj) getSession().get(TCxjZxjjckbj.class, id);
+    }
+    @Override
+    public void updateTCxjZxjjckbj(TCxjZxjjckbj info) {
+        getSession().update(info);
+    }
+
+    @Override
+    public Pagination findXjfwpdListForPage(String areaId, String type, String status, int pageNo, int pageSize) {
+        StringBuffer hql = new StringBuffer();
+        
+        hql.append("from TCxjXjfwpd bean where bean.areaid = '");
+        hql.append(areaId);
+        hql.append("'");
+        if (!isEmpty(type)) {
+            hql.append(" and type = '");
+            hql.append(type);
+            hql.append("'");
+        }
+        if (!isEmpty(status)) {
+            hql.append(" and status = '");
+            hql.append(status);
+            hql.append("'");
+        }
+        hql.append(" order by year desc, month desc, createTime desc");
+
+        Finder f = Finder.create(hql.toString());
+        f.setCacheable(false);
+        return find(f, pageNo, pageSize);
+    }
+    
+    @Override
+    public TCxjXjfwpd findTCxjXjfwpdInfo(String id) {
+        return (TCxjXjfwpd) getSession().get(TCxjXjfwpd.class, id);
+    }
+    @Override
+    public void updateTCxjXjfwpd(TCxjXjfwpd info) {
+        getSession().update(info);
+    }
+
+    @Override
+    public void saveTCxjXjfwpd(TCxjXjfwpd info) {
+        getSession().save(info);
     }
 
     @Override

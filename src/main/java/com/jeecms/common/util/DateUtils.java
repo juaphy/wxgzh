@@ -395,8 +395,24 @@ public class DateUtils {
 		}
 		return date;
 	}
-	
 
+	/**
+     * 获得指定格式的日期时间字符串
+     * 
+     * @param date
+     * @param pattern
+     * @return
+     */
+    public static String formateDate(Date date, String pattern) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        if (date == null)
+
+            return "";
+
+        return simpleDateFormat.format(date);
+    }
 
 	public static void main(String args[]) {
 		//System.out.println(getDaysBetweenDate(getSpecficMonthStart(Calendar.getInstance().getTime(), 0), new Date()));
@@ -422,5 +438,6 @@ class ThreadTest implements Runnable{
 		Date to=DateUtils.getSpecficWeekEnd(now, 3);
 		String d=DateUtils.parseToShortTimeStr(to);
 	}
+
 }
 

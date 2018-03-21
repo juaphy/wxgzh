@@ -315,4 +315,14 @@ public class CxjMngImpl implements CxjMng {
         return info;
     }
 
+    @Override
+    public TCxjZwzxconfig findZwzxconfigById(String id) {
+        return dao.findZwzxconfigById(id);
+    }
+
+    @Override
+    public void updateBackgroundImg(TCxjZwzxconfig info) {
+        dao.updateBackgroundImg(info);
+    }
+
 }

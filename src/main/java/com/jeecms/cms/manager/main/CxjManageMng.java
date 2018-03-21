@@ -2,8 +2,10 @@ package com.jeecms.cms.manager.main;
 
 import java.util.List;
 
+import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.cms.entity.main.cxj.TSysMenu;
+import com.jeecms.common.page.Pagination;
 
 /**
  * 查询机后台管理接口
@@ -55,5 +57,70 @@ public interface CxjManageMng {
      * @return
      */
     public TCxjZxjjckbj findTCxjZxjjckbjByType(String areaId, String type);
+
+    /**
+     * 根据区划id、类型获取中心简介或者窗口布局内容列表
+     * @param areaId
+     * @param type
+     * @param status 记录状态（0-无效、1-有效）
+     * @return
+     */
+    public List<TCxjZxjjckbj> findZxjjCkbjList(String areaId, String type, String status);
+
+    /**
+     * 根据区划id、类型获取中心简介或者窗口布局内容列表 分页
+     * @param areaId
+     * @param type
+     * @param status 记录状态（0-无效、1-有效）
+     * @param pageNo 当前页码
+     * @param pageSize 每页显示多少条数据
+     * @return
+     */
+    public Pagination findZxjjckbjListForPage(String areaId, String type, String status, int pageNo, int pageSize);
+
+    /**
+     * 显示中心简介或者窗口布局详情
+     * @param areaId
+     * @param type
+     * @return
+     */
+    public TCxjZxjjckbj findTCxjZxjjckbjInfo(String id);
+
+    /**
+     * 更新中心简介/窗口布局详情
+     * @param info
+     */
+    public void updateTCxjZxjjckbj(TCxjZxjjckbj info);
+
+    /**
+     * 获取星级服务评定列表 分页
+     * @param areaId
+     * @param type
+     * @param status 记录状态（0-无效、1-有效）
+     * @param pageNo 当前页码
+     * @param pageSize 每页显示多少条数据
+     * @return
+     */
+    public Pagination findXjfwpdListForPage(String areaId, String type, String status, int pageNo, int pageSize);
+
+    /**
+     * 显示星级服务评定详情
+     * @param areaId
+     * @param type
+     * @return
+     */
+    public TCxjXjfwpd findTCxjXjfwpdInfo(String id);
+
+    /**
+     * 更新星级服务评定信息
+     * @param info
+     */
+    public void updateTCxjXjfwpd(TCxjXjfwpd info);
+
+    /**
+     * 保存星级服务评定信息
+     * @param info
+     */
+    public void saveTCxjXjfwpd(TCxjXjfwpd info);
 
 }

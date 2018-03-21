@@ -16,5 +16,9 @@
 		<property name="senddeptname" column="senddeptname" type="java.lang.String" not-null="false"/>
 		<property name="starnum" column="starnum" type="java.lang.String" not-null="false"/>
 		<property name="minimgurl" column="minimgurl" type="java.lang.String" not-null="false"/>
+		<property name="month" column="month" type="java.lang.String" not-null="false"/>
+		<property name="year" column="year" type="java.lang.String" not-null="false"/>
+		<property name="areaid" column="areaid" type="java.lang.String" not-null="false"/>
+		<property name="status" column="status" type="java.lang.String" not-null="false"/>
 	</class>
 </hibernate-mapping>

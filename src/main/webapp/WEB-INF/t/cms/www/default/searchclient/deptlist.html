@@ -14,13 +14,15 @@
 		    margin: 19px;
 		    cursor: pointer;
 		    padding: 12px 23px;
-            background: #60acff;
+            /* background: #60acff; */
+            background: rgba(36, 116, 173, 0.82);
             box-shadow: 4px 4px 14px 0px #616161;
             margin-bottom: 2px;
             border-radius: 5px;
         }
         .deptinfo:hover {
-            background: #79ca23;
+            /* background: #79ca23; */
+            background: rgba(34, 150, 233, 0.86);
             transition: all 0.3s ease-in-out 0s;
         }
         .examples_body {
@@ -62,7 +64,7 @@
     <div class="examples_body">
          [#if deptList??]
          [#list deptList as c]
-             <div class="deptinfo" deptName="${c.shortName!''}" to="/cxzdj/bsznsxlb.jspx?deptId=${c.deptId!''}">${c.shortName!''}</div>
+             <div class="deptinfo" deptName="${c.name!''}" to="/cxzdj/bsznsxlb.jspx?deptId=${c.deptId!''}">${c.name!''}</div>
          [/#list]
          [/#if]
     </div>

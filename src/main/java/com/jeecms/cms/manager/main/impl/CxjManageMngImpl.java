@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeecms.cms.dao.main.CxjManageDao;
+import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.cms.entity.main.cxj.TSysMenu;
 import com.jeecms.cms.manager.main.CxjManageMng;
+import com.jeecms.common.page.Pagination;
 
 @Service
 @Transactional
@@ -54,6 +56,45 @@ public class CxjManageMngImpl implements CxjManageMng {
     @Override
     public TCxjZxjjckbj findTCxjZxjjckbjByType(String areaId, String type) {
         return dao.findTCxjZxjjckbjByType(areaId, type);
+    }
+
+    @Override
+    public List<TCxjZxjjckbj> findZxjjCkbjList(String areaId, String type, String status) {
+        return dao.findZxjjCkbjList(areaId, type, status);
+    }
+
+    @Override
+    public Pagination findZxjjckbjListForPage(String areaId, String type, String status, int pageNo, int pageSize) {
+        return dao.findZxjjckbjListForPage(areaId, type, status, pageNo, pageSize);
+    }
+
+    @Override
+    public TCxjZxjjckbj findTCxjZxjjckbjInfo(String id) {
+        return dao.findTCxjZxjjckbjInfo(id);
+    }
+    @Override
+    public void updateTCxjZxjjckbj(TCxjZxjjckbj info) {
+        dao.updateTCxjZxjjckbj(info);
+    }
+
+    @Override
+    public TCxjXjfwpd findTCxjXjfwpdInfo(String id) {
+        return dao.findTCxjXjfwpdInfo(id);
+    }
+
+    @Override
+    public Pagination findXjfwpdListForPage(String areaId, String type, String status, int pageNo, int pageSize) {
+        return dao.findXjfwpdListForPage(areaId, type, status, pageNo, pageSize);
+    }
+
+    @Override
+    public void updateTCxjXjfwpd(TCxjXjfwpd info) {
+        dao.updateTCxjXjfwpd(info);
+    }
+
+    @Override
+    public void saveTCxjXjfwpd(TCxjXjfwpd info) {
+        dao.saveTCxjXjfwpd(info);
     }
 
 }

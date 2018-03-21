@@ -3,6 +3,10 @@ package com.jeecms.cms.entity.main;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.jeecms.common.util.StringUtils;
+
 /**
  * 查询机-星级服务评定
  * @author swc 2018-03-15
@@ -23,7 +27,20 @@ public class TCxjXjfwpd implements Serializable {
     private String senddeptname; // 发布人所属部门名称
     private String starnum; // 星级数
     private String minimgurl; // 党建宣传视频略缩图文件id
+    private String month; // 评定月份
+    private String year; // 评定年份
+    private String areaid; // 区划id
+    private String status; // 状态：0-无效、1-有效
 
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
     public String getId() {
         return id;
     }
@@ -95,6 +112,63 @@ public class TCxjXjfwpd implements Serializable {
     }
     public void setMinimgurl(String minimgurl) {
         this.minimgurl = minimgurl;
+    }
+    public String getMonth() {
+        return month;
+    }
+    public void setMonth(String month) {
+        this.month = month;
+    }
+    public String getYear() {
+        return year;
+    }
+    public void setYear(String year) {
+        this.year = year;
+    }
+    public String getAreaid() {
+        return areaid;
+    }
+    public void setAreaid(String areaid) {
+        this.areaid = areaid;
+    }
+
+    /**
+     * 设置中心简介/窗口布局信息
+     * @param info
+     * @param request
+     * @param paramName
+     */
+    public static void setXjfwpdInfo(TCxjXjfwpd info, HttpServletRequest request) {
+
+        // 部门名称
+        String deptname = request.getParameter("deptname");
+        if (!StringUtils.isEmpty(deptname)) {
+            info.setDeptname(deptname);
+        }
+
+        // 星级数
+        String starnum = request.getParameter("starnum");
+        if (!StringUtils.isEmpty(starnum)) {
+            info.setStarnum(starnum);
+        }
+
+        // 评定年份
+        String year = request.getParameter("year");
+        if (!StringUtils.isEmpty(year)) {
+            info.setYear(year);
+        }
+
+        // 评定月份
+        String month = request.getParameter("month");
+        if (!StringUtils.isEmpty(month)) {
+            info.setMonth(month);
+        }
+
+        // 状态
+        String status = request.getParameter("status");
+        if (!StringUtils.isEmpty(status)) {
+            info.setStatus(status);
+        }
     }
 
 }

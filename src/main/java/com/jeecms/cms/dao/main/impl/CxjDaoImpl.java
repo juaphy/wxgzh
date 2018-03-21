@@ -1,5 +1,6 @@
 package com.jeecms.cms.dao.main.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,9 @@ import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.hibernate4.Updater;
+import com.jeecms.common.util.DateUtils;
 
+@SuppressWarnings("rawtypes")
 @Repository
 public class CxjDaoImpl extends HibernateBaseDao implements CxjDao {
 
@@ -23,7 +26,12 @@ public class CxjDaoImpl extends HibernateBaseDao implements CxjDao {
         if (params != null && !params.isEmpty()) {
             
         }
-        String sql = "from TCxjXjfwpd where 1=1";
+        Date date = new Date();
+        String year = DateUtils.formateDate(date, DateUtils.COMMON_FORMAT_YEAR);
+        String month = DateUtils.formateDate(date, DateUtils.COMMON_FORMAT_MONTH_STR);
+        String sql = "from TCxjXjfwpd where status='1' ";
+        sql += " and year = '" + year + "'";
+        sql += " and month = '" + month + "'";
         Query query = getSession().createQuery(sql);
         return query.list();
     }
@@ -138,6 +146,16 @@ public class CxjDaoImpl extends HibernateBaseDao implements CxjDao {
     public boolean deleteTCxjZxjjckbj(String id) {
         getSession().delete(getSession().get(TCxjZxjjckbj.class, id));
         return false;
+    }
+
+    @Override
+    public TCxjZwzxconfig findZwzxconfigById(String id) {
+        return (TCxjZwzxconfig) getSession().get(TCxjZwzxconfig.class, id);
+    }
+
+    @Override
+    public void updateBackgroundImg(TCxjZwzxconfig info) {
+        getSession().update(info);
     }
 
     @Override

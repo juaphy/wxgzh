@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jeecms.common.image.ImageScale;
 import com.jeecms.common.image.ImageUtils;
 import com.jeecms.common.upload.FileRepository;
+import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.common.web.springmvc.RealPathResolver;
 import com.jeecms.core.entity.CmsOss;
 import com.jeecms.core.entity.CmsSite;
@@ -44,6 +47,8 @@ public class ImageUploadAct {
 	 * 用户头像路径
 	 */
 	private static final String USER_IMG_PATH = "/user/images";
+	
+	private static final String CXJ_IMG_PATH = "/cxj/images";
 	/**
 	 * 结果页
 	 */
@@ -198,6 +203,147 @@ public class ImageUploadAct {
 		}
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_MEMBER, RESULT_PAGE);
+	}
+	
+	@RequestMapping("/cxj/manage/cxjUploadImage.jspx")
+	public void cxjUploadImage(String filename, Integer uploadNum, Boolean mark,
+	        @RequestParam(value = "uploadFile", required = false) MultipartFile file,
+	        HttpServletRequest request, HttpServletResponse response) {
+	    WebCoreErrors errors = validate(filename, file, request);
+	    CmsSite site = CmsUtils.getSite(request);
+	    MemberConfig mcfg = site.getConfig().getMemberConfig();
+	    JSONObject json = new JSONObject();
+	    if (!mcfg.isMemberOn()) {
+	        json.put("msg", errors.getErrors().get(0));
+	        ResponseUtils.renderJson(response, json.toString());
+	        return;
+	    }
+	    if (errors.hasErrors()) {
+	        json.put("msg", errors.getErrors().get(0));
+	        ResponseUtils.renderJson(response, json.toString());
+	        return;
+	    }
+	    MarkConfig conf = site.getConfig().getMarkConfig();
+	    if (mark == null) {
+	        mark = conf.getOn();
+	    }
+	    
+	    String origName = file.getOriginalFilename();
+	    String ext = FilenameUtils.getExtension(origName).toLowerCase(
+	            Locale.ENGLISH);
+	    try {
+	        String fileUrl;
+	        if (site.getConfig().getUploadToDb()) {
+	            String dbFilePath = site.getConfig().getDbFileUri();
+	            if (!StringUtils.isBlank(filename)) {
+	                filename = filename.substring(dbFilePath.length());
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = dbFileMng.storeByFilename(filename,
+	                            new FileInputStream(tempFile));
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = dbFileMng.storeByFilename(filename, file
+	                            .getInputStream());
+	                }
+	            } else {
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = dbFileMng.storeByExt(site.getUploadPath(),
+	                            ext, new FileInputStream(tempFile));
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = dbFileMng.storeByExt(site.getUploadPath(),
+	                            ext, file.getInputStream());
+	                }
+	                // 加上访问地址
+	                fileUrl = request.getContextPath() + dbFilePath + fileUrl;
+	            }
+	        } else if (site.getUploadFtp() != null) {
+	            Ftp ftp = site.getUploadFtp();
+	            String ftpUrl = ftp.getUrl();
+	            if (!StringUtils.isBlank(filename)) {
+	                filename = filename.substring(ftpUrl.length());
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = ftp.storeByFilename(filename,
+	                            new FileInputStream(tempFile));
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = ftp.storeByFilename(filename, file
+	                            .getInputStream());
+	                }
+	            } else {
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = ftp.storeByExt(site.getUploadPath(), ext,
+	                            new FileInputStream(tempFile));
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = ftp.storeByExt(site.getUploadPath(), ext,
+	                            file.getInputStream());
+	                }
+	                // 加上url前缀
+	                fileUrl = ftpUrl + fileUrl;
+	            }
+	        }else if (site.getUploadOss() != null) {
+	            CmsOss oss = site.getUploadOss();
+	            if (mark) {
+	                File tempFile = mark(file, conf);
+	                fileUrl=oss.storeByExt(site.getUploadPath(), ext, new FileInputStream(tempFile));
+	                tempFile.delete();
+	            } else {
+	                fileUrl = oss.storeByExt(site.getUploadPath(), ext, file.getInputStream());
+	            }
+	        }else if (site.getUploadOss() != null) {
+	            CmsOss oss = site.getUploadOss();
+	            if (mark) {
+	                File tempFile = mark(file, conf);
+	                fileUrl=oss.storeByExt(site.getUploadPath(), ext, new FileInputStream(tempFile));
+	                tempFile.delete();
+	            } else {
+	                fileUrl = oss.storeByExt(site.getUploadPath(), ext, file.getInputStream());
+	            }
+	        } else {
+	            String ctx = request.getContextPath();
+	            if (!StringUtils.isBlank(filename)) {
+	                if(StringUtils.isNotBlank(ctx)){
+	                    filename = filename.substring(ctx.length());
+	                }
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = fileRepository.storeByFilename(filename,
+	                            tempFile);
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = fileRepository
+	                            .storeByFilename(filename, file);
+	                }
+	            } else {
+	                if (mark) {
+	                    File tempFile = mark(file, conf);
+	                    fileUrl = fileRepository.storeByExt(CXJ_IMG_PATH, ext, tempFile);
+	                    tempFile.delete();
+	                } else {
+	                    fileUrl = fileRepository.storeByExt(CXJ_IMG_PATH, ext, file);
+	                }
+	                // 加上部署路径
+	                fileUrl = ctx + fileUrl;
+	            }
+	        }
+	        json.put("uploadPath", fileUrl);
+	        json.put("uploadNum", uploadNum);
+	    } catch (IllegalStateException e) {
+	        json.put("msg", e.getMessage());
+	        log.error("upload file error!", e);
+	    } catch (IOException e) {
+	        json.put("msg", e.getMessage());
+	        log.error("upload file error!", e);
+	    } catch (Exception e) {
+	        json.put("msg", e.getMessage());
+	        log.error("upload file error!", e);
+	    }
+	    ResponseUtils.renderJson(response, json.toString());
 	}
 
 	private WebCoreErrors validate(String filename, MultipartFile file,
