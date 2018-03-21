@@ -24,10 +24,13 @@ import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjMenu;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
+import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.cms.manager.assist.CmsKeywordMng;
 import com.jeecms.cms.manager.main.ContentMng;
+import com.jeecms.cms.manager.main.CxjManageMng;
 import com.jeecms.cms.manager.main.CxjMng;
 import com.jeecms.cms.rest2.CallRestMng;
+import com.jeecms.cms.rest2.entity.BusinessInfo;
 import com.jeecms.cms.rest2.entity.DeptInfo;
 import com.jeecms.cms.rest2.entity.SxInfo;
 import com.jeecms.common.util.StringUtils;
@@ -54,6 +57,9 @@ public class CxjAct {
 
     @Autowired
     private CxjMng cxjMng;
+
+    @Autowired
+    private CxjManageMng cxjManageMng;
 
     @RequestMapping(value="/cxj/index.jspx", method = RequestMethod.GET)
     public String cxjHome(HttpServletRequest request, HttpServletResponse response,
@@ -133,6 +139,9 @@ public class CxjAct {
             throws JSONException {
         CmsSite site = CmsUtils.getSite(request);
         String areaId = request.getParameter("areaId");
+        if (!setFrontParam(request, model, site)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
 
         // 获取部门列表
         List<DeptInfo> jsonDeptList = cxjMng.findDeptListByAreaid(areaId);
@@ -180,7 +189,7 @@ public class CxjAct {
     public String cxjContent(HttpServletRequest request,HttpServletResponse response, ModelMap model) 
             throws JSONException {
         CmsSite site = CmsUtils.getSite(request);
-        String areaId = request.getParameter("areaId");
+        String areaId = Constants.SYSKEY_AREAID;
         if (CTools.isEmpty(areaId)) {
             return FrontUtils.pageNotFound(request, response, model);
         }
@@ -189,7 +198,16 @@ public class CxjAct {
         if (zwzxConfig == null) {
             return FrontUtils.pageNotFound(request, response, model);
         }
-        List<TCxjMenu> menus = cxjMng.findCxjMenu(areaId);
+
+        // 获取菜单信息
+        String menuId = request.getParameter("menuId");
+        TCxjMenu menu = cxjMng.findCxjMenu(menuId);
+        if (menu == null) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        model.put("menu", menu);
+
+        List<TCxjMenu> menus = cxjMng.findCxjMenuList(areaId);
         if (menus == null || menus.size() <= 0) {
             return FrontUtils.pageNotFound(request, response, model);
         }
@@ -200,4 +218,99 @@ public class CxjAct {
         return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjy");
 
     }
+
+    /**
+     * 查询机-访问进度查询页面
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws JSONException
+     */
+    @RequestMapping(value="/cxj/jdcx.jspx", method = RequestMethod.GET)
+    public String jdcx(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+        if (!setFrontParam(request, model, site)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.jdcx");
+    }
+
+    /**
+     * 查询机-进度查询页面显示查询结果
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws JSONException
+     */
+    @RequestMapping(value="/cxj/jdcxresult.jspx", method = RequestMethod.GET)
+    public String jdcxresult(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+        if (!setFrontParam(request, model, site)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+        /*String bsnum = request.getParameter("bsnum");
+        BusinessInfo bsinfo = cxjMng.findBusiInfo(bsnum);
+        model.put("bsinfo", bsinfo);*/ // 该接口不符合需求
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.jdcx");
+    }
+
+    /**
+     * 查询机-访问服务评价页面
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws JSONException
+     */
+    @RequestMapping(value="/cxj/fwpj.jspx", method = RequestMethod.GET)
+    public String fwpj(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+        String areaId = Constants.SYSKEY_AREAID;
+        FrontUtils.frontData(request, model, site);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.fwpj");
+    }
+
+    /**
+     * 查询机-访问中心简介/窗口布局页面
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     * @throws JSONException
+     */
+    @RequestMapping(value="/cxj/zxjjckbj.jspx", method = RequestMethod.GET)
+    public String zxjjckbj(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws JSONException {
+        CmsSite site = CmsUtils.getSite(request);
+        String areaId = Constants.SYSKEY_AREAID;
+        if (!setFrontParam(request, model, site)) {
+            return FrontUtils.pageNotFound(request, response, model);
+        }
+
+        // 获取中心简介或者窗口布局信息
+        String type = request.getParameter("type");
+        TCxjZxjjckbj info = cxjManageMng.findTCxjZxjjckbjByType(areaId, type);
+        model.put("info", info);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.zxjjckbj");
+    }
+
+    /**
+     * 设置页面返回参数
+     * @param request
+     * @param model
+     * @param site
+     * @return 向页面返回zwzxConfig
+     */
+    private boolean setFrontParam(HttpServletRequest request, ModelMap model, CmsSite site) {
+        TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig(Constants.SYSKEY_AREAID);
+        if (zwzxConfig == null) {
+            return false;
+           // return FrontUtils.pageNotFound(request, response, model);
+        }
+        model.put("zwzxConfig", zwzxConfig);
+        FrontUtils.frontData(request, model, site);
+        return true;
+    }
+
 }

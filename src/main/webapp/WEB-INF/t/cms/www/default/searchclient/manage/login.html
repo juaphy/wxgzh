@@ -4,8 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>实体大厅管理系统</title> 
         <link href="${resSys}/www/default/css/searchclient/manage/index.css" rel="stylesheet" type="text/css" />
-        <script src="${resSys}/www/default/js/searchclient/manage/jquery.js" type="text/javascript"></script>
+        <script src="${resSys}/www/default/js/jquery-1.11.3.js" type="text/javascript"></script>
         <script src="${resSys}/www/default/js/searchclient/manage/captcha.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/${res}/js/layer-v3.1.1/layer/layer.js"></script>
         <style>
 body{font-family:'宋体',Arial, "Times New Roman", Times, serif;font-size:14px;line-height:25px;background:url(${resSys}/www/default/css/searchclient/manage/mid-bg.jpg) no-repeat center top;}
  
@@ -45,7 +46,7 @@ body{font-family:'宋体',Arial, "Times New Roman", Times, serif;font-size:14px;
     color: rgb(0, 0, 0);
 } */
 .login_bj {
-    background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg}) no-repeat center center;[#else]#0c5ba5[/#if]
+    background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg}) no-repeat center center; background-size: 100%;[#else]#0c5ba5[/#if]
 }
 .login_pic {
     z-index:-1;
@@ -62,12 +63,19 @@ body{font-family:'宋体',Arial, "Times New Roman", Times, serif;font-size:14px;
     _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="${zwzxConfig.loginBjImg!''}");
 }
 </style>
+	<script>
+	    $(function() {
+	    [#if errorMsg??]
+	        layer.msg("${errorMsg!''}");
+	    [/#if]
+	    });
+	</script>
     </head>
     <body class="login_bj">
         
         <div class="login_pic"></div>
             <div class="login">
-            <form method="post" action="/login/doLogin.do" name="loginForm"
+            <form method="post" action="/cxj/login.jspx" name="loginForm"
                 id="loginForm">
                 <input type="hidden" name="login" value="1">
                 

@@ -130,6 +130,19 @@ public class CacheSessionProvider implements SessionProvider, InitializingBean {
 		}
 	}
 
+	@Override
+	public void logout2(HttpServletRequest request, HttpServletResponse response, String key) {
+	    request.removeAttribute(CURRENT_SESSION);
+        request.removeAttribute(CURRENT_SESSION_ID);
+        String root = RequestUtils.getRequestedSessionId(request);
+        if (!StringUtils.isBlank(root)) {
+            sessionCache.clear(root);
+            Cookie cookie = createCookie(request, null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+	}
+
 	private Cookie createCookie(HttpServletRequest request, String value) {
 		Cookie cookie = new Cookie(Constants.JSESSION_COOKIE, value);
 		String ctx = request.getContextPath();

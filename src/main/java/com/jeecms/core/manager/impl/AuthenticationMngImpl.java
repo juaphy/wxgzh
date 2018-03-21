@@ -37,6 +37,7 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 		Authentication auth = new Authentication();
 		auth.setUid(user.getId());
 		auth.setUsername(user.getUsername());
+		auth.setType(user.getType());
 		auth.setEmail(user.getEmail());
 		auth.setLoginIp(ip);
 		save(auth);

@@ -17,9 +17,12 @@ import com.jeecms.cms.dao.main.CxjDao;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjMenu;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
+import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.cms.manager.main.CxjMng;
 import com.jeecms.cms.rest2.CallRestMng;
+import com.jeecms.cms.rest2.entity.BusinessInfo;
 import com.jeecms.cms.rest2.entity.DeptInfo;
+import com.jeecms.cms.rest2.entity.Logs;
 import com.jeecms.cms.rest2.entity.SxInfo;
 import com.jeecms.common.hibernate4.Updater;
 
@@ -141,6 +144,35 @@ public class CxjMngImpl implements CxjMng {
     }
 
     /**
+     * 设置业务基本信息数据
+     * @param deptInfo
+     * @param map
+     */
+    private void setBusiInfo(BusinessInfo info, Map<String, String> map) {
+        info.setBsnum(mapToUpperCase(map, "bsnum"));
+        info.setSxzxname(mapToUpperCase(map, "sxzxname"));
+        info.setDeptid(mapToUpperCase(map, "deptid"));
+        info.setDeptname(mapToUpperCase(map, "deptname"));
+        info.setAppname(mapToUpperCase(map, "appname"));
+        info.setAppcompany(mapToUpperCase(map, "appcompany"));
+        info.setApplytime(mapToUpperCase(map, "applytime"));
+        info.setStatus(mapToUpperCase(map, "status"));
+        info.setCstatus(mapToUpperCase(map, "cstatus"));
+    }
+
+    /**
+     * 设置业务办理过程数据
+     * @param deptInfo
+     * @param map
+     */
+    private void setLogs(Logs logs, Map<String, String> map) {
+        logs.setLid(mapToUpperCase(map, "lid"));
+        logs.setNodename(mapToUpperCase(map, "nodename"));
+        logs.setIdea(mapToUpperCase(map, "idea"));
+        logs.setHandletime(mapToUpperCase(map, "handletime"));
+    }
+
+    /**
      * 从map中获取value，如果原key获取不到值，则将key转换成大写再获取
      * @param map
      * @param column
@@ -178,8 +210,17 @@ public class CxjMngImpl implements CxjMng {
                 sxInfos = new ArrayList<SxInfo>();
                 Map<String, String> map = null;
                 for (int i = 0; i < list.size(); i++) {
-                    sxInfo = new SxInfo();
                     map = (Map<String, String>) list.get(i);
+
+                    // 排除行政处罚 4、行政强制 5、行政检查 14、行政奖励 11、行政裁决 8
+                    if ("4".equals(mapToUpperCase(map, "xzxk"))
+                            || "5".equals(mapToUpperCase(map, "xzxk"))
+                            || "14".equals(mapToUpperCase(map, "xzxk"))
+                            || "11".equals(mapToUpperCase(map, "xzxk"))
+                            || "8".equals(mapToUpperCase(map, "xzxk"))) {
+                        continue;
+                    }
+                    sxInfo = new SxInfo();
                     setSxInfo(sxInfo, map);
                     sxInfos.add(sxInfo);
                 }
@@ -193,8 +234,13 @@ public class CxjMngImpl implements CxjMng {
     }
 
     @Override
-    public List<TCxjMenu> findCxjMenu(String areaId) {
-        return dao.findCxjMenu(areaId);
+    public List<TCxjMenu> findCxjMenuList(String areaId) {
+        return dao.findCxjMenuList(areaId);
+    }
+
+    @Override
+    public TCxjMenu findCxjMenu(String id) {
+        return dao.findCxjMenu(id);
     }
 
     @Override
@@ -205,6 +251,68 @@ public class CxjMngImpl implements CxjMng {
     @Override
     public TCxjZwzxconfig findZwzxconfig(String areaId) {
         return dao.findZwzxconfig(areaId);
+    }
+
+    @Override
+    public List<TCxjZxjjckbj> findTCxjZxjjckbjList(String areaId) {
+        return dao.findTCxjZxjjckbjList(areaId);
+    }
+
+    @Override
+    public TCxjZxjjckbj findTCxjZxjjckbj(String areaId, String type) {
+        return dao.findTCxjZxjjckbj(areaId, type);
+    }
+
+    @Override
+    public TCxjZxjjckbj saveTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj) {
+        return dao.saveTCxjZxjjckbj(tCxjZxjjckbj);
+    }
+
+    @Override
+    public TCxjZxjjckbj updateTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj) {
+        return dao.updateTCxjZxjjckbj(tCxjZxjjckbj);
+    }
+
+    @Override
+    public boolean deleteTCxjZxjjckbj(String id) {
+        return dao.deleteTCxjZxjjckbj(id);
+    }
+
+    @SuppressWarnings({ "unused", "unchecked" })
+    @Override
+    public BusinessInfo findBusiInfo(String bsnum) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("BSNUM", bsnum);
+        String result = callRestMng.execute("search", "RestBussinessService", params);
+        if (result == null || "".equals(result)) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject(result);
+        if (jsonObject == null) {
+            return null;
+        }
+        BusinessInfo info = new BusinessInfo();
+
+        List<Logs> logsList = null;
+        try {
+            setBusiInfo(info, (Map<String, String>) jsonObject.get("ReturnValue"));
+            JSONArray jsonArray = (JSONArray) jsonObject.get("LOGS");
+            if (jsonArray != null) {
+                List<?> list = jsonArray.toList();
+                Logs logs = null;
+                logsList = new ArrayList<Logs>();
+                Map<String, String> map = null;
+                for (int i = 0; i < list.size(); i++) {
+                    logs = new Logs();
+                    map = (Map<String, String>) list.get(i);
+                    setLogs(logs, map);
+                    logsList.add(logs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return info;
     }
 
 }

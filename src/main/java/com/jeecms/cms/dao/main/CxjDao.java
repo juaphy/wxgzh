@@ -7,6 +7,7 @@ import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjMenu;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
+import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.common.hibernate4.Updater;
 
 /**
@@ -50,6 +51,49 @@ public interface CxjDao {
      * @param areaId
      * @return
      */
-    public List<TCxjMenu> findCxjMenu(String areaId);
+    public List<TCxjMenu> findCxjMenuList(String areaId);
+
+    /**
+     * 根据id获取查询机专用菜单信息
+     * @param id
+     * @return
+     */
+    public TCxjMenu findCxjMenu(String id);
+
+    // 中心简介/窗口布局
+    /**
+     * 获取中心简介/窗口布局列表
+     * @return
+     */
+    public List<TCxjZxjjckbj> findTCxjZxjjckbjList(String areaId);
+
+    /**
+     * 获取中心简介/窗口布局
+     * @param areaId
+     * @param type
+     * @return
+     */
+    public TCxjZxjjckbj findTCxjZxjjckbj(String areaId, String type);
+
+    /**
+     * 保存中心简介/窗口布局信息
+     * @param tCxjZxjjckbj
+     * @return
+     */
+    public TCxjZxjjckbj saveTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj);
+
+    /**
+     * 更新中心简介/窗口布局信息
+     * @param tCxjZxjjckbj
+     * @return
+     */
+    public TCxjZxjjckbj updateTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj);
+
+    /**
+     * 删除中心简介/窗口布局信息
+     * @param id
+     * @return
+     */
+    public boolean deleteTCxjZxjjckbj(String id);
 
 }

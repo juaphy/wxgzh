@@ -6,10 +6,38 @@
     <title>${zwzxConfig.zwzxshortname!''} 查询系统</title>
     <link href="/${res}/css/searchclient/index2.css" rel="stylesheet" type="text/css" />
     <script language="javascript" type="text/javascript" src="/${res}/js/searchclient/index.js"></script>
+    <script src="/${res}/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function() {
+        	$(".footermenu").click(function() {
+        		var _url = $(this).attr("to");
+        		$("#center_right_iframe").attr("src", _url);
+        		var _menuname = $(this).attr("menuname");
+        		$("#menu_title").html(_menuname);
+        	});
+        });
+    </script>
     [#include "/r/cms/www/default/css/searchclient/include_cxy_css.html" /]
+    <style>
+        #center_right_iframe {
+            border: 0px;
+            width: 100%;
+            height: 99%;
+            min-height: 500px;
+        }
+        #menu_title {
+            font-size: 32px;
+            color: #fff;
+            text-shadow: 3px 3px 3px #333333;
+        }
+        .an_content2 {
+            background: -webkit-linear-gradient(#ffffff85, #ffffff00);
+            border-radius: 20px 20px 0px 0px;
+        }
+    </style>
 </head>
 <body>
-	<div class="an_container w_content" style="background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg})[#else]#0c5ba5[/#if]">
+	<div class="an_container w_content" style="background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg}) #0456a2 no-repeat center; background-size: 100%;[#else]#0c5ba5[/#if]">
 		<div class="an_header2">
 			[#if zwzxConfig.homelogo??]
             <img src="${zwzxConfig.minlogo}" alt="" />
@@ -20,23 +48,14 @@
 			<a href="/" class="head_icon1">主页</a>
 		</div>
 		<!--an_header2 end -->
-		<div class="an_content2" style=" background: url(/${res}/images/searchclient/an_content2.png) center top no-repeat;">
+		<div class="an_content2" style="/*  background: url(/${res}/images/searchclient/an_content2.png) center top no-repeat; */">
 			<div class="an_main2">
 				<div class="main_title v_middle" style="background: url(/${res}/images/searchclient/main_title_bj.png) left bottom repeat-x;">
-					<img src="/${res}/images/searchclient/main_title.png" alt="" />机构简介
+					<img src="/${res}/images/searchclient/main_title.png" alt="" /><font id="menu_title">${menu.name!''}</font>
 				</div>
 				<div class="main_con zxjj">
-					<h2>荔波县政务服务中心简介</h2>
-                <p>为进一步完善实体政务大厅各项功能，提升政务服务水平，努力为群众搭建高效规范运行的政务服务平台，10月18日上午9时，荔波县人民政府政务服务中心新办事大厅正式投入使用。</p>
-
-<p>荔波县新政务大厅位于荔波县玉屏街道恩铭路15号，紧靠荔波大剧院，办公大楼总面积14041平方米，1-5层为政务服务办事大厅，设办公柜台157个，后台办公卡座177个，并配设大中小会议室和餐厅。目前政务大厅业务范围囊括了县直部门721项行政审批和公共服务事项，进驻部门由原来的33个增加到41个，服务窗口由原来的99个增加到122个，进驻人员由原来的146人增加到176人。</p>
-
-<p>县委、县政府高度重视政务服务工作，自2016年初开始谋划新厅建设工作，按照“美观实用、适度超前、精简节约、方便群众”的原则，新政务大厅在环境、功能及公共设施等方面做了很大改进。大厅内设咨询服务区、网上申报区、自助服务区、投诉处理区、群众等候区等区域，根据办事群体不同需求，单独设置母婴室、阅览室、残疾人无障碍设施，配备排队叫号机、自助查询机、服务评价器、自助服务终端、高拍仪等电子化办公设备，提供网上申报、办事预约、智能查询、证照扫描等服务。新增县残联、社保局、就业局、全程代办中心等具有行政审批和公共服务职能的县直部门进驻外，还积极引进了中介机构、保险机构、银行、邮政等相关企业进驻。窗口按照事项关联性划分为企业设立类、经营管理类、项目建设类、公共服务类进行科学布局，更加方便群众办事。政务大厅内新建了包含视频监控系统、公共广播系统、无线WIFI系统、排队、查询和评价系统、会议系统、防盗报警系统、微信公众平台、大厅统一管理系统等10个子系统在内的信息化系统。</p>  
-
-<p>今后，荔波县政务大厅将依托贵州省网上办事大厅，打造“办事一张网”的政务服务，通过对内严格管理，对外优化服务，实现“一窗口”受理、“一站式”办结、“一条龙”服务，让群众少跑腿、好办事、不添堵。</p>
-      
-				<br/>	
-					</div>
+					<iframe id="center_right_iframe" src="${menu.url!''}"></iframe>
+				</div>
 				<!--   main_con end   -->
 			</div>
 			<!--   an_main2 end   -->

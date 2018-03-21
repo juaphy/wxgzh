@@ -115,11 +115,11 @@ public class DynamicPageAct {
 	        return FrontUtils.pageNotFound(request, response, model);
 	    }
 
-	    TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig();
+	    TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig(Constants.SYSKEY_AREAID);
         if (zwzxConfig == null) {
             return FrontUtils.pageNotFound(request, response, model);
         }
-        List<TCxjMenu> menus = cxjMng.findCxjMenu(zwzxConfig.getAreaid());
+        List<TCxjMenu> menus = cxjMng.findCxjMenuList(Constants.SYSKEY_AREAID);
         if (menus == null || menus.size() <= 0) {
             return FrontUtils.pageNotFound(request, response, model);
         }

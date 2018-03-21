@@ -21,7 +21,7 @@
 	</script>
 </head>
 <body>
-	<div class="an_container w_content" style="background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg})[#else]#0c5ba5[/#if]">
+	<div class="an_container w_content" style="background:[#if zwzxConfig.backgroundImg?? && zwzxConfig.backgroundImg != ""]url(${zwzxConfig.backgroundImg}) #0456a2 no-repeat center; background-size: 100%;[#else]#0c5ba5[/#if]">
 		<div class="an_header">
 			<p class="align_c">
 			    [#if zwzxConfig.homelogo??]
@@ -38,7 +38,7 @@
 					<div class="common_btn6">
 					    [#if menus??]
 					    [#list menus as menu]
-                        <div class="icon_div"><a to="[#if menu.homeUrl??]${menu.homeUrl!''}?areaId=${zwzxConfig.areaid!''}[/#if]" class="${menu.classname!''}">${menu.name!''}</a></div>
+                        <div class="icon_div"><a to="[#if menu.homeUrl??]${menu.homeUrl!''}?areaId=${zwzxConfig.areaid!''}&menuId=${menu.id!''}[/#if]" class="${menu.classname!''}">${menu.name!''}</a></div>
                         [/#list]
                         [/#if]
                     </div>
@@ -48,9 +48,7 @@
 		</div>
 		<!-- an_content end -->
 		<div class="an_footer f_all">
-			<p>主办：${zwzxConfig.zwzxshortname!''}
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				技术支持：深圳太极云软技术股份有限公司</p>
+			<p>主办：${zwzxConfig.zwzxshortname!''}</p>
 		</div>
 		<!-- an_footer end -->
 	</div>

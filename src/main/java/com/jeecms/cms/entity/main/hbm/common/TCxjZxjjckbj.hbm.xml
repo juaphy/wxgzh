@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.cxj">
+    <class name="TCxjZxjjckbj" table="t_cxj_zxjjckbj">
+        <meta attribute="sync-DAO">false</meta>
+        <cache usage="read-write"/>
+        <id name="id" column="id" type="java.lang.String" />
+        <property name="areaid" column="areaid" type="java.lang.String" />
+        <property name="type" column="type" type="java.lang.String" />
+        <property name="title" column="title" type="java.lang.String" />
+        <property name="content" column="content" type="java.lang.String" />
+        <property name="status" column="status" type="java.lang.String" />
+        <property name="orderid" column="orderid" type="java.lang.Integer" />
+        <property name="createTime" column="create_time" type="java.sql.Timestamp" />
+        <property name="createUserid" column="create_userid" type="java.lang.String" />
+        <property name="updateTime" column="update_time" type="java.sql.Timestamp" />
+        <property name="updateUserid" column="update_userid" type="java.lang.String" />
+    </class>
+</hibernate-mapping>

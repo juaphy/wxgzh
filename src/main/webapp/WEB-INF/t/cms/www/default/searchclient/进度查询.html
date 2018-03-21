@@ -4,24 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<title>荔波县政务服务中心</title>
-<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript"
-	src="/bin/js/index.js"></script>
-<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+<title></title>
+<link href="/${res}/css/searchclient/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/${res}/js/searchclient/index.js"></script>
+<script language="javascript" type="text/javascript" src="/${res}/js/jquery-1.11.3.js"></script>
+<style>
+    .login .width_l {
+        background: rgba(226, 99, 43, 0.78);
+        border-radius: 12px;
+    }
+    .an_container {height: 100%; min-height: 600px;}
+    .w_content {width: 100%;}
+</style>
 </head>
 <body>
 	<div class="an_container w_content">
-		<div class="an_header2">
-			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
-				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
-		</div>
-		<!--an_header2 end -->
 		<div class="an_content2">
 			<div class="an_main2">
-				<div class="main_title v_middle">
-					<img src="/${res}/images3/main_title.png" alt="" />进度查询
-				</div>
 				<div class="main_con jdcx">
 					<div class="jdcx_left f_l">
 						<div class="login">
@@ -78,10 +77,6 @@
 			</div>
 			<!--   an_main2 end   -->
 		</div>
-		<!-- an_content2 end -->
-		<div class="an_footer2">[#include
-			"/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]</div>
-		<!-- an_footer2 end -->
 	</div>
 	<!--   an_container end   -->
 </body>
@@ -107,7 +102,12 @@
 					$("#tisi").text("请输入编号！");
 					return;
 				}
-				window.location.href="/doSearch.jspx?bid="+bsnum;
+				//window.location.href="http://www.gzegn.gov.cn/queryBusinessinfo.jspx?iscxj=true&bsnum="+bsnum;
+				var _parent = $(window.parent.document);
+				var _iframe = _parent.find("#center_right_iframe");
+				var _menuTitle = _parent.find("#menu_title");
+				_menuTitle.html("业务最新结果公示");
+				_iframe.attr("src", "http://www.gzegn.gov.cn/queryBusinessinfo.jspx?iscxj=true&bid="+bsnum);
 			}
 			bsnum+=num;
 			$("#bsnum").val(bsnum);
@@ -128,8 +128,12 @@ $("#tisi").text("");
 		$("#tisi").text("请输入编号！");
 		return;
 	}
-	window.location.href="/doSearch.jspx?bid="+bsnum;
+	//window.location.href="http://www.gzegn.gov.cn/queryBusinessinfo.jspx?iscxj=true&bsnum="+bsnum;
 	//$.post("/doSearch.jspx",{bid:bsnum},function(data){},"text");
-	
+	var _parent = $(window.parent.document);
+    var _iframe = _parent.find("#center_right_iframe");
+    var _menuTitle = _parent.find("#menu_title");
+    _menuTitle.html("业务最新结果公示");
+    _iframe.attr("src", "http://www.gzegn.gov.cn/queryBusinessinfo.jspx?iscxj=true&bid="+bsnum);
 }
 </script>

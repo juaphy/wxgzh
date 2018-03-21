@@ -17,18 +17,19 @@
                 if (_url == null || "" == _url) {
                     return false;
                 }
-                window.parent.layer.open({
+                window.location.href=_url;
+                /* window.parent.layer.open({
                     area:["98%", "98%"],
                     type:2,
                     title: "<div style='text-align: center;font-size: 25px;font-size: 30px;color: #13A9D6;'>贵阳市白云区人民政府政务服务中心</div>",
                     content: _url
-                });
+                }); */
             });
         });
     </script>
     <style>
         .sxinfo {
-            font-size: 23px;
+            /* font-size: 23px;
             width: 98%;
             height: 27px;
             color: #13a9d6;
@@ -37,25 +38,64 @@
             text-align: left;
             white-space: nowrap;
             text-overflow: ellipsis;
-            overflow: hidden;
+            overflow: hidden; */
+            width: 97%;
+		    padding: 0px;
+		    height: 82px;
+		    line-height: 82px;
+		    font-size: 26px;
+		    background-position: right 0px;
+		    color: #383838;
+		    font-family: 微软雅黑;
+		    cursor: pointer;
+		    text-align: left;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    overflow: hidden;
+		    padding-left: 30px;
+		    padding-right: 10px;
+		    display: block;
+		    text-overflow: ellipsis;
+		    background-color: #d0deeae3;
+		    margin: 12px 6px;
+		    -webkit-border-radius: 8px;
         }
+        .sxinfo:hover {
+		   /*  animation: myfirst 0.3s linear 0s 1 alternate forwards;
+		    -ms-animation: myfirst 0.3s linear 0s 1 alternate forwards;
+		    -moz-animation: myfirst 0.3s linear 0s 1 alternate forwards;
+		    -webkit-animation: myfirst 0.3s linear 0s 1 alternate forwards;
+		    -o-animation: myfirst 0.3s linear 0s 1 alternate forwards; */
+		    transition: all 0.3s ease-in-out 0s;
+		    color: #014991;
+		    background-color: #e7eef4;
+		}
         .examples_body {
-            background: white;
-            width: 93%;
-            height: 800px;
-            text-align: center;
-            box-shadow: 18px 18px 30px 3px #d6d5d5;
-            margin: 12px auto;
-            overflow: auto;
+		    background: none;
+		    width: 98%;
+		    height: 570px;
+		    text-align: center;
+		    margin: 31px auto;
+		    overflow: auto;
+		}
+        .tit {
+            background: none;
+            color: #29a9d6;
+            text-indent: 18px;
+            line-height: 52px;
+            height: 24px;
+            text-shadow: 3px 3px 3px #ffffff;
         }
     </style>
 </head>
-<body style="background: #eaf7ff;">
-    <div class="tit">贵阳市白云区人民政府政务服务中心 <font color="red">${deptName!''}</font>事项列表</div>
+<body style="background: none;">
+    <div class="tit">${deptName!''} 事项列表</div>
     <div class="examples_body">
          [#if sxList??]
          [#list sxList as c]
+             [#if c.sxzxname??]
              <div class="sxinfo" to="http://www.gzegn.gov.cn/lawguide/${c.id!''}.jspx?isCxj=true">${c.sxzxname!''}</div>
+             [/#if]
          [/#list]
          [/#if]
     </div>

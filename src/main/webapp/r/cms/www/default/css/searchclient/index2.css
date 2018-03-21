@@ -230,10 +230,10 @@ background-position: right -97px;
 .login_input_style { width: 97%; height: 70px; line-height: 70px; background-color: #edf6ff; border: 0px; padding-left: 20px; border-radius: 8px; -webkit-border-radius: 8px; color: #666; font-size: 27px; }
 .login_input_style:hover { background-color: #fff; box-shadow: 0px 0px 3px #064389 }
 .common_btn { font-size: 30px; width: 140px; height: 74px; line-height: 74px; color: #fff; padding-left: 135px; border-radius: 8px; -webkit-border-radius: 8px; }
-.common_btn1 { background: url(../images/queren_icon.png) 79px center no-repeat #e2632b; margin-right: 27px; }
-.common_btn1:hover { background: url(../images/queren_icon.png) 79px center no-repeat #f0733c; color: #fff; }
-.common_btn2 { background: url(../images/chongzhi_icon.png) 79px center no-repeat #79ca23; }
-.common_btn2:hover { background: url(../images/chongzhi_icon.png) 79px center no-repeat #8be12f; color: #fff; }
+.common_btn1 { background: url(/r/cms/www/default/images/icon/queren_icon.png) 79px center no-repeat #e2632b; margin-right: 27px; }
+.common_btn1:hover { background: url(/r/cms/www/default/images/icon/queren_icon.png) 79px center no-repeat #f0733c; color: #fff; }
+.common_btn2 { background: url(/r/cms/www/default/images/icon/chongzhi_icon.png) 79px center no-repeat #79ca23; }
+.common_btn2:hover { background: url(/r/cms/www/default/images/icon/chongzhi_icon.png) 79px center no-repeat #8be12f; color: #fff; }
 .jianpan { padding: 40px; border-radius: 14px; -webkit-border-radius: 14px; background: url(../images/bscx_dian.png) repeat; width: 550px; }
 .jianpan a { display: inline-block; width: 105px; height: 105px; line-height: 105px; text-align: center; background-color: #7c8896; color: #fff; font-size: 72px; margin: 10px 15px; border-radius: 6px; -webkit-border-radius: 6px; border: 1px #bed5e9 solid }
 .jianpan a:hover { background-color: #333; }

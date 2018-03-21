@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.jeecms.cms.Constants;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
 import com.jeecms.cms.entity.main.cxj.TCxjMenu;
+import com.jeecms.cms.manager.main.CxjManageMng;
 import com.jeecms.cms.manager.main.CxjMng;
+import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -33,33 +35,25 @@ public class CxjManageAct {
     public static final String INDEXPAGE = "searchclient";
 
     @Autowired
-    private CxjMng cxjMng;
+    private CxjManageMng cxjManageMng;
+
+    @Autowired
+    private SessionProvider session;
 
     /**
-     * 查询机管理模块-登录
+     * 查询机管理模块-菜单列表
      * @param request
      * @param response
      * @param model
      * @return
      * @throws JSONException
      */
-    @RequestMapping(value="/cxj/manage/login.jspx", method = RequestMethod.GET)
-    public String cxjHome(HttpServletRequest request, HttpServletResponse response,
+    @RequestMapping(value="/cxj/manage/menulist.jspx", method = RequestMethod.GET)
+    public String cxjManageMenuList(HttpServletRequest request, HttpServletResponse response,
             ModelMap model) throws JSONException {
         CmsSite site = CmsUtils.getSite(request);
-
-        TCxjZwzxconfig zwzxConfig = cxjMng.findZwzxconfig();
-        if (zwzxConfig == null) {
-            return FrontUtils.pageNotFound(request, response, model);
-        }
-        List<TCxjMenu> menus = cxjMng.findCxjMenu(zwzxConfig.getAreaid());
-        if (menus == null || menus.size() <= 0) {
-            return FrontUtils.pageNotFound(request, response, model);
-        }
-        model.put("menus", menus);
-        model.put("zwzxConfig", zwzxConfig);
         FrontUtils.frontData(request, model, site);
-        return FrontUtils.getTplPath(site.getSolutionPath(), Constants.TPLDIR_MNG_CXJINDEX, "login");
+        return FrontUtils.getTplPath(site.getSolutionPath(), Constants.TPLDIR_MNG_CXJINDEX, "manage");
     }
 
 }

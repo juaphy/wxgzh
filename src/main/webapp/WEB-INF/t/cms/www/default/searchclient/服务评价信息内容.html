@@ -1,0 +1,109 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>荔波县政务服务中心</title>
+<link href="/${res}/css/index2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript"
+	src="/bin/js/index.js"></script>
+<script language="javascript" type="text/javascript" src="/r/cms/www/blue_webhall/js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="an_container w_content">
+		<div class="an_header2">
+			<img src="/${res}/images3/logo2.png" alt="" /> <a href="javascript:history.back();"
+				class="head_icon2">返回</a><a href="/" class="head_icon1">主页</a>
+		</div>
+		<!--an_header2 end -->
+		<div class="an_content2">
+			<div class="an_main2">
+				<div class="main_title v_middle rel">
+					<img src="/${res}/images3/main_title.png" alt="" />服务评价公示
+					<p class="blsxnr_title abs"></p>
+				</div>
+				<div class="main_con blsxnr">
+					<div class="common_tab rel">
+						<ul class="tab_ul6 abs">
+							<li class="selectTag"><a onclick="selectTag('0',this)">评价信息</a>
+							</li>
+							<!-- <li><a onclick="selectTag('1',this)">设定依据</a>
+							</li>
+							<li><a onclick="selectTag('2',this)">申请材料</a>
+							</li>
+							<li><a onclick="selectTag('3',this)">特殊环节</a>
+							</li>
+							<li><a onclick="selectTag('4',this)">办理流程</a>
+							</li> -->
+						</ul>
+					</div>
+					<div class="bl_common_content zong_tagContent">
+						<div class="tagContent selectTag">
+							<table cellpadding="0" cellspacing="0" border="0"
+								class="table_fix dl_table_style">
+								<colgroup>
+									<col width="180" />
+									<col />
+									<col width="180" />
+									<col />
+								</colgroup>
+								[#if advice??]
+								<tr>
+									<td class=" common_label_title_r td_width">受理编号</td>
+									<td colspan="3">${advice.bsnum!}</td>
+									<td class=" common_label_title_r td_width">评价时间</td>
+									<td colspan="3">${advice.createtime!}</td>
+								</tr>
+								<tr>
+									<td class=" common_label_title_r td_width">评价结果</td>
+									[#if (advice.result!)=='0']
+									<td colspan="3">
+										非常满意
+									</td>
+									[/#if][#if (advice.result!)=='1']
+									<td colspan="3">
+										满意
+									</td>
+									[/#if][#if (advice.result!)=='2']
+									<td colspan="3">
+										基本满意
+									</td>
+									[/#if][#if (advice.result!)=='3']
+									<td colspan="3">
+										一般
+									</td>
+									[/#if][#if (advice.result!)=='4']
+									<td colspan="3">
+										很差
+									</td>
+									[/#if]
+									<td class=" common_label_title_r td_width">备注</td>
+									<td colspan="3">${advice.remark!'无'}</td>
+								</tr>
+								[#else]
+									<tr>
+										<td colspan="6">该服务暂无评价</td>
+								</tr>
+								
+								[/#if]
+							</table>
+						</div>
+					</div>
+				</div>
+				<!--   main_con end   -->
+			</div>
+			<!--   an_main2 end   -->
+		</div>
+		<!-- an_content2 end -->
+		<div class="an_footer2">
+			[#include "/WEB-INF/t/cms/www/blue_webhall/chaxun/footmemu.html"/]
+		</div>
+		<!-- an_footer2 end -->
+	</div>
+	<!--   an_container end   -->
+</body>
+</html>
+<script language="javascript" type="text/javascript">
+</script>
+

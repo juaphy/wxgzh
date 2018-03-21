@@ -37,4 +37,11 @@ public class HttpSessionProvider implements SessionProvider {
 			session.invalidate();
 		}
 	}
+
+	public void logout2(HttpServletRequest request, HttpServletResponse response, String key) {
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.removeAttribute(key);
+	    }
+	}
 }

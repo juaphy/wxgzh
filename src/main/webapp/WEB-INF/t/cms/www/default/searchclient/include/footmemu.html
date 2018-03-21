@@ -32,7 +32,7 @@
 				</a> -->
 				[#if menus??]
                 [#list menus as menu]
-                <a href="${menu.url!''}" class="" >
+                <a to="${menu.url!''}" class="footermenu" style="cursor: pointer;" menuname="${menu.name!''}">
                     <img src="${menu.imgsrc!''}" alt="" />
                     <br />${menu.name!''}
                 </a>

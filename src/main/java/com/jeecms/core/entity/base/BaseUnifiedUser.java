@@ -27,6 +27,7 @@ public abstract class BaseUnifiedUser  implements Serializable {
 	public static String PROP_EMAIL = "email";
 	public static String PROP_REGISTER_TIME = "registerTime";
 	public static String PROP_USERNAME = "username";
+	public static String PROP_TYPE = "type";
 	public static String PROP_ID = "id";
 	public static String PROP_REGISTER_IP = "registerIp";
 	public static String PROP_LAST_LOGIN_IP = "lastLoginIp";
@@ -52,6 +53,7 @@ public abstract class BaseUnifiedUser  implements Serializable {
 	public BaseUnifiedUser (
 		java.lang.Integer id,
 		java.lang.String username,
+		java.lang.String type,
 		java.lang.String password,
 		java.util.Date registerTime,
 		java.lang.String registerIp,
@@ -81,6 +83,7 @@ public abstract class BaseUnifiedUser  implements Serializable {
 
 	// fields
 	private java.lang.String username;
+	private java.lang.String type;
 	private java.lang.String email;
 	private java.lang.String password;
 	private java.util.Date registerTime;
@@ -386,6 +389,14 @@ public abstract class BaseUnifiedUser  implements Serializable {
 	public String toString () {
 		return super.toString();
 	}
+
+    public java.lang.String getType() {
+        return type;
+    }
+
+    public void setType(java.lang.String type) {
+        this.type = type;
+    }
 
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.cxj">
+    <class name="TSysMenu" table="t_sys_menu">
+        <meta attribute="sync-DAO">false</meta>
+        <cache usage="read-write"/>
+        <id name="id" column="id" type="java.lang.String" />
+        <property name="name" column="name" type="java.lang.String" />
+        <property name="parentid" column="parentid" type="java.lang.String" />
+        <property name="url" column="url" type="java.lang.String" />
+        <property name="parameter" column="parameter" type="java.lang.String" />
+        <property name="depth" column="depth" type="java.lang.String" />
+        <property name="orderid" column="orderid" type="java.lang.Integer" />
+        <property name="modperson" column="modperson" type="java.lang.String" />
+        <property name="modtime" column="modtime" type="java.sql.Timestamp" />
+        <property name="remark" column="remark" type="java.lang.String" />
+        <property name="status" column="status" type="java.lang.String" />
+        <property name="leaf" column="leaf" type="java.lang.Integer" />
+        <property name="systemid" column="systemid" type="java.lang.String" />
+        <property name="type" column="type" type="java.lang.String" />
+        <property name="reservetwo" column="reservetwo" type="java.lang.String" />
+        <property name="reservethree" column="reservethree" type="java.sql.Timestamp" />
+        <property name="exchange" column="exchange" type="java.lang.String" />
+    </class>
+</hibernate-mapping>

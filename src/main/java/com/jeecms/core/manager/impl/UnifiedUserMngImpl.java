@@ -146,15 +146,15 @@ public class UnifiedUserMngImpl implements UnifiedUserMng {
 			throws UsernameNotFoundException, BadCredentialsException {
 		UnifiedUser user = getByUsername(username);
 		if (user == null) {
-			throw new UsernameNotFoundException("username not found: "
+			throw new UsernameNotFoundException("找不到用户: "
 					+ username);
 		}
 		if (!pwdEncoder.isPasswordValid(user.getPassword(), password)) {
 			updateLoginError(user.getId(), ip);
-			throw new BadCredentialsException("password invalid");
+			throw new BadCredentialsException("密码错误");
 		}
 		if (!user.getActivation()) {
-			throw new BadCredentialsException("account not activated");
+			throw new BadCredentialsException("账号未激活");
 		}
 		updateLoginSuccess(user.getId(), ip);
 		return user;

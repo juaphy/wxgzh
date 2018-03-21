@@ -5,9 +5,11 @@
 
     <!-- Mng -->
     <bean id="cxjMng" class="com.jeecms.cms.manager.main.impl.CxjMngImpl"/>
+    <bean id="cxjManageMng" class="com.jeecms.cms.manager.main.impl.CxjManageMngImpl"/>
     <bean id="callRestMng" class="com.jeecms.cms.rest2.impl.CallRestMngImpl"/>
 
     <!--DAO-->
     <bean id="cxjDao" class="com.jeecms.cms.dao.main.impl.CxjDaoImpl"/>
+    <bean id="cxjManageDao" class="com.jeecms.cms.dao.main.impl.CxjManageDaoImpl"/>
 
 </beans>

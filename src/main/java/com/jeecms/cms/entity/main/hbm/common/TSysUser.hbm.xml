@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.cxj">
+    <class name="TSysUser" table="t_sys_user">
+        <meta attribute="sync-DAO">false</meta>
+        <cache usage="read-write"/>
+        <id name="id" column="id" type="java.lang.String" />
+        <property name="account" column="account" type="java.lang.String" />
+        <property name="username" column="username" type="java.lang.String" />
+        <property name="password" column="password" type="java.lang.String" />
+        <property name="deptid" column="deptid" type="java.lang.String" />
+        <property name="cardid" column="cardid" type="java.lang.String" />
+        <property name="sex" column="sex" type="java.lang.String" />
+        <property name="address" column="address" type="java.lang.String" />
+        <property name="email" column="email" type="java.lang.String" />
+        <property name="phone" column="phone" type="java.lang.String" />
+        <property name="mobile" column="mobile" type="java.lang.String" />
+        <property name="staffid" column="staffid" type="java.lang.String" />
+        <property name="createtime" column="createtime" type="java.sql.Timestamp" />
+        <property name="modtime" column="modtime" type="java.sql.Timestamp" />
+        <property name="status" column="status" type="java.lang.String" />
+        <property name="remark" column="remark" type="java.lang.String" />
+        <property name="type" column="type" type="java.lang.String" />
+        <property name="caid" column="caid" type="java.lang.String" />
+        <property name="reserveone" column="reserveone" type="java.lang.String" />
+        <property name="reservetwo" column="reservetwo" type="java.lang.String" />
+        <property name="reservethree" column="reservethree" type="java.sql.Timestamp" />
+        <property name="birthday" column="birthday" type="java.sql.Timestamp" />
+        <property name="partyday" column="partyday" type="java.sql.Timestamp" />
+        <property name="carrerday" column="carrerday" type="java.sql.Timestamp" />
+        <property name="degree" column="degree" type="java.lang.String" />
+        <property name="imageurl" column="imageurl" type="java.lang.String" />
+        <property name="menustyle" column="menustyle" type="java.lang.String" />
+        <property name="systemstyle" column="systemstyle" type="java.lang.String" />
+        <property name="exchange" column="exchange" type="java.lang.String" />
+        <property name="windowid" column="windowid" type="java.lang.String" />
+        <property name="windowname" column="windowname" type="java.lang.String" />
+    </class>
+</hibernate-mapping>

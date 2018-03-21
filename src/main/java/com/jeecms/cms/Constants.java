@@ -182,4 +182,14 @@ public class Constants {
 	 */
 	public static final String TPLDIR_MNG_CXJINDEX = "searchclient/manage";
 
+	/**
+	 * 系统key-区划id
+	 */
+	public static final String SYSKEY_AREAID = "520113";
+
+	/**
+	 * 用户类型：超级管理员
+	 */
+	public static final String USERTYPE_SUPPORTADMIN = "SUPPORTADMIN";
+
 }

@@ -44,6 +44,7 @@ public abstract class BaseAuthentication  implements Serializable {
 		java.lang.String id,
 		java.lang.Integer uid,
 		java.lang.String username,
+		java.lang.String type,
 		java.util.Date loginTime,
 		java.lang.String loginIp,
 		java.util.Date updateTime) {
@@ -69,6 +70,7 @@ public abstract class BaseAuthentication  implements Serializable {
 	// fields
 	private java.lang.Integer uid;
 	private java.lang.String username;
+	private java.lang.String type;
 	private java.lang.String email;
 	private java.util.Date loginTime;
 	private java.lang.String loginIp;
@@ -220,6 +222,14 @@ public abstract class BaseAuthentication  implements Serializable {
 	public String toString () {
 		return super.toString();
 	}
+
+    public java.lang.String getType() {
+        return type;
+    }
+
+    public void setType(java.lang.String type) {
+        this.type = type;
+    }
 
 
 }

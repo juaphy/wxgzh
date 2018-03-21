@@ -166,4 +166,14 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	 * @return
 	 */
 	abstract protected Class<T> getEntityClass();
+
+	/**
+	 * 判断是否为空
+	 * @param str
+	 * @return null或者空串，返回true
+	 */
+	protected boolean isEmpty(String str) {
+	    return str == null || "".equals(str);
+	}
+
 }

@@ -33,6 +33,7 @@ public class Authentication extends BaseAuthentication {
 		java.lang.String id,
 		java.lang.Integer uid,
 		java.lang.String username,
+		java.lang.String type,
 		java.util.Date loginTime,
 		java.lang.String loginIp,
 		java.util.Date updateTime) {
@@ -41,6 +42,7 @@ public class Authentication extends BaseAuthentication {
 			id,
 			uid,
 			username,
+			type,
 			loginTime,
 			loginIp,
 			updateTime);

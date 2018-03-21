@@ -10,17 +10,12 @@ import com.jeecms.cms.dao.main.CxjDao;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;
 import com.jeecms.cms.entity.main.cxj.TCxjMenu;
 import com.jeecms.cms.entity.main.cxj.TCxjZwzxconfig;
+import com.jeecms.cms.entity.main.cxj.TCxjZxjjckbj;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.hibernate4.Updater;
 
 @Repository
-public class CxjDaoImpl extends HibernateBaseDao<TCxjXjfwpd, String>
-		implements CxjDao {
-
-	@Override
-	protected Class<TCxjXjfwpd> getEntityClass() {
-		return TCxjXjfwpd.class;
-	}
+public class CxjDaoImpl extends HibernateBaseDao implements CxjDao {
 
     @SuppressWarnings("unchecked")
     @Override
@@ -35,7 +30,7 @@ public class CxjDaoImpl extends HibernateBaseDao<TCxjXjfwpd, String>
 
     @Override
     public TCxjXjfwpd findTCxjXjfwpdById(String id) {
-        TCxjXjfwpd entity = get(id);
+        TCxjXjfwpd entity = (TCxjXjfwpd) getSession().get(TCxjXjfwpd.class, id);
         return entity;
     }
 
@@ -47,7 +42,7 @@ public class CxjDaoImpl extends HibernateBaseDao<TCxjXjfwpd, String>
 
     @Override
     public TCxjXjfwpd deleteTCxjXjfwpdById(String id) {
-        TCxjXjfwpd entity = super.get(id);
+        TCxjXjfwpd entity = (TCxjXjfwpd) getSession().get(TCxjXjfwpd.class, id);
         if (entity != null) {
             getSession().delete(entity);
         }
@@ -62,12 +57,17 @@ public class CxjDaoImpl extends HibernateBaseDao<TCxjXjfwpd, String>
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<TCxjMenu> findCxjMenu(String areaId) {
+    public List<TCxjMenu> findCxjMenuList(String areaId) {
         String sql = "from TCxjMenu where status='1'";
         sql += " and areaid='" + areaId + "'";
         sql += " order by ordernum";
         Query query = getSession().createQuery(sql);
         return query.list();
+    }
+
+    @Override
+    public TCxjMenu findCxjMenu(String id) {
+        return (TCxjMenu) getSession().get(TCxjMenu.class, id);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,6 +95,55 @@ public class CxjDaoImpl extends HibernateBaseDao<TCxjXjfwpd, String>
             return null;
         }
         return list.get(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TCxjZxjjckbj> findTCxjZxjjckbjList(String areaId) {
+        String sql = "from TCxjZxjjckbj where status='1'";
+        sql += " and areaid='" + areaId + "'";
+        sql += " order by orderid, createtime desc";
+        Query query = getSession().createQuery(sql);
+        return query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public TCxjZxjjckbj findTCxjZxjjckbj(String areaId, String type) {
+        String sql = "from TCxjZxjjckbj where status='1'";
+        sql += " and areaid='" + areaId + "'";
+        sql += " and type='" + type + "'";
+        sql += " order by orderid, createtime desc";
+        Query query = getSession().createQuery(sql);
+        List<TCxjZxjjckbj> list = query.list();
+        if (list == null || list.size() <= 0) {
+            return null;
+        }
+        return list.get(0);
+    }
+
+    @Override
+    public TCxjZxjjckbj saveTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj) {
+        getSession().save(tCxjZxjjckbj);;
+        return tCxjZxjjckbj;
+    }
+
+    @Override
+    public TCxjZxjjckbj updateTCxjZxjjckbj(TCxjZxjjckbj tCxjZxjjckbj) {
+        getSession().update(tCxjZxjjckbj);
+        return tCxjZxjjckbj;
+    }
+
+    @Override
+    public boolean deleteTCxjZxjjckbj(String id) {
+        getSession().delete(getSession().get(TCxjZxjjckbj.class, id));
+        return false;
+    }
+
+    @Override
+    protected Class getEntityClass() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

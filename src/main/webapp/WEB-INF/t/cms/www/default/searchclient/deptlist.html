@@ -10,16 +10,35 @@
             font-size: 25px;
 		    float: left;
 		    width: 20%;
-		    color: #13a9d6;
+		    color: white;
 		    margin: 19px;
 		    cursor: pointer;
+		    padding: 12px 23px;
+            background: #60acff;
+            box-shadow: 4px 4px 14px 0px #616161;
+            margin-bottom: 2px;
+            border-radius: 5px;
+        }
+        .deptinfo:hover {
+            background: #79ca23;
+            transition: all 0.3s ease-in-out 0s;
         }
         .examples_body {
-            background: white;
-            width: 87%;
-            height: 600px;
+            width: 98%;
+            height: 570px;
             text-align: center;
-            box-shadow: 18px 18px 30px 3px #d6d5d5;
+            box-shadow: 10px 10px 42px -2px #5f5f5f;
+            margin: 31px auto;
+            background: none;
+            overflow-y: auto;
+        }
+        .tit {
+            background: none;
+            color: #29a9d6;
+            text-indent: 18px;
+            line-height: 52px;
+            height: 24px;
+            text-shadow: 3px 3px 3px #ffffff;
         }
     </style>
     <script>
@@ -38,9 +57,9 @@
         });
     </script>
 </head>
-<body style="background: #eaf7ff;">
-    <div class="tit">贵阳市白云区人民政府政务服务中心部门列表</div>
-    <div class="examples_body" style="background: white;">
+<body style="background: none;">
+    <div class="tit">部门列表</div>
+    <div class="examples_body">
          [#if deptList??]
          [#list deptList as c]
              <div class="deptinfo" deptName="${c.shortName!''}" to="/cxzdj/bsznsxlb.jspx?deptId=${c.deptId!''}">${c.shortName!''}</div>
