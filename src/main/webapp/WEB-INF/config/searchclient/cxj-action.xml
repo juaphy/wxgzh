@@ -11,4 +11,6 @@
     <bean id="cxjManageAct" class="com.jeecms.cms.action.front.CxjManageAct"/>
 
     <bean id="cxjLoginAct" class="com.jeecms.cms.action.front.CxjLoginAct"/>
+
+    <bean id="cxjUeditorAct" class="com.jeecms.cms.action.front.CxjUeditorAct"/>
 </beans>

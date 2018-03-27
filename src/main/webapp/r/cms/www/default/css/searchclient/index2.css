@@ -234,12 +234,12 @@ background-position: right -97px;
 .common_btn1:hover { background: url(/r/cms/www/default/images/icon/queren_icon.png) 79px center no-repeat #f0733c; color: #fff; }
 .common_btn2 { background: url(/r/cms/www/default/images/icon/chongzhi_icon.png) 79px center no-repeat #79ca23; }
 .common_btn2:hover { background: url(/r/cms/www/default/images/icon/chongzhi_icon.png) 79px center no-repeat #8be12f; color: #fff; }
-.jianpan { padding: 40px; border-radius: 14px; -webkit-border-radius: 14px; background: url(../images/bscx_dian.png) repeat; width: 550px; }
+.jianpan { padding: 40px; border-radius: 14px; -webkit-border-radius: 14px; background: url(/r/cms/www/default/images/searchclient/bscx_dian.png) repeat; width: 550px; }
 .jianpan a { display: inline-block; width: 105px; height: 105px; line-height: 105px; text-align: center; background-color: #7c8896; color: #fff; font-size: 72px; margin: 10px 15px; border-radius: 6px; -webkit-border-radius: 6px; border: 1px #bed5e9 solid }
 .jianpan a:hover { background-color: #333; }
 .jianpan button{ display: inline-block; width: 105px; height: 105px; line-height: 105px; text-align: center; background-color: #7c8896; color: #fff; font-size: 72px; margin: 10px 15px; border-radius: 6px; -webkit-border-radius: 6px; border: 1px #bed5e9 solid }
 .jianpan button:hover { background-color: #333; }
-.bscx_sj { background: url(../images/bscx_sj.png) no-repeat; width: 24px; height: 42px; left: -24px; top: 30px; }
+.bscx_sj { background: url(/r/cms/www/default/images/searchclient/bscx_sj.png) no-repeat; width: 24px; height: 42px; left: -24px; top: 30px; }
 .jianpan a.word_x { font-size: 100px; font-family: arial }
 /*月度服务之星*/
 .ydfwzx { padding: 0px 45px; }

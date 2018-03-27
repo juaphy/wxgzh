@@ -19,14 +19,12 @@
     <script src='/${res}/js/jquery.nicescroll.min.js'></script>
     <script src="/${res}/js/layer-v3.1.1/layer/layer.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" href="/jeeadmin/jeecms/static/ueditor/themes/default/css/ueditor.css" />
-    <link rel="stylesheet" href="/jeeadmin/jeecms/static/ueditor/third-party/codemirror/codemirror.css" />
-    <script type="text/javascript" charset="utf-8" src="/jeeadmin/jeecms/static/ueditor/ueditor.config_cxj.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/jeeadmin/jeecms/static/ueditor/ueditor.all.min.js"> </script>
-    <script type="text/javascript" charset="utf-8" src="/jeeadmin/jeecms/static/ueditor/third-party/codemirror/codemirror.js"> </script>
-    <script type="text/javascript" charset="utf-8" src="/jeeadmin/jeecms/static/ueditor/third-party/zeroclipboard/ZeroClipboard.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/${res}/js/ueditor/ueditor.config_cxj.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/${res}/js/ueditor/ueditor.all.min.js"> </script>
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="/jeeadmin/jeecms/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/${res}/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <link rel="stylesheet" href="/${res}/js/ueditor/themes/default/css/ueditor.min.css" />
+    <link rel="stylesheet" href="/${res}/js/ueditor/themes/default/css/ueditor.css" />
     <style>
         #dateinfo {
             float: right;
@@ -220,6 +218,14 @@
 							    <script id="container" name="content" type="text/plain">${info.content!''}</script>
 							    <!-- 实例化编辑器 -->
 							    <script type="text/javascript">
+							        UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+							        UE.Editor.prototype.getActionUrl = function(action){
+							        	if (action == "uploadimage") {
+							        	    return "http://127.0.0.1:8089/cxj/ueditor/upload.jspx";
+							        	} else {
+							        		return this._bkGetActionUrl.call(this, action);
+							        	}
+							        }
 							        var ue = UE.getEditor('container');
 							    </script>
                             </td>
@@ -238,7 +244,7 @@
 </html>
 <script>
     $(function() {
-    	$(".cxj_btn_submit").click(function() {debugger;
+    	$(".cxj_btn_submit").click(function() {
     		layer.alert("确定要修改吗？", function() {
     			// layer.msg("...");
     			$("#cxj_content").val(ue.getContent()); // 刷新内容
