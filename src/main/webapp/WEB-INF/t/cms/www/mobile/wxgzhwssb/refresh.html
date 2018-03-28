@@ -1,0 +1,17 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script language="javascript">
+	$(document).ready(function() {
+		//自动刷新一次 ，解决JQ mobile 相关机制问题
+		 setTimeout("fresh()",50);
+	});	
+	function fresh() {
+		if (location.href.indexOf("reload=true") < 0) {
+            if (location.href.indexOf("?") < 0) {
+                location.href += "?reload=true";
+            } else {
+                location.href += "&reload=true";
+            }
+        }
+	}
+</script>

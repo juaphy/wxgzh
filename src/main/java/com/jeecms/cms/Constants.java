@@ -192,4 +192,17 @@ public class Constants {
 	 */
 	public static final String USERTYPE_SUPPORTADMIN = "SUPPORTADMIN";
 
+	/**
+	 * 微信公众号-网上申报页面模板路径：wxgzhwssb
+	 */
+    public static final String WSSB_INDEX = "wxgzhwssb";
+
+    /** 是否直属部门：县区-6*/
+    public static final String ISZSBM_XQ = "6";
+
+    /** 是否直属部门：乡镇-7*/
+    public static final String ISZSBM_XZ = "7";
+
+    /** 是否直属部门：村居-8*/
+    public static final String ISZSBM_CJ = "8";
 }

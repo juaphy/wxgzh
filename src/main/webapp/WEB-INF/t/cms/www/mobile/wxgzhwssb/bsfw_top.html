@@ -1,0 +1,43 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<div class="header">
+
+    [#include "top_common.html"/][#if zwzxConfig??]${zwzxConfig.zwzxshortname!}[#else]XXX政务中心[/#if]
+    <script language="javascript">
+        $(document).ready(function() {
+
+            /* 
+             var storage = window.localStorage;
+             var userid = storage.getItem("userid");
+             var username = storage.getItem("username");
+             var realname = storage.getItem("realname");
+             if(userid !=null && userid !=''){
+             $("#logincontent").hide();
+             $("#logoutcontent").show();
+             $("#usercenter").show();
+             }
+             else{
+            
+             $("#logoutcontent").hide();
+             $("#logincontent").show();
+             $("#usercenter").hide();
+             } */
+
+        });
+
+        function loginout() {
+            var storage = window.localStorage;
+            storage.removeItem("userid");
+            storage.removeItem("username");
+            storage.removeItem("realname");
+            location.href = "${base}/mobile/index/520321.jspx";
+        }
+        function login() {
+            location.href = "${base}/mobile/login/520321.jspx";
+        }
+        function usercenter() {
+            location.href = "${base}/mobile/wddt/520321.jspx";
+
+        }
+    </script>
+</div>

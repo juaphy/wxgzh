@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v3_5_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.searchclient</groupId>
-  <artifactId>searchclient</artifactId>
+  <groupId>com.wxgzh</groupId>
+  <artifactId>wxgzh</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <url>http://www.searchclient.com</url>
-  <name>searchclient</name>
+  <url>http://www.wxgzh.com</url>
+  <name>wxgzh</name>
   <organization>
-	<name>searchclient</name>
-	<url>http://www.searchclient.com/</url>
+	<name>wxgzh</name>
+	<url>http://www.wxgzh.com/</url>
   </organization>
   <properties>
   	<java.version>1.7</java.version>
@@ -795,7 +795,7 @@
   </dependencies>
   
   <build>
-    <finalName>searchclient</finalName>
+    <finalName>wxgzh</finalName>
     <plugins>
     	<!-- 指定jdk1.7编译，否则maven update 可能调整jdk-->
     	<plugin>  
@@ -823,5 +823,5 @@
 		</plugin>
 	</plugins>
   </build>
-  <description>searchclient查询终端机系统</description>
+  <description>wxgzh网上申报-微信公众号系统</description>
 </project>
