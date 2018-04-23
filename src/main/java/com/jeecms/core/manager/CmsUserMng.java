@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import com.jeecms.cms.entity.main.wssb.TWebHallIncInforMation;
+import com.jeecms.cms.entity.main.wssb.TWebHallUserInforMation;
 import com.jeecms.common.email.EmailSender;
 import com.jeecms.common.email.MessageTemplate;
 import com.jeecms.common.page.Pagination;
@@ -82,4 +84,11 @@ public interface CmsUserMng {
 
 	public boolean emailNotExist(String email);
 
+	/** 更新登录信息 */
+	public void updateLoginInfo(Integer userId, String ip);
+
+	/** 统一认证注册用户信息-本地化用户信息*/
+	public CmsUser registerMemberForTyrz(String username, String email, String password, String ip, Integer groupId,
+        CmsUserExt userExt, Boolean activation, EmailSender sender, MessageTemplate msgTpl,
+        TWebHallUserInforMation userinfo,TWebHallIncInforMation incinfo);
 }

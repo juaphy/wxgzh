@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author swc 2018-03-15
  *
  */
-public class SxBllcInfo implements Serializable{
+public class SxSlhjInfo implements Serializable{
 
     private static final long serialVersionUID = 4379240325053633799L;
     

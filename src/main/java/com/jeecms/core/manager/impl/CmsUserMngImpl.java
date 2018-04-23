@@ -1,6 +1,7 @@
 package com.jeecms.core.manager.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.wssb.TWebHallIncInforMation;
+import com.jeecms.cms.entity.main.wssb.TWebHallUserInforMation;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
+import com.jeecms.cms.manager.main.WebHallIncInforMationMng;
+import com.jeecms.cms.manager.main.WebHallUserInforMationMng;
 import com.jeecms.common.email.EmailSender;
 import com.jeecms.common.email.MessageTemplate;
 import com.jeecms.common.hibernate4.Updater;
@@ -37,6 +42,14 @@ import com.jeecms.core.manager.UnifiedUserMng;
 @Service
 @Transactional
 public class CmsUserMngImpl implements CmsUserMng {
+    
+
+    @Autowired
+    private WebHallUserInforMationMng userinfoMng;
+
+    @Autowired
+    private WebHallIncInforMationMng incinfoMng;
+
 	@Transactional(readOnly = true)
 	public Pagination getPage(String username, String email, Integer siteId,
 			Integer groupId, Integer statu, Boolean admin, Integer rank,
@@ -447,5 +460,60 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public void setDao(CmsUserDao dao) {
 		this.dao = dao;
 	}
+
+    public void updateLoginInfo(Integer userId, String ip) {
+        Date now = new Timestamp(System.currentTimeMillis());
+        CmsUser user = findById(userId);
+        if (user != null) {
+            user.setLoginCount(user.getLoginCount() + 1);
+            user.setLastLoginIp(ip);
+            user.setLastLoginTime(now);
+        }
+    }
+
+    /**
+     * 统一认证注册的用户
+     * @param username
+     * @param email
+     * @param password
+     * @param ip
+     * @param groupId
+     * @param userExt
+     * @param activation
+     * @param sender
+     * @param msgTpl
+     * @param userinfo
+     * @param incinfo
+     * @return
+     */
+    public CmsUser registerMemberForTyrz(String username, String email, String password, String ip, Integer groupId,
+            CmsUserExt userExt, Boolean activation, EmailSender sender, MessageTemplate msgTpl,
+            TWebHallUserInforMation userinfo, TWebHallIncInforMation incinfo) {
+        UnifiedUser unifiedUser = unifiedUserMng.savePwdNoMd5(username, email,
+                password, ip,"");
+        CmsUser user = new CmsUser();
+        user.forMember(unifiedUser);
+
+        CmsGroup group = null;
+        if (groupId != null) {
+            group = cmsGroupMng.findById(groupId);
+        } else {
+            group = cmsGroupMng.getRegDef();
+        }
+        if (group == null) {
+            throw new RuntimeException("register default member group not found!");
+        }
+        user.setGroup(group);
+        user.init();
+        dao.save(user);
+        if (userExt != null) {
+            cmsUserExtMng.save(userExt, user);
+        }
+        if(null != userinfo)
+            userinfoMng.save(userinfo, user);
+        if(null != incinfo)
+            incinfoMng.save(incinfo, user);
+        return user;
+    }
 
 }

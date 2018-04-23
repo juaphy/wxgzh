@@ -236,4 +236,10 @@ public final class SystemConstant{
 	public void setSYSTEMID(String systemid) {
 		SystemConstant.SYSTEMID = systemid;
 	}
+
+    /**
+     * 默认的区划ID,按市级查找
+     */
+    public static final String AREAID = "520000";
+
 }

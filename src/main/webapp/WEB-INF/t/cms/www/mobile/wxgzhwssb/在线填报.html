@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="/${mobileRes!}/wxgzhwssb/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/${mobileRes!}/wxgzhwssb/css/index.css" rel="stylesheet">
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/commontools.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/base64.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/json.js"></script>
+    </head>
+<body> 
+	<header>
+		<a href="#" class="back glyphicon glyphicon-chevron-left"></a>
+		<h3>在线填表</h3>
+	</header>
+	<div class="appContainer">
+		
+    <div class="appContent">
+    	<div class="appStep">
+    		<ul >
+	    		<li class="act"><span>1</span><p>在线填表</p></li>
+	            <li><span>2</span><p>申请材料</p></li>
+	    		<li><span>3</span><p>申报确认</p></li>
+    		</ul>
+    	</div>
+    	<!-- 基本信息 -->  
+    	<div class="appFormGroup" id="baseDiv">
+    		<div class="appForm">
+    			<ul class="">
+		    		<li><label for="zx1">申请人</label><input id="zx1" name="per_name" value="${username}" type="text" placeholder="申请人姓名"></li>
+		    		<li><label for="zx2">项目名称</label><input id="zx2" name="sqsxmc" value="${Sxmc}"  type="text" placeholder="申请项目名称"></li>
+		    	</ul>
+    		</div>
+    		
+
+	    	<ul class="appForm">
+	    		<li><label for="zx3">联系人</label><input id="zx3" name="jbr_mc" type="text" placeholder="联系人姓名"></li>
+	    		<li><label for="zx4">手机号码</label><input id="zx4" name="per_phone" value="${phone}" type="text" placeholder="联系人手机号码"></li>
+	    		<li><label for="zx5">固定电话</label><input id="zx5" name="per_gddh" type="text" placeholder="固定电话"></li>
+	    	</ul>
+
+	    	<ul class="appForm" >
+	    		<li><label for="zx6">证件类型</label><select name="per_zztype" id="zx6">
+	    		<!-- 	<option value="">身份证</option> -->
+	    			<option selected="selected" value="10" >居民身份证</option>
+					<option value="11">军人证</option>
+					<option value="12">护照</option>
+					<option value="15">港澳居民来往内地通行证</option>
+					<option value="16">台湾居民来往大陆通行证</option>									
+	    		</select></li>
+	    		<li><label for="zx7">证件号码</label><input id="zx7" name="per_idcard" type="text" value="${usercode}" placeholder="证件号码"></li>
+
+	    	</ul>
+    	</div>
+    	<a href="javascript:getclxx()" class="btn btnPrimary btn-block next">下一步</a>
+    </div>
+	</div>
+	<div style="display: none">
+		<form action="/wssb/sqcl.jspx" method="post" id="form">
+			<input name="baseForm" id="baseForm" value=""/>
+			<input name="sxId" id="sxId" value="${sxId}"/>
+			<input name="Sxmc" id="Sxmc" value="${Sxmc}"/>
+		</form>
+	</div>
+  </body>
+</html>
+  
+<script type="text/javascript" >
+var clarray=[];
+ 
+var sxid="${sxId}";
+var areaid="${areaId}";
+var Sxmc="${Sxmc}";
+var token="${token}";
+var username="${username}";
+var userid="${userid}";
+	function getclxx(){
+			var param=checkbody();
+			 if(param){
+			 	param["sxid"]=sxid;
+			 	param["areaid"]=areaid;
+			 	param["sxmc"]=Sxmc;
+			 	param["username"]=username;
+			 	param["userid"]=userid; 
+				 var parm=JSON.stringify(param);
+				// parm= encodeBase64(parm);
+				 $("#baseForm").val(parm);
+				 $("#form").submit();
+			 }
+	 }
+	 
+		function checkbody(){
+			var per_name=$("#zx1").val();
+			var sqsxmc=$("#zx2").val();
+			var jbr_mc=$("#zx3").val();
+			var per_phone=$("#zx4").val();
+			var per_gddh=$("input[name='per_gddh']").val();
+			var per_zztype=$("#zx6").val();
+			var per_idcard=$("#zx7").val();
+			
+			if(per_name==null||per_name==""){
+				alert("请填写申请人");
+				return false;
+			}
+			if(sqsxmc==null||sqsxmc==""){
+				alert("请填写项目名称");
+				return false;	
+			}
+			if(jbr_mc==null||jbr_mc==""){
+				alert("请填写联系人");
+				return false;
+			}
+			if(per_phone==null||per_phone==""){
+				alert("请填写联系人手机号码");
+				return false;
+			}
+			if(per_zztype==null||per_zztype==""){
+				alert("请选择证照类型");
+				return;
+			}
+			if(per_idcard==null||per_idcard==""){
+				alert("请填写身份证号码");
+					return false;
+			}
+			
+			if(!(/^1[34578]\d{9}$/.test(per_phone))){ 
+        		alert("手机号码有误，请重填");  
+       			 return false; 
+    		} 
+    		
+    		var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+			if(reg.test(per_idcard) == false) {   
+			       alert("身份证输入不合法");  
+			       return  false;  
+			   } 
+			return {"per_name":per_name,"sqsxmc":sqsxmc,"jbr_mc":jbr_mc,"per_phone":per_phone,"per_gddh":per_gddh,"per_zztype":per_zztype,"per_idcard":per_idcard};
+		}
+		
+	
+</script>

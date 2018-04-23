@@ -7,7 +7,18 @@
     <bean id="wxgzhWssbMng" class="com.jeecms.cms.manager.main.impl.WxgzhWssbMngImpl"/>
     <bean id="callInterfaceMng" class="com.jeecms.cms.manager.main.impl.CallInterfaceMngImpl"/>
 
+    <bean id="userinfoMng" class="com.jeecms.cms.manager.main.impl.WebHallUserInforMationMngImpl"/>
+    <bean id="incinfoMng" class="com.jeecms.cms.manager.main.impl.WebHallIncInforMationMngImpl"/>
+ 
+    <bean id="matterService" class="com.jeecms.cms.manager.main.impl.MatterServiceImpl"/>
+
+    <bean id="dsfxtconfigservice" class="com.jeecms.cms.dao.main.impl.DsfxtConfigServiceImpl"/>
+
     <!--DAO-->
     <bean id="wxgzhWssbDao" class="com.jeecms.cms.dao.main.impl.WxgzhWssbDaoImpl"/>
+
+    <bean id="webHallUserInforMationDao" class="com.jeecms.cms.dao.main.impl.WebHallUserInforMationDaoImpl"/>
+    <bean id="webHallIncInforMationDao" class="com.jeecms.cms.dao.main.impl.WebHallIncInforMationDaoImpl"/>
+
 
 </beans>

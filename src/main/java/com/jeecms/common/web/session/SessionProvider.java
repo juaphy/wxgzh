@@ -20,4 +20,6 @@ public interface SessionProvider {
 	public void logout(HttpServletRequest request, HttpServletResponse response);
 
 	public void logout2(HttpServletRequest request, HttpServletResponse response, String key);
+
+	public void logout3(HttpServletRequest request, HttpServletResponse response, String key);
 }

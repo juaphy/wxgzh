@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>登陆页面</title>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <link href="/${mobileRes!}/wxgzhwssb/css/login.css" type="text/css" rel="stylesheet">
+		<script src="/${mobileRes!}/wxgzhwssb/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-title"><p>贵州省网上办事大厅登录</p>
+                <i></i>
+            </div>
+            <form method="post" id="form" action="/wssb/login.jspx">
+            <input type="hidden" name="type" value="0" >
+            <input type="hidden" name="areaId" value="${areaId!}" >
+            <div class="login-bar">
+                <ul>
+                    <li><img src="/${mobileRes!}/wxgzhwssb/images/login_user.png"><input type="text" id="account" name="account" class="text" placeholder="请输入用户名" /><div id="accspan"></div></li>
+                    <li><img src="/${mobileRes!}/wxgzhwssb/images/login_pwd.png"><input type="password" id="password" name="password" class="psd" placeholder="请输入确认密码" /><div id="pwdspan"></div></li>
+                </ul>
+            </div>
+            <div class="login-btn" >
+<!--            	   <button id="btnSub"  class="submit"  type="button">登陆</button> -->
+               <!--  <a href="http://smrz.gzegn.gov.cn/sso/register?client_id=GAIIMAIQP&goto=/member/index.jspx"><div class="login-reg"><p>没有账号，先注册</p></div></a> -->
+                <a id="btnSub"  href="javascript:;"  ><div class="login-reg" ><p  style="margin:0 auto;background:#f34541;">登录</p></div></a>
+                <a  href="http://58.16.65.68:83/sso/register?client_id=GAIIMAIQP&goto=/member/index.jspx"><div class="login-reg"><p style="margin:25px auto;">没有账号，先注册</p></div></a>
+            </div>
+            </form> 
+        </div>
+    </body>
+</html> 
+
+<script type="text/javascript">
+	$(function(){
+		var ischeck= '${ischeck!}';
+		$("#password").val("");
+		//alert(ischeck);
+		if(ischeck!=null||ischeck!=""||ischeck!=undefined){
+			$("#accspan").html('<span style="color:red;font-size:12px;">'+ischeck+'</span>');
+		}
+		$("#account").focus(function(){
+			$("#accspan").html('');
+		});
+		$("#btnSub").click(function(){
+			var password=$("#password").val();
+			var account=$("#account").val();
+			if(account==null||account==""){
+				$("#accspan").html('<span style="color:red;font-size:12px;">账号不能为空</span>');
+				return false;		
+			}else{
+				if(account.indexOf(" ")>-1){
+					$("#accspan").html('<span style="color:red;font-size:12px;">账号不能有空格</span>');
+					return false;		
+				}
+				$("#accspan").html('');
+			}
+			if(password==null||password==""){
+				$("#pwdspan").html('<span style="color:red;font-size:12px;">密码不能为空</span>');
+				return false;
+			}else{
+				if(password.indexOf(" ")>-1){
+					$("#pwdspan").html('<span style="color:red;font-size:12px;">密码不能有空格</span>');
+					return false;
+				}
+				$("#pwdspan").html('');
+			}
+			
+			$("#form").submit();
+			
+		});
+		
+	})
+</script>

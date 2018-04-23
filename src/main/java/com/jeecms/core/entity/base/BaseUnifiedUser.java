@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 
 public abstract class BaseUnifiedUser  implements Serializable {
-
-	public static String REF = "UnifiedUser";
+    private static final long serialVersionUID = -935595751955897465L;
+    public static String REF = "UnifiedUser";
 	public static String PROP_ACTIVATION = "activation";
 	public static String PROP_ERROR_COUNT = "errorCount";
 	public static String PROP_ACTIVATION_CODE = "activationCode";
@@ -59,7 +59,8 @@ public abstract class BaseUnifiedUser  implements Serializable {
 		java.lang.String registerIp,
 		java.lang.Integer loginCount,
 		java.lang.Integer errorCount,
-		java.lang.Boolean activation) {
+		java.lang.Boolean activation,
+        java.lang.String areaid) {
 
 		this.setId(id);
 		this.setUsername(username);
@@ -69,6 +70,7 @@ public abstract class BaseUnifiedUser  implements Serializable {
 		this.setLoginCount(loginCount);
 		this.setErrorCount(errorCount);
 		this.setActivation(activation);
+		this.setAreaid(areaid);
 		initialize();
 	}
 
@@ -98,8 +100,7 @@ public abstract class BaseUnifiedUser  implements Serializable {
 	private java.lang.String errorIp;
 	private java.lang.Boolean activation;
 	private java.lang.String activationCode;
-
-
+    private java.lang.String areaid;
 
 	/**
 	 * Return the unique identifier of this class
@@ -396,6 +397,14 @@ public abstract class BaseUnifiedUser  implements Serializable {
 
     public void setType(java.lang.String type) {
         this.type = type;
+    }
+
+    public java.lang.String getAreaid() {
+        return areaid;
+    }
+
+    public void setAreaid(java.lang.String areaid) {
+        this.areaid = areaid;
     }
 
 

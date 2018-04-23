@@ -100,6 +100,16 @@
 			<key column="user_id"/>
 			<one-to-many class="com.jeecms.cms.entity.main.CmsThirdAccount"/>
 		</set>
-
+        <set name="userinfoSet" inverse="true" cascade="delete-orphan">
+            <cache usage="read-write"/>
+            <key column="user_uid"/>
+            <one-to-many class="com.jeecms.cms.entity.main.wssb.TWebHallUserInforMation"/>
+        </set>
+        <set name="incinfoSet" inverse="true" cascade="delete-orphan">
+            <cache usage="read-write"/>
+            <key column="inc_id"/>
+            <one-to-many class="com.jeecms.cms.entity.main.wssb.TWebHallIncInforMation"/>
+        </set>
+        <property name="areaid" column="areaid" type="string" not-null="false" length="50"/>
 	</class>
 </hibernate-mapping>

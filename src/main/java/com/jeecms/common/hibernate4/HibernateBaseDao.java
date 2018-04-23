@@ -43,7 +43,7 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	 *            是否锁定，使用LockMode.UPGRADE
 	 * @return 持久化对象
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	protected T get(ID id, boolean lock) {
 		T entity;
 		if (lock) {
@@ -58,7 +58,7 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	/**
 	 * 按属性查找对象列表
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	protected List<T> findByProperty(String property, Object value) {
 		Assert.hasText(property);
 		return createCriteria(Restrictions.eq(property, value)).list();
@@ -67,12 +67,11 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	/**
 	 * 按属性查找唯一对象
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	protected T findUniqueByProperty(String property, Object value) {
 		Assert.hasText(property);
 		Assert.notNull(value);
-		return (T) createCriteria(Restrictions.eq(property, value))
-				.uniqueResult();
+		return (T) createCriteria(Restrictions.eq(property, value)).uniqueResult();
 	}
 
 	/**
@@ -82,7 +81,8 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	 * @param value
 	 * @return
 	 */
-	protected int countByProperty(String property, Object value) {
+	@SuppressWarnings("deprecation")
+    protected int countByProperty(String property, Object value) {
 		Assert.hasText(property);
 		Assert.notNull(value);
 		return ((Number) (createCriteria(Restrictions.eq(property, value))
@@ -96,7 +96,8 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	 * @param criterion
 	 *            数量可变的Criterion.
 	 */
-	protected List findByCriteria(Criterion... criterion) {
+	@SuppressWarnings("rawtypes")
+    protected List findByCriteria(Criterion... criterion) {
 		return createCriteria(criterion).list();
 	}
 

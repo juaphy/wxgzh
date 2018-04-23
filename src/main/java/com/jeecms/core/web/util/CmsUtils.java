@@ -11,6 +11,12 @@ import com.jeecms.core.entity.CmsUser;
  * 比如获得会员信息,获得后台站点信息
  */
 public class CmsUtils {
+
+    /**
+     * CA用户KEY
+     */
+    public static final String CA_KEY = "_ca_key";
+
 	/**
 	 * 用户KEY
 	 */
@@ -84,4 +90,15 @@ public class CmsUtils {
 	public static Integer getSiteId(HttpServletRequest request) {
 		return getSite(request).getId();
 	}
+
+    /**
+     * 设置CA登录ID
+     * 
+     * @param request
+     * @param login_id_ca
+     */
+    public static void setCA(HttpServletRequest request, String login_id_ca) {
+        request.setAttribute(CA_KEY, login_id_ca);
+    }
+
 }

@@ -9,16 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+//import org.apache.shiro.SecurityUtils;
+//import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.jeecms.common.util.CheckMobile;
+import com.jeecms.common.util.SessionUtils;
 import com.jeecms.common.web.CookieUtils;
 import com.jeecms.common.web.session.SessionProvider;
+import com.jeecms.core.entity.Authentication;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
+import com.jeecms.core.manager.AuthenticationMng;
 import com.jeecms.core.manager.CmsSiteMng;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.util.CmsUtils;
@@ -91,16 +94,27 @@ public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 		}
 		CmsUtils.setSite(request, site);
 		CmsThreadVariable.setSite(site);
-		Subject subject = SecurityUtils.getSubject();
-		CmsUser user =null;
-		if (subject.isAuthenticated()|| subject.isRemembered()) {
+		//Subject subject = SecurityUtils.getSubject();
+		CmsUser user = null;
+		Authentication userA = authMng.retrieveUserIdFromSession(session, request);
+		//初始区划信息，防止直接访问链接地址时，查询出全部的新闻信息
+        String areaId = SessionUtils.getAreaidInfo(request);
+        SessionUtils.setAreaidInfo(request, areaId);
+        if (userA != null) {
+            user = cmsUserMng.findById(userA.getUid());
+        }
+        if (user != null) {
+            CmsUtils.setUser(request, user);
+            CmsUtils.setCA(request, userA.getLoginIdCa());
+        }
+		/*if (subject.isAuthenticated()|| subject.isRemembered()) {
 			String username =  (String) subject.getPrincipal();
 			user= cmsUserMng.findByUsername(username);
 			CmsUtils.setUser(request, user);
 			// Site加入线程变量
 			CmsThreadVariable.setUser(user);
 		}
-		checkEquipment(request, response);
+		checkEquipment(request, response);*/
 		return true;
 	}
 	
@@ -154,9 +168,12 @@ public class FrontContextInterceptor extends HandlerInterceptorAdapter {
 
 	private CmsSiteMng cmsSiteMng;
 	private CmsUserMng cmsUserMng;
+
 	@Autowired
 	private SessionProvider session;
 
+	@Autowired
+    private AuthenticationMng authMng;
 
 	@Autowired
 	public void setCmsSiteMng(CmsSiteMng cmsSiteMng) {

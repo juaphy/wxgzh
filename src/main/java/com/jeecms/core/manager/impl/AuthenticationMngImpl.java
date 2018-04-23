@@ -76,7 +76,7 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 		}
 	}
 
-	public Integer retrieveUserIdFromSession(SessionProvider session,
+/*	public Integer retrieveUserIdFromSession(SessionProvider session,
 			HttpServletRequest request) {
 		String authId = (String) session.getAttribute(request, AUTH_KEY);
 		if (authId == null) {
@@ -87,7 +87,7 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 			return null;
 		}
 		return auth.getUid();
-	}
+	}*/
 
 	public void storeAuthIdToSession(SessionProvider session,
 			HttpServletRequest request, HttpServletResponse response,
@@ -186,4 +186,39 @@ public class AuthenticationMngImpl implements AuthenticationMng {
 		// 为了防止多个应用同时刷新，间隔时间=interval+RandomUtils.nextInt(interval/4);
 		// return current + interval + RandomUtils.nextInt(interval / 4);
 	}
+
+	public Authentication login(String userName,  String ip,
+            HttpServletRequest request, HttpServletResponse response,
+            SessionProvider session) throws UsernameNotFoundException,
+            BadCredentialsException {
+        UnifiedUser user = unifiedUserMng.login(userName, ip);
+        if(user==null){
+            return null;
+        }
+        Authentication auth = new Authentication();
+        auth.setUid(user.getId());
+        auth.setUsername(user.getUsername());
+        auth.setEmail(user.getEmail());
+        auth.setLoginIp(ip);
+        String login_id = null;
+        if(login_id != null)
+            auth.setLoginIdCa(login_id);
+        save(auth);
+        session.setAttribute(request, response, AUTH_KEY, auth.getId());
+        return auth;
+    }
+
+    public Authentication retrieveUserIdFromSession(SessionProvider session,
+            HttpServletRequest request) {
+        String authId = (String) session.getAttribute(request, AUTH_KEY);
+        if (authId == null) {
+            return null;
+        }
+        Authentication auth = retrieve(authId);
+        if (auth == null) {
+            return null;
+        }
+        return auth;
+    }
+
 }

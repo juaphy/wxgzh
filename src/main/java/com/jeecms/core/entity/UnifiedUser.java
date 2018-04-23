@@ -30,7 +30,8 @@ public class UnifiedUser extends BaseUnifiedUser {
 		java.lang.String registerIp,
 		java.lang.Integer loginCount,
 		java.lang.Integer errorCount,
-		java.lang.Boolean activation) {
+		java.lang.Boolean activation,
+        java.lang.String areaid) {
 
 		super (
 			id,
@@ -41,7 +42,8 @@ public class UnifiedUser extends BaseUnifiedUser {
 			registerIp,
 			loginCount,
 			errorCount,
-			activation);
+			activation,
+			areaid);
 	}
 
 	/* [CONSTRUCTOR MARKER END] */

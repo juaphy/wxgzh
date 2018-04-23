@@ -177,4 +177,17 @@ public class CacheSessionProvider implements SessionProvider, InitializingBean {
 	public void setSessionIdGenerator(SessionIdGenerator sessionIdGenerator) {
 		this.sessionIdGenerator = sessionIdGenerator;
 	}
+
+    @Override
+    public void logout3(HttpServletRequest request, HttpServletResponse response, String key) {
+        request.removeAttribute(CURRENT_SESSION);
+        request.removeAttribute(CURRENT_SESSION_ID);
+        String root = RequestUtils.getRequestedSessionId(request);
+        if (!StringUtils.isBlank(root)) {
+            sessionCache.clear(root);
+            Cookie cookie = createCookie(request, null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+    }
 }

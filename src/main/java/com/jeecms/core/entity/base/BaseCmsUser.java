@@ -15,8 +15,8 @@ import com.jeecms.core.entity.CmsLog;
  */
 
 public abstract class BaseCmsUser  implements Serializable {
-
-	public static String REF = "CmsUser";
+    private static final long serialVersionUID = -5173888109712752373L;
+    public static String REF = "CmsUser";
 	public static String PROP_REGISTER_TIME = "registerTime";
 	public static String PROP_LOGIN_COUNT = "loginCount";
 	public static String PROP_SELF_ADMIN = "selfAdmin";
@@ -65,7 +65,8 @@ public abstract class BaseCmsUser  implements Serializable {
 		java.lang.Boolean admin,
 		java.lang.Boolean viewonlyAdmin,
 		java.lang.Boolean selfAdmin,
-		java.lang.Integer statu) {
+		java.lang.Integer statu,
+        java.lang.String areaid) {
 
 		this.setId(id);
 		this.setGroup(group);
@@ -80,12 +81,13 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setViewonlyAdmin(viewonlyAdmin);
 		this.setSelfAdmin(selfAdmin);
 		this.setStatu(statu);
+		this.setAreaid(areaid);
 		initialize();
 	}
 
 	protected void initialize () {}
 
-
+    private java.lang.String areaid;
 
 	private int hashCode = Integer.MIN_VALUE;
 
@@ -621,6 +623,14 @@ public abstract class BaseCmsUser  implements Serializable {
 	public String toString () {
 		return super.toString();
 	}
+
+    public java.lang.String getAreaid() {
+        return areaid;
+    }
+
+    public void setAreaid(java.lang.String areaid) {
+        this.areaid = areaid;
+    }
 
 
 }

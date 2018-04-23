@@ -65,12 +65,12 @@
         <div class="box">
             <div class="hd">
                 <li class="active">
-                    <a href="${base}/mobile/bmfw/${areaId!}.jspx">办事申报</a>
+                    <a href="">办事申报</a>
                 </li>
-                <li class="line"><a href="${base}/mobile/bjcx/${areaId!}.jspx">进度查询</a>
+                <li class="line"><a href="/wssb/jdcx.jspx?areaId=${areaId!}">进度查询</a>
                 </li>
                 <li class="line">
-                    <a href="${base}/mobile/map/${areaId!}.jspx">办事地图</a>
+                    <a href="/wssb/bsmap.jspx?areaId=${areaId!}">办事地图</a>
                 </li>
             </div>
 
@@ -79,11 +79,11 @@
                 [#if xqDeptInfos??]
                 [#list xqDeptInfos as dept]
                 <li>
-                    <a href="/wssb/bmbs/${deptId!}.jspx?areaId=${areaId!}">
+                    <a href="/wssb/bmbs/${dept.deptId!}.jspx?areaId=${areaId!}" title="${dept.name!}">
                         <img src1="/${mobileRes!}/wxgzhwssb/images/dept_icon/${dept.deptId!}.png" alt="">
                     </a>
                     <h3>
-                        <a href="/wssb/bmbs/${dept.deptId!}.jspx">${dept.name!}</a>
+                        <a href="/wssb/bmbs/${dept.deptId!}.jspx" title="${dept.name!}">${dept.shortName!}</a>
                     </h3>
                 </li>
                 [/#list]
@@ -94,11 +94,11 @@
                 [#if xzDeptInfos??]
                 [#list xzDeptInfos as dept]
                 <li>
-                    <a href="/wssb/bmbs/${deptId!}.jspx?areaId=${areaId!}">
+                    <a href="/wssb/bmbs/${dept.deptId!}.jspx?areaId=${areaId!}" title="${dept.name!}">
                         <img src1="/${mobileRes!}/wxgzhwssb/images/dept_icon/${dept.deptId!}.png" alt="">
                     </a>
                     <h3>
-                        <a href="/wssb/bmbs/${dept.deptId!}.jspx">${dept.shortName!}</a>
+                        <a href="/wssb/bmbs/${dept.deptId!}.jspx" title="${dept.name!}">${dept.shortName!}</a>
                     </h3>
                 </li>
                 [/#list]

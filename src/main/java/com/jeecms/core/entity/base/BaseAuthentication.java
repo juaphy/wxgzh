@@ -22,7 +22,7 @@ public abstract class BaseAuthentication  implements Serializable {
 	public static String PROP_ID = "id";
 	public static String PROP_USERNAME = "username";
 	public static String PROP_UID = "uid";
-
+	public static String PROP_LOGIN_ID_CA = "loginIdCa";
 
 	// constructors
 	public BaseAuthentication () {
@@ -47,7 +47,8 @@ public abstract class BaseAuthentication  implements Serializable {
 		java.lang.String type,
 		java.util.Date loginTime,
 		java.lang.String loginIp,
-		java.util.Date updateTime) {
+		java.util.Date updateTime,
+        java.lang.String loginIdCa) {
 
 		this.setId(id);
 		this.setUid(uid);
@@ -75,8 +76,7 @@ public abstract class BaseAuthentication  implements Serializable {
 	private java.util.Date loginTime;
 	private java.lang.String loginIp;
 	private java.util.Date updateTime;
-
-
+	private java.lang.String loginIdCa;
 
 	/**
 	 * Return the unique identifier of this class
@@ -229,6 +229,14 @@ public abstract class BaseAuthentication  implements Serializable {
 
     public void setType(java.lang.String type) {
         this.type = type;
+    }
+
+    public java.lang.String getLoginIdCa() {
+        return loginIdCa;
+    }
+
+    public void setLoginIdCa(java.lang.String loginIdCa) {
+        this.loginIdCa = loginIdCa;
     }
 
 

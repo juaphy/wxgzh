@@ -1,0 +1,88 @@
+<!DOCTYPE html>   
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+     
+  	<link href="/${res}/ysgzmobile/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/${res}/ysgzmobile/css/index.css" rel="stylesheet">
+    <script type="text/javascript" src="/${res}/js/jquery-1.8.0.min.js"></script>
+  </head>
+  <body>
+	<header>
+		<a href="#" class="back glyphicon glyphicon-remove"></a>
+		<h3>提示</h3>
+	</header>
+	<div class="appContainer">
+		
+    <div class="appContent">
+    	
+
+    	<div id="ts1" class="appFormGroup">
+    		
+    			<div class="queren">	
+	               
+                    <div class="wancheng">
+                        <p>恭喜您在贵州省网上办事大厅成功申请业务</p>
+                        <p class="bianhao">业务编号：${bsnum}</p>
+                    </div>
+
+                    <p class="ganxie">感谢您对贵州省网上办事大厅的关注和应用，我们将竭诚您服务</p>
+					<a href="${base}/wechat/center.jspx" class="btn btn-block btnPrimary"> 返回用户中心</a>
+    			</div>
+    	</div>
+    	
+    	<div id="ts2"  class="appFormGroup">
+    		
+    			<div class="queren">	
+	               
+                    <div class="wancheng">
+                        <p>请检查参数是否正确传入</p>
+                        <p class="bianhao"></p>
+                    </div>
+
+                    <p class="ganxie">感谢您对贵州省网上办事大厅的关注和应用，我们将竭诚您服务</p>
+					<a href="${base}/wechat/center.jspx" class="btn btn-block btnPrimary"> 返回用户中心</a>
+    			</div>
+    	</div>
+    	<div id="ts3"  class="appFormGroup">
+    		
+    			<div class="queren">	
+	               
+                    <div class="wancheng">
+                        <p>该用户不存在</p>
+                        <p class="bianhao"></p>
+                    </div>
+                    <p class="ganxie">感谢您对贵州省网上办事大厅的关注和应用，我们将竭诚您服务</p>
+					<a href="${base}/wechat/center.jspx" class="btn btn-block btnPrimary"> 返回用户中心</a>
+    			</div>
+    	</div>
+    	
+    </div> 
+	</div>
+
+  </body>
+</html>
+
+<script>
+	var type='${type}';
+	$(function(){
+		if(type!=undefined&&type=="1"){
+			$("#ts1").show();
+			$("#ts2").hide();
+			$("#ts3").hide();
+		}else if(type!=undefined&&type=="2"){
+			$("#ts2").show();
+			$("#ts1").hide();
+			$("#ts3").hide();
+		}else{
+			$("#ts1").hide();
+			$("#ts2").hide();
+			$("#ts3").show();
+		}
+		
+	
+	})
+</script>

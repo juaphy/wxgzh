@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="/${mobileRes!}/wxgzhwssb/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/${mobileRes!}/wxgzhwssb/css/index.css" rel="stylesheet">
+    <link type="text/css" media="all" rel="stylesheet" href="/${mobileRes!}/wxgzhwssb/css/donwload_style.css" />
+    <link type="text/css" media="all" rel="stylesheet" href="/${mobileRes!}/wxgzhwssb/css/dropload.css">
+    <script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/commontools.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/base64.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/ajaxupload.js"></script>
+	<script type="text/javascript" src="/${mobileRes!}/wxgzhwssb/js/json.js"></script>
+    </head>
+<body>
+	<header>
+		<a href="#" class="back glyphicon glyphicon-chevron-left"></a>
+		<h3>${Sxmc}</h3>
+	</header>
+	<div class="appContainer">
+		
+    <div class="appContent">
+    	<div class="appStep">
+    		<ul >
+    		<li class="act"><span>1</span><p>基本表单</p></li>
+    		<li class="act"><span>2</span><p>材料上传</p></li>
+    		<li id="queren"><span>3</span><p>申报确认</p></li>
+    	</ul>
+    	</div>
+    	<div class="tipWaring jiuzheng">如果材料是“暂未上传”的标志需要点击上传附件	</div>
+		 <div id="loadimg" style="font-size: 10px;display: none;"  class="dropload-load"><span class="loading"></span>在线申报中...</div>
+    	<div class="appFormGroup" id="clxx"  >
+    		
+    			<!-- <dl class="upLoadImg">	
+					<dt><span class="neme">	《工商营业执照》</span>	<span class="tipWarning tip"><i class="glyphicon glyphicon-exclamation-sign"></i>暂未上传	</span></dt>
+					<dd>
+						<ul>
+							<li  class="add"><div class="uploadBox">
+							<span>	</span><p>	点此上传</p>	
+							</div></li>
+						</ul>
+					</dd>
+    			</dl> -->
+
+    			<!-- <dl class="upLoadImg">
+					<dt><span class="neme">	《税务发票单》</span><span class="tipSuccess tip"><i class="glyphicon glyphicon-ok-sign"></i>已上传1张</span></dt>
+					<dd>
+						<ul id="">
+							<li><div class="uploadBox"> <img src="/${res}/ysgzmobile/img/bidan.png" alt="">	</div></li>
+							<li class="add">
+							<div class="uploadBox">	
+								<span></span>
+								<p>点此上传</p>
+							</div></li>
+						</ul>
+					</dd>
+    			</dl> -->
+
+
+    	</div>
+    	
+    	<div class="appFormGroup" id="checkedzl" style="display:none;">
+    		
+    			<div class="queren">	
+					<ul>
+						<li><h3>基本表单</h3><span class="tip"></span><span class="tipSuccess tip"> <i class="glyphicon glyphicon-ok-sign"></i>填写正确</span></li>
+						<li id="cl_error"><a href=""><h3>材料信息</h3><span class="tipWarning tip"><i class="glyphicon glyphicon-exclamation-sign"></i>填写有误</span></a></li>
+						<li id="cl_colleck"><h3>材料信息</h3><span class="tipSuccess tip"> <i class="glyphicon glyphicon-ok-sign"></i>填写正确</span></li>
+					</ul>
+					<a href="javascript:submit()" class="btn btn-block btnPrimary"> 提 交</a>
+    			</div>
+    	</div>
+    	
+    </div>
+	</div>
+	<div class="footer btnGroup">	
+		<a href="javascript:back();" class="btn">上一步</a>
+		 <a id="nextbtn" href="javascript:next();" class="btn">下一步</a> 
+	</div>
+	<!-- <div class="save"><img src="/${res}/ysgzmobile/img/save.png" alt=""><p>暂存</p></div> -->
+	
+  </body>
+</html>
+
+<script>
+var clarray=[];
+var iSupload=[];
+var iSuploadfile=[];
+var materialinfoxml=[];
+var filexml;
+  
+var inccode = '${usercode!}';
+var token='${token!}';
+if(inccode==null||inccode==""||inccode==undefined){
+	inccode="";
+}    
+var sxid='${sxId}';
+
+var baseinfo='${param}';
+//baseinfo=decodeBase64(baseinfo);
+
+var clxxlist="<materials>";
+	//alert(baseinfo);
+	debugger;
+	$.ajax({
+		url:"/wssb/cl.jspx",
+		data:{"sxid":sxid,"groupid":""},
+		type:"post",
+		dataType:"XML",
+		timeout: 300000, 
+		success:function(xml){debugger;
+			if (xml == null || "" == xml) {
+				return false;
+			}
+			var clxxlength=$(xml).find("length").text();
+			filexml=new Array(parseInt(clxxlength));
+			for(var j=0;j<parseInt(clxxlength);j++){
+				iSupload[j]=false;
+				iSuploadfile[j]=false;
+			}
+						//alert(clxxlength)
+						if(xml!=null&&xml!=undefined){
+							var clmc="";
+							$(xml).find("cl").each(function(i){
+										clarray[i] = new Object();
+							        	clarray[i].clid = new String($(this).children("clid").text());
+							        	clarray[i].clmc = new String($(this).children("clmc").text());
+							        	clarray[i].dzhyq = new String($(this).children("dzhyq").text());
+							        	clarray[i].xid = new String($(this).children("xid").text());
+							        	clarray[i].gid = new String($(this).children("gid").text());
+							        	clarray[i].baseinfo = new String($(this).children("baseinfo").text());
+							        	clarray[i].formver = new String($(this).children("formver").text());
+							        	clarray[i].uid = new String($(this).children("uid").text());
+							        	clarray[i].fid = new String($(this).children("fid").text());
+							        	clarray[i].zt = new String($(this).children("zt").text());
+							        	clarray[i].sxid = new String($(this).children("sxid").text());
+							        	clarray[i].ctype = new String($(this).children("ctype").text());
+							        	clarray[i].templateid = new String($(this).children("templateid").text());
+							        	clarray[i].templateName = new String($(this).children("templateName").text());
+							        	clarray[i].bz = new String($(this).children("bz").text());
+							        	clarray[i].cclid = new String($(this).children("cclid").text());
+							        	clarray[i].fname = new String($(this).children("fname").text());
+							        	clarray[i].orinum = new String($(this).children("orinum").text());
+							        	clarray[i].copynum = new String($(this).children("copynum").text());
+							        	clarray[i].pid = new String($(this).children("pid").text());
+							        	clarray[i].clbh = new String($(this).children("clbh").text());
+							        	clarray[i].sfby = new String($(this).children("sfby").text());
+							        	clarray[i].filetype = new String($(this).children("filetype").text());
+							        	clarray[i].filelist="";
+										clmc=$(this).find("clmc").text();
+										//alert(clmc.length);
+										if(clmc.length>=19){
+											//clmc=clmc.substring(0,18)+"...";
+										}
+								 			   var clxx='<dl class="upLoadImg">'+	
+										  				'<dt><span class="neme" title="'+$(this).find("clmc").text()+'">'+clmc+'</span><span add="" class="tipSuccess tip"><i class="glyphicon glyphicon-ok-sign"></i>暂未上传</span></dt>'+
+										  				'<dd>'+
+										  				'<ul>'+
+										 				//			'<li><div class="uploadBox"> <img src="	img/bidan.png" alt=""></div></li>'+
+										  			    '<li class="add"><div class="uploadBox">	'+
+										  				//'<a id="upbutton"'+i+' onclick="upload()"><span></span>'+
+										  				'<div id="upbutton'+i+'"><span></span>'+
+										  				'<p>点此上传</p></div>'+
+										  				'</div></li>'+
+										  				'</ul>'+
+										  				'</dd>'+
+						    		      				'</dl>';
+								$("#clxx").append(clxx);
+								
+								var clxxXml=getclxxXml(i);
+								materialinfoxml.push({"clxxXml":clxxXml,"num":i});
+								
+								var button = $('#upbutton'+i), interval;
+								debugger;
+								var fileName = $(this).children("clmc").text();
+								new AjaxUpload(button, { // ${wtiohttp!''}
+									action: '/wssb/uploadFileToWt.jspx?sxid='+sxid+'&r='+Math.random()+'&filename='+ encodeURI(encodeURI(fileName)) + '&clbh='+ $(this).children("clbh").text()+'&inccode='+ inccode, 
+									name: 'myfile',
+									onSubmit : function(file, ext){
+										ext  = ext.toLowerCase();
+										var file_name=file.substring(0,file.lastIndexOf("."));
+										var reg=[":",";","+","?",".","<",">","{","}","[","]","*","&","%","#","@","~","?","$","\"","'","/","|"];
+										for(var j=0;j<reg.length;j++){
+											if(file_name.indexOf(reg[j])!="-1"){
+												alert("上传的文件中含有特殊字符，请修改名称重新上传！");
+												return false;
+											}
+										}
+										//var filetype = clarray[i].filetype; 
+										var filetype = clarray[i].filetype;
+										if(filetype!=null&&filetype!=""){
+											//判断文件类型是否存在
+											var fjlx = filetype.indexOf(ext);
+												if(fjlx =='-1'){
+													alert("您上传的文档格式不对，请重新选择！该材料只支持上传"+filetype+"格式的文件");
+													return false;
+												}
+										}else{
+											if(!(ext && /^(doc|docx|xls|xlsx|pdf|ppt|jpg|bmp|png|DOC|DOCX|XLS|XLSX|PDF|PPT|JPG|BMP|PNG|zbj|jzbj|szbj|kczbj|hwzbj|qtzbj|zbs|hwzbs|bds|hwbds|tbj|jtbj|stbj|kctbj|hwtbj|qttbj|tbs|hwtbs|tbz|jtbz|stbz|kctbz|hwtbz|qttbz|tyzbj|tytbj|tytbz|sgbmz|jlbmz|sjbmz|kcbmz|hwbmz|qtbmz|zgzmz|zip|rar)$/.test(ext))){
+												alert("您上传的文档格式不对，请重新选择！支持*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.ppt,*.jpg,*.bmp,*.png,*.zbj,*.jzbj,*.szbj,*.kczbj,*.hwzbj,*.qtzbj,*.zbs,*.hwzbs,*.bds,*.hwbds,*.tbj,*.jtbj,*.stbj,*.kctbj,*.hwtbj,*.qttbj,*.tbs,*.hwtbs,*.tbz,*.jtbz,*.stbz,*.kctbz,*.hwtbz,*.qttbz,*.tyzbj,*.tytbj,*.tytbz,*.sgbmz,*.jlbmz,*.sjbmz,*.kcbmz,*.hwbmz,*.qtbmz,*.rar,*.zip,*.zgzmz格式的文件");
+												return false;
+											}
+										}
+										button.find("p").text('上传中。。。');
+										interval = window.setInterval(function(){
+											//getPro();
+											var text=button.find("p").text();
+											if (text.length < 13){
+												button.find("p").text(text + '.');
+											} else {
+												button.find("p").text('上传中。。。');
+											}
+										}, 200);
+										
+										if(!iSuploadfile[i]){
+										}
+									},
+									onComplete: function(file, response){debugger;
+										//alert(file);
+										/* var info = new String($(response).text());
+										var status = info.split(":")[0];
+										var msg = info.split(":")[1];//文件id */
+										var obj = JSON.parse(response); //由JSON字符串转换为JSON对象
+										var status = obj.status;
+										var msg = obj.fileId;
+										var _uploadpath = obj.uploadPath;
+										//获取文件后缀
+										var filetype = file.split(".")[1];
+										if(status=="fileid"){
+											button.find("p").text('继续上传');
+											clarray[i].zt = 1;
+											clarray[i].fid = msg;
+											clarray[i].fname = file;
+											clarray[i].filelist += msg+":"+file+";";
+											window.clearInterval(interval);
+											this.enable();
+										}else{
+											window.clearInterval(interval);
+											button.find("p").text('点此上传');	
+											this.enable();
+										}
+										
+										var uploadnum=$("#upbutton"+i).parents("dd").prev().find("span").eq(1);
+										var addfilename=$("#upbutton"+i).parent().parent().parent();
+										setfileslist(uploadnum,addfilename,filetype,file,msg,_uploadpath);
+										
+									    var fileStr="<file><fileid><![CDATA["+msg+"]]></fileid><filename><![CDATA["+file+"]]></filename><filepath><![CDATA[]]></filepath><filedel><![CDATA[0]]></filedel></file>";
+									  	materialinfoxml[i].clxxXml;
+									  	//alert(materialsxml[i].clxxXml);
+									  	var mm=materialinfoxml[i].clxxXml;
+									  	if(filexml[i]==undefined){
+									  		filexml[i]=fileStr;
+									  		//filexml.push(fileStr);
+									  	}else{
+									  		filexml[i]=filexml[i]+fileStr;
+									  	}
+									  //	alert(filexml[i]);
+									  	mm=mm.substring(0,mm.lastIndexOf("</dataid>"));
+									  	materialinfoxml[i].clxxXml=mm+"</dataid>"+filexml[i]+"</materialinfo>";
+									  //	alert(materialinfoxml[i].clxxXml);
+									  
+									   iSupload[i]=true;
+									   iSuploadfile[i]=true;
+									}
+									 
+								}); 
+								
+							});	
+							//alert(clarray[1].pid+" "+clarray[1].clmc);
+						}
+					},
+					error:function(){
+						alert("系统出错");
+					},
+				});
+			
+			
+			var xmlHttpRequest;
+			/* function getPro(){	
+				 if(window.XmlHttpRequest){
+					 xmlHttpRequest=new XmlHttpRequest();
+				 }else{
+				  	xmlHttpRequest=new ActiveXObject("Microsoft.XMLHTTP");
+				 } 
+				 xmlHttpRequest.onreadystatechange=callBack; 
+				 url="/servlet/GetProgressServlet";
+				 xmlHttpRequest.open("post",url,true);
+				  
+				 xmlHttpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				 xmlHttpRequest.send("&timeStamp="+(new Date()).getTime()); 	  
+			} */
+			
+			function setfileslist(uploadnum,addfilename,filetype,file,msg,_uploadpath){
+				var picnum=uploadnum.text();
+				var regsfiletype=/^(|JPG|jpg|jpeg|JPEG|png|PNG)$/;
+				if(regsfiletype.test(filetype)){
+					var picture='<li><div class="uploadBox"><img src="' + _uploadpath + '/servlet/downloadFileServlet?fileNo='+msg+'"+ alt=""></div></li>';
+					addfilename.prepend(picture);
+						if(picnum=="暂未上传"){
+							uploadnum.text("已上传1份");
+						}else{
+							var start=parseInt(picnum.indexOf("传"))+1;
+							var end=picnum.lastIndexOf("份");
+							var num=picnum.substring(start,end);
+							num=parseInt(num)+1;
+							uploadnum.text("已上传"+num+"份");
+						}
+				}else{
+					var li='<li><div class="uploadBox1">'+file+'</div></li>';
+					addfilename.prepend(li);
+					if(picnum=="暂未上传"){
+						uploadnum.text("已上传1份");
+					}else{
+						var start=parseInt(picnum.indexOf("传"))+1;
+						var end=picnum.lastIndexOf("份");
+						var num=picnum.substring(start,end);
+						num=parseInt(num)+1;
+						uploadnum.text("已上传"+num+"份");
+					}
+				}
+			}
+	
+	
+	var gostatus=0;
+	function back(){
+		if(gostatus==0){
+			window.history.back();
+		}else if(gostatus==1){
+			$("#clxx").css("display","block");
+			$("#checkedzl").css("display","none");
+			$("#queren").removeClass("act");
+			$("#nextbtn").show();
+			gostatus=0;
+			
+			//alert(clxxlist);
+			//alert(iSupload.toString());
+		} 
+	}
+	
+	function next(){
+		gostatus=1;
+		$("#cl_error").hide();
+		$("#cl_colleck").show();
+		
+		$("#clxx").css("display","none");
+		$("#checkedzl").css("display","block");
+		$("#queren").addClass("act");
+		$("#nextbtn").hide();
+		if(sxid==null||sxid==""||sxid==undefined){
+				$("#cl_error").show();
+				$("#cl_colleck").hide();
+			}   
+		for(var k=0;k<iSupload.length;k++){
+			var isupload=iSupload[k];
+			if(isupload==false){
+				$("#cl_error").show();
+				$("#cl_colleck").hide();
+			}
+		}
+	}
+	var flag=true;
+	function submit(){debugger;
+			 for(var k=0;k<iSupload.length;k++){
+				var isupload=iSupload[k];
+				if(isupload==false){
+					alert("请上传全部材料");
+				   return false;
+				}
+			} 
+			if(sxid==null||sxid==""||sxid==undefined){
+				$("#cl_error").show();
+				$("#cl_colleck").hide();
+				alert("请上传全部材料");
+				return false;
+			}   
+			if(!flag){
+				return false;
+			}
+			flag=false;
+			$("#loadimg").css("display","block");
+			//alert(baseinfo);
+			var p=JSON.parse(baseinfo);
+			//alert(baseinfo);
+			 /* var json = eval('(' + baseinfo + ')'); 
+			 alert(json.per_name) ; */
+			//基本表单
+			var  baseForm="<baseForm>"+
+							"<dataid></dataid>"+
+							"<pid>"+sxid+"</pid>"+
+							"<bsnum></bsnum>"+
+							"<formid>1</formid>"+
+							"<version>1</version>"+
+							"<formtype>10</formtype>"+
+							"<data>"+
+								"<jbr_mc>"+p.per_name+"</jbr_mc>"+
+								"<jbr_sfzjhm>"+p.per_idcard+"</jbr_sfzjhm>"+
+								"<jbr_yddh>"+p.per_phone+"</jbr_yddh>"+
+								"<sqsxmc>"+p.sqsxmc+"</sqsxmc>"+
+								"<sqr_mc>"+p.per_name+"</sqr_mc>"+
+								"<sqr_sfzjhm>"+p.per_idcard+"</sqr_sfzjhm>"+
+								"<sqr_yddh>"+p.per_phone+"</sqr_yddh>"+
+								"<sqr_gddh>"+p.per_gddh+"</sqr_gddh>"+
+								"<per_zztype>"+p.per_zztype+"</per_zztype>"+
+								"<per_name>"+p.per_name+"</per_name>"+
+								"<per_idcard>"+p.per_idcard+"</per_idcard>"+
+								"<per_phone>"+p.per_phone+"</per_phone>"+
+								"<sqr_type>P</sqr_type>"+
+							"</data>"+
+					     "</baseForm>";
+					     
+			var params = new Object();
+				params.baseinfo=baseinfo;
+				var materialinfos="";
+				for(var i=0;i<materialinfoxml.length;i++){
+					//clxxlist+=materialinfoxml[i].clxxXml;
+					//alert(clxxlist);
+					//alert(materialinfoxml[i].clxxXml);
+					materialinfos=materialinfos+materialinfoxml[i].clxxXml;
+				}
+				//alert(materialinfos);
+				//console.log(materialinfos)
+				params.materials=clxxlist+materialinfos+"</materials>";
+				params.token=token;
+				params.sxId=sxid;
+				params.status="0";
+				params.baseForm=baseForm;
+				
+				//alert(params.materials);
+				
+				$.post("/wssb/toShenBao.jspx",params,function(data){
+					var type=$(data).find("type").text();
+					//alert(type);
+					$("#loadimg").css("display","none");
+					if(type=="1"){
+						//alert("成gong");
+						window.location.href='/wechat/ts.jspx?bsnum='+$(data).find("bsnum").text();
+					}else{
+						alert("申报失败");
+					}
+			
+				},"xml");
+	}
+	
+	
+	function getclxxXml(i){
+				var clxxlistxml="";
+				clxxlistxml+="<materialinfo>";
+				//clxxlist+="<id><![CDATA["+getId()+"]]></id>";
+				clxxlistxml+="<id><![CDATA[]]></id>";
+				clxxlistxml+="<materialid><![CDATA["+clarray[i].clbh+"]]></materialid>";
+				clxxlistxml+="<materialname><![CDATA["+clarray[i].clmc+"]]></materialname>";
+				clxxlistxml+="<submittype><![CDATA["+clarray[i].dzhyq+"]]></submittype>";
+				clxxlistxml+="<orinum><![CDATA["+clarray[i].orinum+"]]>";
+				clxxlistxml+="</orinum>";
+				clxxlistxml+="<copynum><![CDATA["+clarray[i].copynum+"]]>";
+				clxxlistxml+="</copynum>";
+				clxxlistxml+="<isneed><![CDATA["+clarray[i].zt+"]]></isneed>";
+				clxxlistxml+="<status><![CDATA[1]]></status>";
+				clxxlistxml+="<formid><![CDATA[1]]>";
+				clxxlistxml+="</formid>";
+				clxxlistxml+="<formver><![CDATA[10]]></formver>";
+				clxxlistxml+="<remark><![CDATA[上传文件]]></remark>";
+				clxxlistxml+="<username><![CDATA[申请人]]></username>";
+				clxxlistxml+="<certificateid><![CDATA[]]>";
+				clxxlistxml+="</certificateid>";
+				clxxlistxml+="<certificatestartdate><![CDATA[]]>";
+				clxxlistxml+="</certificatestartdate>";
+				clxxlistxml+="<certificateenddate><![CDATA[]]>";
+				clxxlistxml+="</certificateenddate>";
+				clxxlistxml+="<sh><![CDATA[]]>";
+				clxxlistxml+="</sh>";
+				clxxlistxml+="<shyj><![CDATA[]]>";
+				clxxlistxml+="</shyj>";
+				clxxlistxml+="<dataid><![CDATA[]]>";
+				clxxlistxml+="</dataid>";
+				
+				clxxlistxml+="</materialinfo>";	
+				
+				return clxxlistxml;									
+	}
+	
+	
+	
+	
+</script>

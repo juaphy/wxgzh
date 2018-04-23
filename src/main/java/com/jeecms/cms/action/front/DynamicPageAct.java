@@ -108,9 +108,10 @@ public class DynamicPageAct {
 	public String index(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 	    CmsSite site = CmsUtils.getSite(request);
 	    FrontUtils.frontData(request, model, site);
+	    return FrontUtils.pageNotFound(request, response, model);
 	    //	return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_INDEX, TPL_INDEX);
 	    //带有其他路径则是非法请求(非内网)
-	    String uri=URLHelper.getURI(request);
+	    /*String uri=URLHelper.getURI(request);
 	    if(StringUtils.isNotBlank(uri)&&(!(uri.equals("/")||uri.equals("/index.jhtml")))){
 	        return FrontUtils.pageNotFound(request, response, model);
 	    }
@@ -124,7 +125,7 @@ public class DynamicPageAct {
             return FrontUtils.pageNotFound(request, response, model);
         }
         model.put("menus", menus);
-        model.put("zwzxConfig", zwzxConfig);
+        model.put("zwzxConfig", zwzxConfig);*/
 
 	    //使用静态首页而且静态首页存在
 	    /*if(existIndexPage(site)){
@@ -139,7 +140,7 @@ public class DynamicPageAct {
 	            return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_INDEX, TPL_INDEX);
 	        }
 	    }*/
-        return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjindex");
+        //return FrontUtils.getTplPath(request, site.getSolutionPath(), Constants.TPLDIR_CXJINDEX, "tpl.cxjindex");
 	}
 
 	/**

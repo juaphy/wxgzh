@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jeecms.cms.CTools;
 import com.jeecms.cms.ListUtils;
 import com.jeecms.cms.dao.main.CxjDao;
 import com.jeecms.cms.entity.main.TCxjXjfwpd;

@@ -4,8 +4,10 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -208,4 +210,52 @@ public final class JsonUtil {
     public static final String DATE = "yyyy-MM-dd";
     public static final String DATEMIN = "yyyy-MM-dd HH:mm";
     public static final String DATETIME = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * 将json字符串转换成xml字符串
+     * @param json
+     * @param isCDATA 值是否使用CDATA标签包起来
+     * @return
+     */
+    public static String jsonToXml(String json, boolean isCDATA) {
+        String xml = "";
+        if (json != null && !"".equals(json)) {
+            Map<String, Object> map = jsonToMap(json);
+            if (map != null && !map.isEmpty()) {
+                Iterator it = map.entrySet().iterator();
+                Map.Entry entry;
+                String key;
+                String value;
+                StringBuffer xmlSbf = new StringBuffer();
+                while (it.hasNext()) {
+                    entry = (Map.Entry) it.next();
+                    key = (String) entry.getKey();
+                    value = (String) entry.getValue();
+                    xmlSbf.append("<");
+                    xmlSbf.append(key);
+                    xmlSbf.append(">");
+                    if (isCDATA) {
+                        xmlSbf.append("<![CDATA[");
+                        xmlSbf.append(value);
+                        xmlSbf.append("]]>");
+                    } else {
+                        xmlSbf.append(value);
+                    }
+                    xmlSbf.append("</");
+                    xmlSbf.append(key);
+                    xmlSbf.append(">");
+                }
+                if (xmlSbf != null && xmlSbf.length() > 0) {
+                    xml = xmlSbf.toString();
+                }
+            }
+        }
+        return xml;
+    }
+
+    public static void main(String[] args) {
+        String json = "{\"name\": \"dddddd\"}";
+        System.out.println(jsonToXml(json, false));
+    }
+
 }

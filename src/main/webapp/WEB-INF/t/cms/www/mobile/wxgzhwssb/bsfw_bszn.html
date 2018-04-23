@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="/${mobileRes!}/wxgzhwssb/css/style.css" rel="stylesheet" media="screen">
+    <script src="/${mobileRes!}/wxgzhwssb/js/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="/${mobileRes!}/wxgzhwssb/js/swiper-2.0.min.js" type="text/javascript"></script>
+    <script src="/${mobileRes!}/wxgzhwssb/js/common.js" type="text/javascript"></script>
+    <script language="javascript">
+        $(document).ready(function() {
+            var mySwiper = new Swiper('.index-banner', {
+                pagination : '.index-pagination',
+                loop : true,
+                grabCursor : true,
+                paginationClickable : true,
+                onSlideChangeEnd : function() {
+                    var bannerTitle = $(".index-banner ul li.swiper-slide-active img").attr("title");
+                    $(".banner-title p").text(bannerTitle);
+                }
+            });
+            var bannerFstTitle = $(".index-banner ul li.swiper-slide-active img").attr("title");
+            $(".banner-title p").text(bannerFstTitle);
+            fjcHeight();
+            fontSizeHack();
+            $(".index-banner ul li img").show();
+        });
+        function wssb() {
+            var storage = window.localStorage;
+            storage.setItem("sxzxname", "[#if permissionitem??]${permissionitem.sxzxname!}[/#if]");
+            location.href = "[#if permissionitem??]${base}/wssb/chatwssb.jspx?areaId=${areaId!}&sxid=${permissionitem.id}[/#if]";
+        }
+    </script>
+    <style>
+        .text-area-bottom  .pj_button {
+            background: #06C;
+            font-family: "微软雅黑";
+            color: #FFF;
+            border: 1px #069 solid;
+            font-weight: 900;
+            width: 100%;
+            min-height: 50px;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+        .pj_button {
+            cursor: pointer;
+        }
+        .bszn_show .top1, .bszn_show .top3 {
+            background: none;
+        }
+        .bszn_show .top2 {
+            background: white;
+            box-shadow: 5px 6px 9px 0px rgba(105, 101, 101, 0.58);
+            padding-top: 18px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        [#include "bsfw_top.html"/]
+        <div class="box">
+            <div class="hd">
+                <li class="active">
+                    <a href="/wssb/${deptId!}.jspx?areaId=${areaId!}">部门办事</a>
+                </li>
+                <li class="">
+                    <a href="/wssb/jdcx.jspx?areaId=${areaId!}">进度查询</a>
+                </li>
+                <li>
+                    <a href="${base}/mobile/bmfw/${areaId}.jspx">在线申报</a>
+                </li>
+            </div>
+            <div class="bszn_show">
+                <!-- <div class="top1"></div> -->
+                [#if permissionitem??]
+                <div class="top2">
+                    <div class="bszn_content">
+                        <li class="tit">${permissionitem.sxzxname!}</li>
+                        <!-- <li class="tit2">事项编号</li>
+                        <li class="nr">52055532131241049081-001</li> -->
+                        <li class="tit2">事项类型</li>
+                        <li class="nr"></li>
+                        <li class="tit2">权力部门</li>
+                        <li class="nr">${permissionitem.spsljgmc!}</li>
+                        <li class="tit2">申请条件及条件依据</li>
+                        <li class="nr">${permissionitem.sptj!'暂无'}</li>
+                        <li class="tit2">审批收费</li> [#if
+                        (permissionitem.ischange!"")=="1"]
+                        <li class="nr">收费标准：${permissionitem.charge!'无'}<br />
+                            收费依据及描述:${permissionitem.sfyj!'无'}
+                        </li> [#else]
+                        <li class="nr">不涉及收费</li> [/#if]
+                        <li class="tit2">特殊环节</li> [#if
+                        (permissionitem.speprmflag!"")=="1"]
+                        <li class="nr">特殊环节名称：${permissionitem.speprmname!'无'}<br />
+                            是否收费：[#if
+                            (permissionitem.speprmflagsfsf!"")=="1"]收费[#else]不收费[/#if]
+                            <br />完成时限:${permissionitem.finishtime!} [#if
+                            (permissionitem.finishlimit!)=="G"]个工作日[#else]个自然日[/#if]<br />法律依据及描述:${permissionitem.tshjyj!"无"}<br />
+                            收费依据及描述:[#if
+                            (permissionitem.speprmflagsfsf!"")=="1"]${permissionitem.byzda!}[#else]不涉及收费[/#if]
+                        </li> [#else]
+                        <li class="nr">不涉及特殊环节</li> [/#if]
+                        <li class="tit2">申请材料</li>
+                        <li class="nr">[#if sxcls?? && sxcls?size gt 0] [#list sxcls
+                            as sxcl]${sxcl_index+1}.${sxcl.clmc!}<br />
+                            [/#list] [#else]无[/#if]
+                        </li>
+                        <li class="tit2">设定依据</li>
+                        <li class="nr">[#if laws?? && laws?size gt 0] [#list laws as
+                            law] [#if
+                            (law.type!"")=="1"]${law_index+1}.${law.lawname!}[/#if][/#list]
+                            [#else]无[/#if]</li>
+                        <li class="tit2">法定时限</li>
+                        <li class="nr">[#if (permissionitem.fdsxflag!'')
+                            ='0']${permissionitem.limittimesexplain!'无相关规定'}[#else]${permissionitem.limittime!permissionitem.limitdays!}
+                            [#if
+                            (permissionitem.fdsxdw!)=="G"]个工作日[#else]个自然日[/#if]
+                            [/#if]</li>
+                        <li class="tit2">承诺时限</li>
+                        <li class="nr">[#if (permissionitem.limitdays!'')
+                            ='999']该事项没有承诺时限[#else]${permissionitem.limitdays!}
+                            [#if
+                            (permissionitem.limitunit!)=="G"]个工作日[#else]个自然日[/#if]
+                            [/#if]</li>
+                        <li class="tit2">办理窗口</li>
+                        <li class="nr">${permissionitem.windowsval!}</li>
+                        <li class="tit2">办理时间</li>
+                        <li class="nr">${permissionitem.blsjdetails!'无'}</li>
+                        <li class="tit2">网上申请</li>
+                        <li class="nr">${permissionitem.wssbaddress!'申请人可通过贵州省网上办事大厅在线申请(地址：http://www.gzegn.gov.cn）'}</li>
+                        <li class="tit2">办理公示</li>
+                        <li class="nr">${permissionitem.publicsite!}</li>
+                        <li class="tit2">办理查询</li>
+                        <li class="nr">${permissionitem.blcx!'申请人可通过电话、贵州省网上办事大厅、贵州省网上办事大厅手机APP客户端、政务服务大厅窗口等方式查询行政许可事项的办理进程'}</li>
+                        <li class="tit2">咨 询</li>
+                        <li class="nr">${permissionitem.zxytxfx!}</li>
+                        <li class="tit2">监督投诉</li>
+                        <li class="nr">${permissionitem.txfx!}</li>
+                        <li class="tit2">行政复议行政诉讼</li>
+                        <li class="nr">${permissionitem.xzssjxzfyfx!}</li>
+                    </div>
+                    <div style="margin: 20px auto; width: 45%;"
+                        class="text-area-bottom">
+                        [#if (permissionitem.sfydsb!'')='1']
+                        <label><input type="button"
+                            style="vertical-align: middle" value="网上申报"
+                            name="pingjia" onclick="wssb();" class="pj_button"></label>
+                        [/#if]
+                    </div>
+                </div>
+                [/#if]
+                <div class="top3"></div>
+            </div>
+            <div style="height: 200px;"></div>
+        </div>
+    </div>
+    <div style="height: 80px; width: 100%; float: left;"></div>
+    [#include "foot.html"/]
+</body>
+</html>

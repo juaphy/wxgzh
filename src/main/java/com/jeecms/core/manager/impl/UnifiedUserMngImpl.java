@@ -26,6 +26,7 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.common.security.BadCredentialsException;
 import com.jeecms.common.security.UsernameNotFoundException;
 import com.jeecms.common.security.encoder.PwdEncoder;
+import com.jeecms.common.util.AesCrypto;
 import com.jeecms.core.dao.UnifiedUserDao;
 import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.entity.Config.ConfigLogin;
@@ -330,4 +331,37 @@ public class UnifiedUserMngImpl implements UnifiedUserMng {
 		this.dao = dao;
 	}
 
+    public UnifiedUser login(String userName, String ip)
+            throws UsernameNotFoundException, BadCredentialsException {
+        UnifiedUser user = getByUsername(userName);
+        if (user == null) {
+            return null;
+            /*throw new UsernameNotFoundException("找不到用户: " + USER_ID);*/
+        }
+        /*if (!user.getActivation()) {
+            throw new BadCredentialsException("帐号未激活");
+        }*/
+        updateLoginSuccess(user.getId(), ip);
+        return user;
+    }
+
+    public UnifiedUser savePwdNoMd5(String username, String email, String password, String ip,String areaid){
+        Date now = new Timestamp(System.currentTimeMillis());
+        UnifiedUser user = new UnifiedUser();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        String newPwd = AesCrypto.getEncrypt(password, AesCrypto.getRawKey());// 加密算法
+    
+        user.setRegisterIp(ip);
+        user.setRegisterTime(now);
+        user.setLastLoginIp(ip);
+        user.setLastLoginTime(now);
+        user.setActivation(true);
+        user.setAreaid(areaid);
+        user.init();
+        dao.save(user);
+        
+        return user;
+    }
 }

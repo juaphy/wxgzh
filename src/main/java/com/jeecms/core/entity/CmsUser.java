@@ -11,18 +11,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jeecms.cms.SystemConstant;
 import com.jeecms.cms.entity.assist.CmsJobApply;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModelItem;
 import com.jeecms.cms.entity.main.CmsThirdAccount;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentBuy;
+import com.jeecms.cms.entity.main.wssb.TWebHallIncInforMation;
+import com.jeecms.cms.entity.main.wssb.TWebHallUserInforMation;
 import com.jeecms.common.hibernate4.PriorityInterface;
 import com.jeecms.common.util.DateUtils;
 import com.jeecms.core.entity.base.BaseCmsUser;
@@ -33,6 +35,31 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 	public static final Integer USER_STATU_DISABLED = 1;
 	public static final Integer USER_STATU_CHECKING = 2;
 
+    private Set<TWebHallUserInforMation> userinfoSet;
+    private Set<TWebHallIncInforMation> incinfoSet;
+    private String userType;// 用户类型
+
+    public Set<TWebHallUserInforMation> getUserinfoSet() {
+        return userinfoSet;
+    }
+
+    public void setUserinfoSet(Set<TWebHallUserInforMation> userinfoSet) {
+        this.userinfoSet = userinfoSet;
+    }
+
+    public Set<TWebHallIncInforMation> getIncinfoSet() {
+        return incinfoSet;
+    }
+
+    public void setIncinfoSet(Set<TWebHallIncInforMation> incinfoSet) {
+        this.incinfoSet = incinfoSet;
+        if (incinfoSet != null && incinfoSet.size() > 0) {
+            this.setUserType(SystemConstant.U_TYPE_QY);
+        } else {
+            this.setUserType(SystemConstant.U_TYPE_GR);
+        }
+    }
+
 	public Byte getCheckStep(Integer siteId) {
 		CmsUserSite us = getUserSite(siteId);
 		if (us != null) {
@@ -41,6 +68,24 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 			return null;
 		}
 	}
+
+    public TWebHallUserInforMation getUserInfoMation() {
+        Set<TWebHallUserInforMation> set = getUserinfoSet();
+        if (set != null && set.size() > 0) {
+            return set.iterator().next();
+        } else {
+            return null;
+        }
+    }
+
+    public TWebHallIncInforMation getIncInfoMation() {
+        Set<TWebHallIncInforMation> set = getIncinfoSet();
+        if (set != null && set.size() > 0) {
+            return set.iterator().next();
+        } else {
+            return null;
+        }
+    }
 
 	public String getRealname() {
 		CmsUserExt ext = getUserExt();
@@ -863,12 +908,20 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 			java.lang.Integer rank, java.lang.Long uploadTotal,
 			java.lang.Integer uploadSize, java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin, java.lang.Boolean selfAdmin,
-			java.lang.Integer statu) {
+			java.lang.Integer statu,java.lang.String areaid) {
 
 		super(id, group, username, registerTime, registerIp, loginCount, rank,
 				uploadTotal, uploadSize, admin, viewonlyAdmin, selfAdmin,
-				statu);
+				statu, areaid);
 	}
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
 	/* [CONSTRUCTOR MARKER END] */
 

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.wssb">
+	<class name="TWebHallUserInforMation" table="t_webhall_userinformation">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="useruid" type="java.lang.Integer" column="user_uid">
+			<generator class="foreign"><param name="property">user</param></generator>
+		</id>
+		<property name="username" column="user_name" type="string" not-null="false" length="50"/>
+		<property name="usergender" column="user_gender" type="string" not-null="false"/>
+		<property name="certificatetype" column="certificatetype" type="string" not-null="false" length="20"/>
+		<property name="userpid" column="user_pid" type="string" not-null="false" length="32"/>
+		<property name="userphone" column="user_phone" type="string" not-null="false" length="32"/>
+		<property name="usermobile" column="user_mobile" type="string" not-null="false" length="32"/>
+		<property name="useremail" column="user_email" type="string" not-null="false" length="50"/>
+		<property name="useraddress" column="user_address" type="string" not-null="false" length="200"/>
+		<property name="userindicia" column="user_indicia" type="string" not-null="false" length="32"/>
+		<property name="userdate" column="user_date" type="java.util.Date" not-null="false"/>
+		<property name="userca" column="user_ca" type="string" not-null="false" length="32"/>
+		<property name="isrealname" column="isrealname" type="string" not-null="false" length="2"/>
+		<property name="imgfront" column="img_front" type="string" not-null="false" length="30"/>
+		<property name="imgback" column="img_back" type="string" not-null="false" length="30"/>
+		<property name="realauth" column="real_auth" type="string" not-null="false" length="50"/>
+		<one-to-one name="user" class="com.jeecms.core.entity.CmsUser" constrained="true"/>
+	</class> 
+</hibernate-mapping>

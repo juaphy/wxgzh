@@ -1,0 +1,15 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.wssb">
+	<class name="TSysDsfxtConfig" table="T_SYS_DSFXTCONFIG">
+		<id name="id" type="java.lang.String">
+            <column name="id"/>
+            <generator class="assigned" />
+        </id> 
+		<property name="url" column="url" type="string"/>
+		<property name="describe" column="describe" type="string"/>
+		<property name="type" column="type" type="string"/>
+		<property name="status" column="status" type="string"/>
+		<property name="bsname" column="bsname" type="string"/>
+	</class>
+</hibernate-mapping>

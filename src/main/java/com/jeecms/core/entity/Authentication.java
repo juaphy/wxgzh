@@ -36,7 +36,8 @@ public class Authentication extends BaseAuthentication {
 		java.lang.String type,
 		java.util.Date loginTime,
 		java.lang.String loginIp,
-		java.util.Date updateTime) {
+		java.util.Date updateTime,
+        java.lang.String loginIdCa) {
 
 		super (
 			id,
@@ -45,7 +46,8 @@ public class Authentication extends BaseAuthentication {
 			type,
 			loginTime,
 			loginIp,
-			updateTime);
+			updateTime,
+			loginIdCa);
 	}
 
 	/* [CONSTRUCTOR MARKER END] */

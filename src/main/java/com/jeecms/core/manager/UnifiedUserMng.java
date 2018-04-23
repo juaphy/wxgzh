@@ -36,9 +36,20 @@ public interface UnifiedUserMng {
 	public UnifiedUser resetPassword(Integer userId);
 
 	public Integer errorRemaining(String username);
-
 	public UnifiedUser login(String username, String password, String ip)
 			throws UsernameNotFoundException, BadCredentialsException;
+
+	/**
+	 * 微信端-网上申报-登录
+	 * @param username
+	 * @param password
+	 * @param ip
+	 * @return
+	 * @throws UsernameNotFoundException
+	 * @throws BadCredentialsException
+	 */
+	public UnifiedUser login(String userName, String ip)
+            throws UsernameNotFoundException, BadCredentialsException;
 
 	public boolean usernameExist(String username);
 
@@ -95,4 +106,10 @@ public interface UnifiedUserMng {
 	public void updateLoginSuccess(Integer userId, String ip);
 
 	public void restPassword(UnifiedUser user);
+
+    /**
+     * 密码无须加密  通过第三方系统密码以MD5
+     */
+    public UnifiedUser savePwdNoMd5(String username, String email, String password, String ip,String areaid);
+
 }

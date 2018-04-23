@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main.wssb">
+	<class name="TWebHallIncInforMation" table="t_webhall_incinformation">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="incid" type="java.lang.Integer" column="inc_id">
+			<generator class="foreign"><param name="property">user</param></generator>
+		</id>
+		<property name="incname" column="inc_name" type="string" not-null="false" length="200"/>
+		<property name="inctype" column="inc_type" type="string" not-null="false" length="50"/>
+		<property name="incisnew" column="inc_isnew" type="string" not-null="false" length="50"/>
+		<property name="incpermit" column="inc_permit" type="string" not-null="false" length="200"/>
+		<property name="inczzjgdm" column="inc_zzjgdm" type="string" not-null="false" length="200"/>
+		<property name="incdeputy" column="inc_deputy" type="string" not-null="false" length="200"/>
+		<property name="incpid" column="inc_pid" type="string" not-null="false" length="200"/>
+		<property name="incaddr" column="inc_addr" type="string" not-null="false" length="200"/>
+		<property name="incindicia" column="inc_indicia" type="string" not-null="false" length="200"/>
+		<property name="incphone" column="inc_phone" type="string" not-null="false" length="200"/>
+		<property name="incfax" column="inc_fax" type="string" not-null="false" length="200"/>
+		<property name="inclogindate" column="inc_logindate" type="java.util.Date" not-null="false" length="200"/>
+		<property name="incnetwork" column="inc_network" type="string" not-null="false" length="200"/>
+		<property name="incemail" column="inc_email" type="string" not-null="false" length="200"/>
+		<property name="incca" column="inc_ca" type="string" not-null="false" length="200"/>
+		<property name="agename" column="age_name" type="string" not-null="false" length="200"/>
+		<property name="agepid" column="age_pid" type="string" not-null="false" length="200"/>
+		<property name="ageemail" column="age_email" type="string" not-null="false" length="200"/>
+		<property name="agemobile" column="age_mobile" type="string" not-null="false" length="200"/>
+		<property name="agephone" column="age_phone" type="string" not-null="false" length="200"/>
+		<property name="ageindicia" column="age_indicia" type="string" not-null="false" length="200"/>
+		<property name="ageaddr" column="age_addr" type="string" not-null="false" length="200"/>
+		<property name="isrealname" column="isrealname" type="string" not-null="false" length="2"/>
+		<property name="imgfront" column="img_front" type="string" not-null="false" length="30"/>
+		<property name="imgback" column="img_back" type="string" not-null="false" length="30"/>
+		<property name="realauth" column="real_auth" type="string" not-null="false" length="50"/>
+		<one-to-one name="user" class="com.jeecms.core.entity.CmsUser" constrained="true"/> 
+	</class>
+</hibernate-mapping>

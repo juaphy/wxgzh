@@ -3,7 +3,7 @@ package com.jeecms.cms.rest2.entity;
 import java.io.Serializable;
 
 /**
- * 调用接口返回的办事指南事项详细信息
+ * 调用接口返回的办事指南-事项详细信息
  * @author swc 2018-03-15
  *
  */
@@ -43,7 +43,7 @@ public class PermissionItemInfo implements Serializable{
     private String bzlx; // 办件类型
     private String xksl; // 许可数量
     private String wssbaddress; // 网上申请
-    private String sfydsb; // 1:网上申报，0：非网上申报
+    private String sfydsb; // 1:网上申报，0：非网上申报（sfwssq字段转换而来）
     private String publicsite; // 审批公示
     private String blcx; // 办件查询
     private String nshnj; // 年审年检

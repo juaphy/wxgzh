@@ -19,7 +19,7 @@ public class BusinessInfo implements Serializable {
     private String applytime; // 申请时间（申报时间）
     private String status; // 状态
     private String cstatus; // 状态名称
-    private List<Logs> logs; // 办理信息
+    // private List<Logs> logs; // 办理信息
     public String getBsnum() {
         return bsnum;
     }
@@ -71,12 +71,12 @@ public class BusinessInfo implements Serializable {
     public String getCstatus() {
         return cstatus;
     }
-    public List<Logs> getLogs() {
+    /*public List<Logs> getLogs() {
         return logs;
     }
     public void setLogs(List<Logs> logs) {
         this.logs = logs;
-    }
+    }*/
     public void setCstatus(String cstatus) {
         this.cstatus = cstatus;
     }

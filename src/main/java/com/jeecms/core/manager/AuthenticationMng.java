@@ -18,9 +18,12 @@ public interface AuthenticationMng {
 	 * 认证信息session key
 	 */
 	public static final String AUTH_KEY = "auth_key";
-
+/*
 	public Integer retrieveUserIdFromSession(SessionProvider session,
-			HttpServletRequest request);
+			HttpServletRequest request);*/
+
+    public Authentication retrieveUserIdFromSession(SessionProvider session,
+            HttpServletRequest request);
 
 	public void storeAuthIdToSession(SessionProvider session,
 			HttpServletRequest request, HttpServletResponse response,
@@ -54,7 +57,23 @@ public interface AuthenticationMng {
 			HttpServletRequest request, HttpServletResponse response,
 			SessionProvider session) throws UsernameNotFoundException,
 			BadCredentialsException;
-	
+
+	/**
+	 * 微信端-网上申报-登录
+	 * @param userName
+	 * @param ip
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 * @throws UsernameNotFoundException
+	 * @throws BadCredentialsException
+	 */
+	public Authentication login(String userName, String ip,
+            HttpServletRequest request, HttpServletResponse response,
+            SessionProvider session) throws UsernameNotFoundException,
+            BadCredentialsException;
+
 	/**
 	 * 注册后登录
 	 * @param user
