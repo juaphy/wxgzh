@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -49,6 +50,8 @@ import com.jeecms.cms.rest2.entity.DeptInfo;
 import com.jeecms.cms.rest2.entity.PermissionItemInfo;
 import com.jeecms.cms.rest2.entity.SxClxxUploadInfo;
 import com.jeecms.cms.rest2.entity.SxInfo;
+import com.jeecms.cms.rest2.entity.WUser;
+import com.jeecms.cms.rest2.entity.WUserDetail;
 import com.jeecms.cms.rest2.impl.CallRestMngImpl;
 import com.jeecms.common.util.StringUtils;
 import com.jeecms.core.entity.CmsSite;
@@ -181,10 +184,8 @@ public class WssbAct extends MyAct {
 
     // 申报页面
     @RequestMapping(value = "/chatwssb.jspx")
-    public String chatwssb(HttpServletRequest request,
-            HttpServletResponse response, ModelMap model) {
+    public String chatwssb(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
-        CmsUser user = CmsUtils.getUser(request);
         FrontUtils.frontData(request, model, site);
         String areaId = request.getParameter("areaId");
         if (!isProcZwzxConfig(areaId, model)) {
@@ -194,7 +195,10 @@ public class WssbAct extends MyAct {
         String typecss=request.getParameter("typecss");
         model.put("typecss", typecss);
 
-        if(user==null||sxid==null){
+        // CmsUser user = CmsUtils.getUser(request);
+        WUser user = CmsUtils.getUser(session);
+        WUserDetail userDetail = CmsUtils.getUserDetail(session);
+        if(user == null || sxid == null || userDetail == null){
             return "redirect:/wssb/logindex.jspx?areaId=" + areaId + "&isWssb=true&goto=/wssb/chatwssb.jspx&sxid=" + sxid;
         }
         PermissionItemInfo item = null;
@@ -204,30 +208,30 @@ public class WssbAct extends MyAct {
         if (bszn != null) {
             item = bszn.getPermissionItemInfo();
         }
-        if (item != null&&user!=null) {
+        if (item != null && userDetail != null) {
             // String account = user.getUsername();
             String usercode="";
             String username="";
             String phone="";
-            if(user.getUserType()!=null&&"1".equals(user.getUserType())){
-                usercode=user.getUserInfoMation().getUserpid();
-                username=user.getUserInfoMation().getUsername();
-                phone=user.getMobile()!=null?user.getMobile():"";
-            }else if(user.getUserType()!=null&&"2".equals(user.getUserType())){
-                usercode=user.getIncInfoMation().getIncpid();
+            if (userDetail.getType() != null && "1".equals(userDetail.getType())){
+                usercode=userDetail.getUserPid();
+                username=userDetail.getUserName();
+                phone = userDetail.getUserMobile() != null ? userDetail.getUserMobile() : "";
+            } else if(userDetail.getType() != null && "2".equals(userDetail.getType())){
+                usercode= userDetail.getIncPid();
                 //username=user.getIncInfoMation().getAgename();
-                username=user.getIncInfoMation().getIncname();
-                phone=user.getMobile()!=null?user.getMobile():user.getIncInfoMation().getAgemobile();
+                username = userDetail.getIncName();
+                phone = userDetail.getUserMobile() != null? userDetail.getUserMobile() : userDetail.getAgeMobile();
                 if(phone==null){
                     phone="";
                 }
             }
-            
-            model.addAttribute("token", "");
+
+            model.addAttribute("token", user.getToken());
             model.addAttribute("Sxmc", item.getSxzxname());
             model.addAttribute("username", username);
             model.addAttribute("sxId", sxid);
-            model.addAttribute("userid", user.getId());
+            model.addAttribute("userid", userDetail.getId());
             model.addAttribute("usercode",usercode);
             model.addAttribute("phone",phone);
         } 
@@ -236,21 +240,23 @@ public class WssbAct extends MyAct {
 
     // 填写申报信息-跳到申请材料页面
     @RequestMapping(value = "/sqcl.jspx")
-    public String sqclpage(String token,String sxId,String Sxmc,String username, HttpServletRequest request, ModelMap model) {
+    public String sqclpage(HttpSession session, String token,String sxId,String Sxmc,String username,
+            HttpServletRequest request, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
-        CmsUser user =CmsUtils.getUser(request);
+        WUser user = CmsUtils.getUser(session);
+        WUserDetail userDetail = CmsUtils.getUserDetail(session);
         try {
             if(user==null){
                 return "redirect:/wssb/logindex.jspx";
             }
             String usercode="";
-            if(user.getUserType()!=null&&"1".equals(user.getUserType())){
-                usercode=user.getUserInfoMation().getUserpid();
-                username=user.getUserInfoMation().getUsername();
-            }else if(user.getUserType()!=null&&"2".equals(user.getUserType())){
-                usercode=user.getIncInfoMation().getIncpid();
+            if(user.getType() != null && "1".equals(user.getType())){
+                usercode = userDetail.getUserPid();
+                username = userDetail.getUserName();
+            }else if(user.getType() != null && "2".equals(user.getType())){
+                usercode = userDetail.getIncPid();
                 //username=user.getIncInfoMation().getAgename();
-                username=user.getIncInfoMation().getIncname();
+                username = userDetail.getIncName();
             }
             String baseForm=request.getParameter("baseForm");
             if(baseForm!=null&&!baseForm.equals("")){
@@ -261,11 +267,11 @@ public class WssbAct extends MyAct {
             }
             //System.out.println(BASE64Helper.decode(baseForm));
             FrontUtils.frontData(request, model, site);
-            model.addAttribute("token", token!=null?token:"");
-            model.addAttribute("Sxmc", Sxmc!=null&&!Sxmc.equals("")?Sxmc:"");
-            model.addAttribute("sxId", sxId!=null?sxId:"");
+            model.addAttribute("token", user.getToken());
+            model.addAttribute("Sxmc", Sxmc != null && !Sxmc.equals("")? Sxmc : "");
+            model.addAttribute("sxId", sxId != null? sxId : "");
             model.addAttribute("usercode", usercode);
-            model.addAttribute("param", baseForm!=null?baseForm:"");
+            model.addAttribute("param", baseForm != null? baseForm : "");
             setFrontProperties(model, request);
             System.out.println(site.getSolutionPath());
         } catch (Exception e) {
@@ -285,28 +291,9 @@ public class WssbAct extends MyAct {
         } else if (bsid != null && !"".equals(bsid)) {
             xml = matterService.getClXml(bsid);
         }
-        //暂存
-        /*xml="<cllist>"
-                + "<cl><clid>52000020150116150529001129</clid><clmc>由具备相应工程咨询资格的机构编制项目申请报告，包括以下内容：（一）项目单位情况；（二）拟建项目情况；（三）资源利用和生态环境影响分析；（四）经济和社会影响分析。</clmc><dzhyq>5,3</dzhyq><gid>20170425134426156N</gid><baseinfo>null</baseinfo><formver> </formver><uid>577943</uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype>3</ctype><templateid></templateid><templateName></templateName><bz></bz><cclid>52000020150116150529001129</cclid><fname>由具备相应工程咨询资格的机构编制项目申请报告，包括以下内容：（一）项目单位情况；（二）拟建项目情况；（三）资源利用和生态环境影响分析；（四）经济和社会影响分析。</fname><orinum>null</orinum><copynum>null</copynum><pid></pid><clbh>#CLBH#</clbh><clyq>纸质原件5份</clyq><filelist></filelist><xid></xid><fid></fid></cl>"
-                + "<cl><clid>52000020150116150619001135</clid><clmc>城乡规划行政主管部门出具的选址意见书（仅指以划拨方式提供国有土地使用权的项目）；</clmc><dzhyq>5,3</dzhyq><gid>20170425134426157N</gid><baseinfo>null</baseinfo><formver> </formver><uid>577943</uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype>3</ctype><templateid></templateid><templateName></templateName><bz></bz><cclid>52000020150116150619001135</cclid><fname>城乡规划行政主管部门出具的选址意见书（仅指以划拨方式提供国有土地使用权的项目）；</fname><orinum>null</orinum><copynum>null</copynum><pid></pid><clbh>#CLBH#</clbh><clyq>纸质原件1份，复印件4份。</clyq><filelist></filelist><xid></xid><fid></fid></cl>"
-                + "<cl><clid>52000020150116150815001149</clid><clmc>根据有关法律法规应提交的其他文件。</clmc><dzhyq>5,3</dzhyq><gid>20170425134426158N</gid><baseinfo>null</baseinfo><formver> </formver><uid>577943</uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype>3</ctype><templateid></templateid><templateName></templateName><bz></bz><cclid>52000020150116150815001149</cclid><fname>根据有关法律法规应提交的其他文件。</fname><orinum>null</orinum><copynum>null</copynum><pid></pid><clbh>#CLBH#</clbh><clyq>纸质原件1份，纸质复印件4份。</clyq><filelist></filelist><xid></xid><fid></fid></cl>"
-                + "<cl><clid>52000020150116150802001147</clid><clmc>项目单位对项目申请报告内容和附属文件真实性负责的承诺；</clmc><dzhyq>5,3</dzhyq><gid>20170425134426159N</gid><baseinfo>null</baseinfo><formver> </formver><uid>577943</uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype>3</ctype><templateid></templateid><templateName></templateName><bz></bz><cclid>52000020150116150802001147</cclid><fname>项目单位对项目申请报告内容和附属文件真实性负责的承诺；</fname><orinum>null</orinum><copynum>null</copynum><pid></pid><clbh>#CLBH#</clbh><clyq>纸质原件1份，复印件4份。</clyq><filelist></filelist><xid></xid><fid></fid></cl>"
-                + "<cl><clid>52000020150116150628001137</clid><clmc>国土资源行政主管部门出具的用地预审意见（不涉及新增用地，在已批准的建设用地范围内进行改扩建的项目，可以不进行用地预审）；</clmc><dzhyq>5,3</dzhyq><gid>20170425134426160N</gid><baseinfo>null</baseinfo><formver> </formver><uid>577943</uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype>3</ctype><templateid></templateid><templateName></templateName><bz></bz><cclid>52000020150116150628001137</cclid><fname>国土资源行政主管部门出具的用地预审意见（不涉及新增用地，在已批准的建设用地范围内进行改扩建的项目，可以不进行用地预审）；</fname><orinum>null</orinum><copynum>null</copynum><pid></pid><clbh>#CLBH#</clbh><clyq>纸质原件1份，复印件4份。</clyq><filelist></filelist><xid></xid><fid></fid></cl>"
-                + "<length>5</length>"
-                + "<sxname><![CDATA[涉及开荒的农业项目]]></sxname>"
-                + "</cllist>";*/
-        //初始化
-        /*xml="<cllist>"
-                + "<cl><clid>52000020150116150529001129</clid><clmc>由具备相应工程咨询资格的机构编制项目申请报告，包括以下内容：（一）项目单位情况；（二）拟建项目情况；（三）资源利用和生态环境影响分析；（四）经济和社会影响分析。</clmc><dzhyq>3</dzhyq><xid></xid><gid>20170425140639107N</gid><baseinfo></baseinfo><formver> </formver><fid></fid><uid></uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype></ctype><templateid></templateid><templateName></templateName><bz> </bz><cclid>52000020150116150529001129</cclid><fname>由具备相应工程咨询资格的机构编制项目申请报告，包括以下内容：（一）项目单位情况；（二）拟建项目情况；（三）资源利用和生态环境影响分析；（四）经济和社会影响分析。</fname><orinum></orinum><copynum></copynum><pid></pid><clbh>#CLBH#</clbh><sfby>1</sfby><clyq>纸质原件5份</clyq></cl>"
-                + "<cl><clid>52000020150116150619001135</clid><clmc>城乡规划行政主管部门出具的选址意见书（仅指以划拨方式提供国有土地使用权的项目）；</clmc><dzhyq>3</dzhyq><xid></xid><gid>20170425140639108N</gid><baseinfo></baseinfo><formver> </formver><fid></fid><uid></uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype></ctype><templateid></templateid><templateName></templateName><bz> </bz><cclid>52000020150116150619001135</cclid><fname>城乡规划行政主管部门出具的选址意见书（仅指以划拨方式提供国有土地使用权的项目）；</fname><orinum></orinum><copynum></copynum><pid></pid><clbh>#CLBH#</clbh><sfby>1</sfby><clyq>纸质原件1份，复印件4份。</clyq></cl>"
-                + "<cl><clid>52000020150116150815001149</clid><clmc>根据有关法律法规应提交的其他文件。</clmc><dzhyq>3</dzhyq><xid></xid><gid>20170425140639109N</gid><baseinfo></baseinfo><formver> </formver><fid></fid><uid></uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype></ctype><templateid></templateid><templateName></templateName><bz> </bz><cclid>52000020150116150815001149</cclid><fname>根据有关法律法规应提交的其他文件。</fname><orinum></orinum><copynum></copynum><pid></pid><clbh>#CLBH#</clbh><sfby>1</sfby><clyq>纸质原件1份，纸质复印件4份。</clyq></cl>"
-                + "<cl><clid>52000020150116150802001147</clid><clmc>项目单位对项目申请报告内容和附属文件真实性负责的承诺；</clmc><dzhyq>3</dzhyq><xid></xid><gid>20170425140639110N</gid><baseinfo></baseinfo><formver> </formver><fid></fid><uid></uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype></ctype><templateid></templateid><templateName></templateName><bz> </bz><cclid>52000020150116150802001147</cclid><fname>项目单位对项目申请报告内容和附属文件真实性负责的承诺；</fname><orinum></orinum><copynum></copynum><pid></pid><clbh>#CLBH#</clbh><sfby>1</sfby><clyq>纸质原件1份，复印件4份。</clyq></cl>"
-                + "<cl><clid>52000020150116150628001137</clid><clmc>国土资源行政主管部门出具的用地预审意见（不涉及新增用地，在已批准的建设用地范围内进行改扩建的项目，可以不进行用地预审）；</clmc><dzhyq>3</dzhyq><xid></xid><gid>20170425140639111N</gid><baseinfo></baseinfo><formver> </formver><fid></fid><uid></uid><zt>0</zt><sxid>20140826104658016544</sxid><ctype></ctype><templateid></templateid><templateName></templateName><bz> </bz><cclid>52000020150116150628001137</cclid><fname>国土资源行政主管部门出具的用地预审意见（不涉及新增用地，在已批准的建设用地范围内进行改扩建的项目，可以不进行用地预审）；</fname><orinum></orinum><copynum></copynum><pid></pid><clbh>#CLBH#</clbh><sfby>1</sfby><clyq>纸质原件1份，复印件4份。</clyq></cl>"
-                + "<length>5</length></cllist>";*/
         response.setContentType("application/xml");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-    //  System.out.println(xml);
         out.print(xml);
         out.flush();
         out.close();
@@ -335,14 +322,14 @@ public class WssbAct extends MyAct {
     // 上传附件到网厅
     @ResponseBody
     @RequestMapping("/uploadFileToWt.jspx")
-    public String uploadFileToWt(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        CmsUser cmsUser = CmsUtils.getUser(request);
+    public String uploadFileToWt(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        WUser user = CmsUtils.getUser(session);
         String fileName = request.getParameter("filename");
         String sxid = request.getParameter("sxid");
         Map<String, String> param = new HashMap<String, String>();
         param.put("filename", fileName);
         param.put("sxid", sxid);
-        param.put("userid", String.valueOf(cmsUser.getId()));
+        param.put("userid", String.valueOf(user.getUserId()));
         SxClxxUploadInfo info = callInterfaceMng.uploadSxcl(request, param);
 
         /*PrintWriter out = response.getWriter();
@@ -357,6 +344,8 @@ public class WssbAct extends MyAct {
         }
         return "";
     }
+
+    // 申报成功显示的页面
     @RequestMapping(value = "/ts.jspx", method = RequestMethod.GET)
     public String goNext(String bsnum,HttpServletRequest request,HttpServletResponse response, ModelMap model) throws IOException {
         CmsSite site = CmsUtils.getSite(request);

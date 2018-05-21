@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -21,6 +22,7 @@ import com.jeecms.cms.manager.main.CallInterfaceMng;
 import com.jeecms.cms.manager.main.WebHallIncInforMationMng;
 import com.jeecms.cms.manager.main.WebHallUserInforMationMng;
 import com.jeecms.cms.rest2.entity.WUser;
+import com.jeecms.cms.rest2.entity.WUserDetail;
 import com.jeecms.common.security.DisabledException;
 import com.jeecms.common.util.MD5;
 import com.jeecms.common.web.RequestUtils;
@@ -197,13 +199,13 @@ public class WssbLoginAction extends MyAct {
     // 调用网厅登录接口进行登录
     @ResponseBody
     @RequestMapping(value="/login4Wt.jspx",method = RequestMethod.POST)
-    public String login4Wt(HttpServletRequest request,
-            HttpServletResponse response, ModelMap model){
+    public String login4Wt(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model){
         CmsSite site = CmsUtils.getSite(request);
         FrontUtils.frontData(request, model, site);
         String password = request.getParameter("password");
         String account = request.getParameter("account");
         String type = request.getParameter("type"); // 用户类型
+        String areaId = request.getParameter("areaId");
 
         Map<String, String> msg = new HashMap<String, String>();
 
@@ -220,9 +222,11 @@ public class WssbLoginAction extends MyAct {
             return JsonUtil.toJson(msg);
         }
 
+        password = MD5.MD5Encode(password);
+
         // 记录用户登录信息 TODO
         String ip = RequestUtils.getIpAddr(request);
-        
+
         // 登录并返回用户信息
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("USERNAME", account);
@@ -233,17 +237,32 @@ public class WssbLoginAction extends MyAct {
             msg.put("msg", "MSG_ERROR_USERNAMEORPASSWORD");
             return JsonUtil.toJson(msg);
         }
-        
+
+        // 获取网厅用户详情
+        Map<String, Object> params2 = new HashMap<String, Object>();
+        params2.put("token", user.getToken());
+        params2.put("ID", user.getUserId());
+        WUserDetail wUserDetail = callInterfaceMng.findWUserDetail(params2);
+        if (wUserDetail == null) {
+            msg.put("msg", "MSG_ERROR_USERDETAIL");
+            return JsonUtil.toJson(msg);
+        }
+
         // 将用户放到session中
-        return "";
+        CmsUtils.setUser(session, user);
+        CmsUtils.setUserDetail(session, wUserDetail);
+
+        msg.put("msg", "SUCCESS");
+        msg.put("toUrl", "/wssb/center.jspx?areaId=" + areaId);
+        return JsonUtil.toJson(msg);
     }
 
     // 跳到个人中心页面
     @RequestMapping(value = "/center.jspx")
-    public String center(HttpServletRequest request,
+    public String center(HttpSession session, HttpServletRequest request,
             HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
-        CmsUser user = CmsUtils.getUser(request);
+        WUser user = CmsUtils.getUser(session);
         FrontUtils.frontData(request, model, site);
         String areaId = request.getParameter("areaId");
         if (!isProcZwzxConfig(areaId, model)) {
@@ -259,13 +278,17 @@ public class WssbLoginAction extends MyAct {
 
     @RequestMapping(value = "/logout.jspx")
     public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-        String authId = (String) session.getAttribute(request, AuthenticationMng.AUTH_KEY);
-        String areaId = request.getParameter("areaId");
+        /*String authId = (String) session.getAttribute(request, AuthenticationMng.AUTH_KEY);
         if (authId != null) {
             authMng.deleteById(authId);
             // session.logout(request, response);
-            session.logout2(request, response, AuthenticationMng.AUTH_KEY);
+            session.logout2(request, response, CmsUtils.WT_USER_KEY);
+        }*/
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.removeAttribute(CmsUtils.WT_USER_KEY);
         }
+        String areaId = request.getParameter("areaId");
         return "redirect:/wssb/logindex.jspx?areaId=" + areaId;
     }
 
